@@ -1,0 +1,35 @@
+import { Route, Routes } from "react-router-dom";
+import DashboardPage from "../pages/Dasjboard";
+import CustomersPage from "../pages/Customers";
+import AdvertismentPage from "../pages/Advertisment";
+import InstallationPage from "../pages/Installation";
+import MachinesPage from "../pages/Machines";
+import ReportingsPage from "../pages/Reportings";
+import MainContent from "./MainContent";
+
+function MainContent() {
+  return (
+    <Routes>
+      <Route path="/" exact>
+        <DashboardPage />
+      </Route>
+      <Route path="/customers">
+        <CustomersPage />
+      </Route>
+      <Route path="/advertisment">
+        <AdvertismentPage />
+      </Route>
+      <Route path="/installation">
+        <InstallationPage />
+      </Route>
+      <Route path="/machines">
+        <MachinesPage />
+      </Route>
+      <Route path="/reportings">
+        <ReportingsPage />
+      </Route>
+    </Routes>
+  );
+}
+
+export default MainContent;

@@ -1,6 +1,6 @@
 import logo from "../assests/logo.png";
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -18,7 +18,9 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import Grid from "@mui/material/Grid";
+
+import DashboardPage from "../pages/Dasjboard";
+
 const icons = [
   <HomeRoundedIcon />,
   <PeopleAltRoundedIcon />,
@@ -55,10 +57,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -177,20 +177,7 @@ export default function MiniDrawer() {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Grid container spacing={1} columns={4}>
-          <Grid item xs={1}>
-            <Item>xs=8</Item>
-          </Grid>
-          <Grid item xs={1}>
-            <Item>xs=8</Item>
-          </Grid>
-          <Grid item xs={1}>
-            <Item>xs=8</Item>
-          </Grid>
-          <Grid item xs={1}>
-            <Item>xs=8</Item>
-          </Grid>
-        </Grid>
+        <DashboardPage />
       </Box>
     </Box>
   );
