@@ -18,3 +18,19 @@ code {
   position: fixed;
   left: 0.5em;
 }
+.logologin{
+  width: 250px;
+}
+
+.mainContent {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.active {
+  background-color: #2599CA;
+}
+
+.tableHead{
+  text-align: center !important;
+}

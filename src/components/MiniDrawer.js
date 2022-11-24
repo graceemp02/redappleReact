@@ -18,8 +18,9 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { useNavigate } from "react-router-dom";
 
-import DashboardPage from "../pages/Dasjboard";
+
 
 const icons = [
   <HomeRoundedIcon />,
@@ -77,7 +78,9 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
+  const navigate = useNavigate();
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -87,7 +90,7 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+console.log(props.page);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -99,12 +102,7 @@ export default function MiniDrawer() {
         onMouseOut={handleDrawerClose}
       >
         <DrawerHeader>
-          <img
-            className="logo"
-            src={logo}
-            onClick={handleDrawerOpen}
-            alt="logo"
-          />
+          <img className="logo" src={logo} alt="I am RedApple Logo" />
           {open && (
             <Typography
               variant="h5"
@@ -129,8 +127,16 @@ export default function MiniDrawer() {
             "Advertisment",
             "Installation",
           ].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              className={props.page === index.toString() ? 'active' : null}
+              key={text}
+              disablePadding
+              sx={{ display: "block" }}
+            >
               <ListItemButton
+                onClick={() => {
+                  navigate("/" + text.toLowerCase());
+                }}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -176,9 +182,6 @@ export default function MiniDrawer() {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DashboardPage />
-      </Box>
     </Box>
   );
 }

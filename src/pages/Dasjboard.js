@@ -1,6 +1,10 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
+import classe from "../index.css";
+import Customers from '../components/customers'
+import Machines from "../components/machines";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -10,12 +14,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 function DashboardPage() {
   return (
-    <Grid container spacing={1} columns={4} rows={10}>
+    <Grid className={classe.mainContet} container spacing={1} columns={4}>
       <Grid item xs={1}>
-        <Item>xs=8</Item>
+        <Item>
+          <Customers />
+        </Item>
       </Grid>
       <Grid item xs={1}>
-        <Item>xs=8</Item>
+        <Item>
+          <Machines />
+        </Item>
       </Grid>
       <Grid item xs={1}>
         <Item>xs=8</Item>
