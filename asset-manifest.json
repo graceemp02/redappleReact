@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/redappleReact/static/css/main.32ccd26d.css",
+    "main.js": "/redappleReact/static/js/main.473990a5.js",
+    "static/media/RedApple_Admin_Login.jpg": "/redappleReact/static/media/RedApple_Admin_Login.36e1bdfc46501c9ad225.jpg",
+    "static/media/logo.png": "/redappleReact/static/media/logo.78ba43012bd49671f3dd.png",
+    "index.html": "/redappleReact/index.html",
+    "main.32ccd26d.css.map": "/redappleReact/static/css/main.32ccd26d.css.map",
+    "main.473990a5.js.map": "/redappleReact/static/js/main.473990a5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.32ccd26d.css",
+    "static/js/main.473990a5.js"
+  ]
+}
