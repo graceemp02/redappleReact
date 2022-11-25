@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assests/logo.png";
 import RedApple_Admin_Login from "../assests/RedApple_Admin_Login.jpg";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -35,15 +36,35 @@ function Copyright(props) {
 const theme = createTheme();
 
 function LoginPage() {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+
+  function handleChange(e) {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = 'http://146.190.65.198/login.php';
+    fetch(url,{method:'POST'}).then(res => {
+      console.log(res);
+    })
+    
+    // const response = await fetch(`${url}`, {
+    //   method: 'POST',
+    //   body: {
+    //     username: inputs.username,
+    //     password: inputs.password
+    //   }
+    // });
+    // const data = await response.json();
+    // console.log(data);
+
+  }
+
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +104,6 @@ function LoginPage() {
             </Typography>
             <Box
               component="form"
-              noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
@@ -96,6 +116,8 @@ function LoginPage() {
                 name="username"
                 autoComplete="username"
                 autoFocus
+                onChange={handleChange}
+                value={inputs.username}
               />
               <TextField
                 margin="normal"
@@ -106,6 +128,8 @@ function LoginPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChange}
+                value={inputs.password}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

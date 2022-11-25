@@ -9,7 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -42,13 +41,19 @@ const rows = [
   "Cupcake",
   "Gingerbread",
 ];
-
-
+let newRows = rows.slice();
 function Customers() {
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  function handleSearch(event) {
-    setSearchTerm(event.target.value);
+  function handleSearch(e) {
+    
+    newRows = []
+    setSearchTerm(e.target.value);
+     console.log(newRows);
+    rows.forEach((val) => {
+      if (searchTerm === "") newRows.push(val)
+      if (val.toLowerCase().includes(searchTerm.toLowerCase())) newRows.push(val);
+    })
   }
   return (
     <TableContainer sx={{ height: "47vh" }}>
@@ -69,21 +74,13 @@ function Customers() {
           </TableRow>
         </TableHead>
         <TableBody component={Paper}>
-          {rows
-            // .fiter((val) => {
-            //   if (searchTerm === "") {
-            //     return val
-            //   } else if (val.toLowerCase().includes(searchTerm.toLowerCase())) {
-            //     return val
-            //   }
-            // })
-            .map((row, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell component="th" scope="row">
-                  {row}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+          {newRows.map((row, index) => (
+            <StyledTableRow key={index}>
+              <StyledTableCell component="th" scope="row">
+                {row}
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -91,3 +88,11 @@ function Customers() {
 }
 
 export default Customers;
+
+// .fiter((val) => {
+//   if (searchTerm === "") {
+//     return val
+//   } else if (val.toLowerCase().includes(searchTerm.toLowerCase())) {
+//     return val
+//   }
+// })

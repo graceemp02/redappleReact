@@ -15,20 +15,20 @@ const Item = styled(Paper)(({ theme }) => ({
 function DashboardPage() {
   return (
     <Grid className={classe.mainContet} container spacing={1} columns={4}>
-      <Grid item xs={1}>
+      <Grid item xs={4} md={2} lg={1}>
         <Item>
           <Customers />
         </Item>
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={4} md={2} lg={1}>
         <Item>
           <Machines />
         </Item>
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={4} md={2} lg={1}>
         <Item>xs=8</Item>
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={4} md={2} lg={1}>
         <Item>xs=8</Item>
       </Grid>
     </Grid>
