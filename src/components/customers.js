@@ -1,4 +1,6 @@
-import * as React from "react";
+/** @format */
+
+import  React, {useState} from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -43,56 +45,56 @@ const rows = [
 ];
 let newRows = rows.slice();
 function Customers() {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   function handleSearch(e) {
-    
-    newRows = []
+    newRows = [];
     setSearchTerm(e.target.value);
-     console.log(newRows);
+    console.log(newRows);
     rows.forEach((val) => {
-      if (searchTerm === "") newRows.push(val)
-      if (val.toLowerCase().includes(searchTerm.toLowerCase())) newRows.push(val);
-    })
+      if (searchTerm === "") newRows.push(val);
+      if (val.toLowerCase().includes(searchTerm.toLowerCase()))
+        newRows.push(val);
+    });
   }
   return (
-    <TableContainer sx={{ height: "47vh" }}>
-      <Table aria-label="customized table">
-        <TableHead sx={{ bgColor: "#2599CA" }}>
-          <TableRow>
-            <StyledTableCell
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Typography variant="h5">CUSTOMERS</Typography>
-              <TextField
-                variant="filled"
-                onChange={handleSearch}
-                label="Search Customer"
-                sx={{ bgcolor: "white", padding: 0 }}
-              />
-            </StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody component={Paper}>
-          {newRows.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell component="th" scope="row">
-                {row}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <div
+        style={{
+          border: '1px solid black',
+          borderRadius: 5,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+        <Typography variant='h6' display={"inline"}>
+          CUSTOMERS
+        </Typography>
+        <TextField
+          variant='outlined'
+          onChange={handleSearch}
+          label='Search Customer'
+          sx={{ bgcolor: "white", padding: 0 }}
+        />
+      </div>
+
+      <TableContainer sx={{ height: "47vh" }}>
+        <Table aria-label='customized table'>
+          
+          <TableBody component={Paper}>
+            {newRows.map((row, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell component='th' scope='row'>
+                  {row}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
 export default Customers;
 
-// .fiter((val) => {
-//   if (searchTerm === "") {
-//     return val
-//   } else if (val.toLowerCase().includes(searchTerm.toLowerCase())) {
-//     return val
-//   }
-// })

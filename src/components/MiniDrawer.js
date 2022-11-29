@@ -1,3 +1,5 @@
+/** @format */
+
 import logo from "../assests/logo.png";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
@@ -19,8 +21,6 @@ import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateR
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { useNavigate } from "react-router-dom";
-
-
 
 const icons = [
   <HomeRoundedIcon />,
@@ -90,28 +90,25 @@ export default function MiniDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-console.log(props.page);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
       <Drawer
-        variant="permanent"
+        variant='permanent'
         open={open}
         onMouseOver={handleDrawerOpen}
-        onMouseOut={handleDrawerClose}
-      >
+        onMouseOut={handleDrawerClose}>
         <DrawerHeader>
-          <img className="logo" src={logo} alt="I am RedApple Logo" />
+          <img className='logo' src={logo} alt='I am RedApple Logo' />
           {open && (
             <Typography
-              variant="h5"
+              variant='h5'
               sx={{
                 position: "fixed",
                 left: 75,
                 lineHeight: 1,
-              }}
-            >
+              }}>
               Red <br />
               Apple
             </Typography>
@@ -128,11 +125,10 @@ console.log(props.page);
             "Installation",
           ].map((text, index) => (
             <ListItem
-              className={props.page === index.toString() ? 'active' : null}
+              className={props.page === index.toString() ? "active" : null}
               key={text}
               disablePadding
-              sx={{ display: "block" }}
-            >
+              sx={{ display: "block" }}>
               <ListItemButton
                 onClick={() => {
                   navigate("/" + text.toLowerCase());
@@ -141,15 +137,13 @@ console.log(props.page);
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
-                }}
-              >
+                }}>
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                  }}
-                >
+                  }}>
                   {icons[index]}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -166,18 +160,16 @@ console.log(props.page);
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
-              }}
-            >
+              }}>
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 <AccountCircleRoundedIcon />
               </ListItemIcon>
-              <ListItemText primary="Name" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary='FullName' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
