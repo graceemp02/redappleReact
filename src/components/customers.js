@@ -1,100 +1,72 @@
 /** @format */
 
-import  React, {useState} from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+import React, { useState } from 'react';
+import Paper from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { TextField, Typography } from '@mui/material';
+const rows = ['Frozen', 'Frozen', 'Ice cream sandwich', 'Eclair', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread', 'Frozen yoghurt', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread'];
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-const rows = [
-  "Frozen yoghurt",
-  "Ice cream sandwich",
-  "Eclair",
-  "Cupcake",
-  "Gingerbread",
-  "Frozen yoghurt",
-  "Ice cream sandwich",
-  "Eclair",
-  "Cupcake",
-  "Gingerbread",
-];
 let newRows = rows.slice();
+
 function Customers() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
 
   function handleSearch(e) {
     newRows = [];
+    setSearchTerm('');
     setSearchTerm(e.target.value);
-    console.log(newRows);
-    rows.forEach((val) => {
-      if (searchTerm === "") newRows.push(val);
-      if (val.toLowerCase().includes(searchTerm.toLowerCase()))
-        newRows.push(val);
+    rows.forEach(val => {
+      if (searchTerm === '') newRows.push(val);
+      if (val.toLowerCase().includes(searchTerm.toLowerCase())) newRows.push(val);
     });
   }
   return (
-    <>
+    <div style={{ height: '50%' }}>
       <div
         style={{
-          border: '1px solid black',
-          borderRadius: 5,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
         }}>
-        <Typography variant='h6' display={"inline"}>
+        <Typography variant='h5' fontWeight={'bold'} pl={1} display={'inline'} sx={{ textDecoration: 'Underline', color: 'black' }}>
           CUSTOMERS
         </Typography>
         <TextField
-          variant='outlined'
+          variant='filled'
           onChange={handleSearch}
           label='Search Customer'
-          sx={{ bgcolor: "white", padding: 0 }}
+          sx={{
+            bgcolor: 'white',
+            p: '0 !important',
+          }}
         />
       </div>
-
-      <TableContainer sx={{ height: "47vh" }}>
-        <Table aria-label='customized table'>
-          
-          <TableBody component={Paper}>
-            {newRows.map((row, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell component='th' scope='row'>
-                  {row}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+      <Paper marginBottom={2} sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1em' }}>
+        <List component='nav' aria-label='secondary' sx={{ maxHeight: '42vh', overflow: 'auto', borderRadius: '10px' }}>
+          {newRows.map((row, index) => {
+            return (
+              <>
+                <ListItemButton
+                  sx={{ paddingBlock: 0 }}
+                  divider={newRows.length - 1 === index ? false : true}
+                  key={row}
+                  selected={selectedIndex === index}
+                  onClick={event => handleListItemClick(event, index)}>
+                  <ListItemText primary={row} />
+                </ListItemButton>
+              </>
+            );
+          })}
+        </List>
+      </Paper>
+      <Paper></Paper>
+    </div>
   );
 }
-
 export default Customers;
-

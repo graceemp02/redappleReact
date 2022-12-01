@@ -15,7 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assests/logo.png";
 import RedApple_Admin_Login from "../assests/RedApple_Admin_Login.jpg";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 
 function Copyright(props) {
@@ -38,6 +39,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 function LoginPage() {
+  const { setUser } = useContext(UserContext);
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
@@ -61,7 +63,10 @@ function LoginPage() {
       .post(url, formData)
       .then((result) => {
         const res = result.data["res"];
-        if (res === "true") navigate("/dashboard");
+        if (res === "true") {
+          setUser(result.data["name"]);
+          navigate("/dashboard");
+        }
         else if (res === "Password Incorrent") setPwdError(res);
         else setUserError(res);
       })

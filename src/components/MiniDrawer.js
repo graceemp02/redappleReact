@@ -21,6 +21,8 @@ import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateR
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { useNavigate } from "react-router-dom";
+import {  useContext } from "react";
+import { UserContext } from "../UserContext";
 
 const icons = [
   <HomeRoundedIcon />,
@@ -79,6 +81,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer(props) {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -131,6 +134,7 @@ export default function MiniDrawer(props) {
               sx={{ display: "block" }}>
               <ListItemButton
                 onClick={() => {
+                  handleDrawerClose();
                   navigate("/" + text.toLowerCase());
                 }}
                 sx={{
@@ -169,7 +173,7 @@ export default function MiniDrawer(props) {
                 }}>
                 <AccountCircleRoundedIcon />
               </ListItemIcon>
-              <ListItemText primary='FullName' sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={user} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

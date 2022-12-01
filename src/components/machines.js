@@ -1,62 +1,54 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+/** @format */
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+import React, { useState } from 'react';
+import Paper from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { TextField, Typography } from '@mui/material';
+const rows = ['Frozen', 'Ice cream sandwich', 'Eclair', 'Frozen', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread', 'Frozen yoghurt', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread'];
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+let newRows = rows.slice();
 
-const rows = [
-  "Frozen yoghurt",
-  "Ice cream sandwich",
-  "Eclair",
-  "Cupcake",
-  "Gingerbread",
-];
+function Customers() {
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-function Machines() {
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   return (
-    <TableContainer sx={{ minHeight: "47vh" }} component={Paper}>
-      <Table aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell className="tableHead">MACHINES</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell component="th" scope="row">
-                {row}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div style={{ height: '50%' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Typography variant='h5' fontWeight={'bold'} color={'black'} pl={1} sx={{ textDecoration: 'Underline' }}>
+          MACHINES
+        </Typography>
+      </div>
+      <Paper marginBottom={2} sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1em' }}>
+        <List component='nav' aria-label='secondary' sx={{ maxHeight: '45vh', overflow: 'auto' }}>
+          {newRows.map((row, index) => {
+            return (
+              <>
+                <ListItemButton
+                  sx={{ paddingBlock: 0 }}
+                  divider={newRows.length - 1 === index ? false : true}
+                  key={row}
+                  selected={selectedIndex === index}
+                  onClick={event => handleListItemClick(event, index)}>
+                  <ListItemText primary={row} />
+                </ListItemButton>
+              </>
+            );
+          })}
+        </List>
+      </Paper>
+      <Paper></Paper>
+    </div>
   );
 }
-
-export default Machines;
+export default Customers;
