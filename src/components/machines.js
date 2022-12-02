@@ -18,19 +18,19 @@ function Customers() {
   };
 
   return (
-    <div style={{ height: '50%' }}>
+    <div style={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Typography variant='h5' fontWeight={'bold'} color={'black'} pl={1} sx={{ textDecoration: 'Underline' }}>
+        <Typography variant='h4' fontWeight={'bold'} color={'black'} pl={1} sx={{ textDecoration: 'Underline' }}>
           MACHINES
         </Typography>
       </div>
-      <Paper marginBottom={2} sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1em' }}>
-        <List component='nav' aria-label='secondary' sx={{ maxHeight: '45vh', overflow: 'auto' }}>
+      <Paper marginBottom={2} sx={{ flex: '1', width: '100%', bgcolor: 'background.paper', borderRadius: '1em' }}>
+        <List component='nav' aria-label='secondary' sx={{minHeight:'340px', height: '45vh', overflow: 'auto' }}>
           {newRows.map((row, index) => {
             return (
               <>
@@ -47,7 +47,6 @@ function Customers() {
           })}
         </List>
       </Paper>
-      <Paper></Paper>
     </div>
   );
 }

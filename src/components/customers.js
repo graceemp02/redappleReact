@@ -6,8 +6,8 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { TextField, Typography } from '@mui/material';
-const rows = ['Frozen', 'Frozen', 'Ice cream sandwich', 'Eclair', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread', 'Frozen yoghurt', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread'];
-
+// const rows = ['Fro?zen', 'Frozen', 'Ice cream sandwich', 'Eclair', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread', 'Frozen yoghurt', 'Ice cream sandwich', 'Eclair', 'Cupcake', 'Gingerbread'];
+const rows = ['anees'];
 let newRows = rows.slice();
 
 function Customers() {
@@ -27,28 +27,30 @@ function Customers() {
     });
   }
   return (
-    <div style={{ height: '50%' }}>
+    <div style={{  height: '50%', display: 'flex', flexDirection: 'column' }}>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
         }}>
-        <Typography variant='h5' fontWeight={'bold'} pl={1} display={'inline'} sx={{ textDecoration: 'Underline', color: 'black' }}>
+        <Typography width={'50%'} fontSize={'auto'} variant='h4' fontWeight={'bold'} display={'inline'} sx={{ textDecoration: 'Underline', color: 'black' }}>
           CUSTOMERS
         </Typography>
         <TextField
+          width={'50%'}
           variant='filled'
           onChange={handleSearch}
           label='Search Customer'
+          size='small'
           sx={{
             bgcolor: 'white',
             p: '0 !important',
           }}
         />
       </div>
-      <Paper marginBottom={2} sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1em' }}>
-        <List component='nav' aria-label='secondary' sx={{ maxHeight: '42vh', overflow: 'auto', borderRadius: '10px' }}>
+      <Paper sx={{marginBottom:'15px', flex: 1, width: '100%', bgcolor: 'background.paper', borderRadius: '1em', display: 'flex' }}>
+        <List component='nav' aria-label='secondary' sx={{ flex: 1,  minHeight:'350px',height: '44vh', overflow: 'auto', borderRadius: '10px' }}>
           {newRows.map((row, index) => {
             return (
               <>

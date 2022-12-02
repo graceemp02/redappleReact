@@ -20,16 +20,15 @@ function DashboardPage() {
     <Grid className={classe.mainContet} container spacing={1} columns={4}>
       <Grid pl={0} item xs={4} md={2} lg={1}>
         <Item sx={{ height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',overflow:'hidden', height: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden', height: '100%' }}>
             <Customers />
             <Machines />
           </div>
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
-        <Item sx={{ height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px', overflow: 'hidden' }}>
-          {' '}
-          <CDashboard />{' '}
+        <Item sx={{ display:'flex', height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px', overflow: 'hidden' }}>
+          <CDashboard />
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
