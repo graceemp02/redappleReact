@@ -35,7 +35,7 @@ code {
   left: 0.5em;
 }
 .logologin {
-  width: 250px;
+  width: 50%;
 }
 @media screen and (max-width: 599px) {
   .logologin {
@@ -65,15 +65,7 @@ code {
   margin-block: 1em;
 
 }
-/* ::-webkit-scrollbar-track:hover{
-  background-color: rgba(255, 0, 0, 1);
-} */
 
-/* ::-webkit-scrollbar-thumb{
-  background-color: rgba(0, 0, 255, .1);
-  border-radius: 100vw;
-  border: .05em solid rgba(255, 0, 0, 1);
-} */
 ::-webkit-scrollbar-thumb{
   background-color: #2599ca;
   border-radius: 100vw;
@@ -87,4 +79,11 @@ code {
 .iconsDiv {
   display: flex; 
   flex-direction: column; 
+
+}
+
+.centerIcon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

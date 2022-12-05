@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import classe from '../index.css';
-import Customers from '../components/customers';
+import Customers from '../components/Customers.jsx';
 import Machines from '../components/machines';
 import CDashboard from '../components/CDashboard';
 
@@ -19,23 +19,62 @@ function DashboardPage() {
   return (
     <Grid className={classe.mainContet} container spacing={1} columns={4}>
       <Grid pl={0} item xs={4} md={2} lg={1}>
-        <Item sx={{ height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden', height: '100%' }}>
+        <Item
+          sx={{
+            height: { xs: 'auto', sm: '98.4vh' },
+            minWidth: '350px',
+            p: 0,
+            minHeight: { xs: 'auto', sm: '800px' },
+          }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              overflow: 'hidden',
+              height: '100%',
+            }}>
             <Customers />
             <Machines />
           </div>
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
-        <Item sx={{ display:'flex', height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px', overflow: 'hidden' }}>
+        <Item
+          sx={{
+            display: 'flex',
+            height: '98.4vh',
+            minWidth: '350px',
+            p: 0,
+            minHeight: '800px',
+            overflow: 'hidden',
+          }}>
           <CDashboard />
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
-        <Item sx={{ height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px', overflow: 'hidden' }}>Full width column</Item>
+        <Item
+          sx={{
+            height: '98.4vh',
+            minWidth: '350px',
+            p: 0,
+            minHeight: '800px',
+            overflow: 'hidden',
+          }}>
+          Full width column
+        </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
-        <Item sx={{ height: '98.4vh', minWidth: '300px', p: 0, minHeight: '800px', overflow: 'hidden' }}>Full width column</Item>
+        <Item
+          sx={{
+            height: '98.4vh',
+            minWidth: '350px',
+            p: 0,
+            minHeight: '800px',
+            overflow: 'hidden',
+          }}>
+          Sample test
+        </Item>
       </Grid>
     </Grid>
   );

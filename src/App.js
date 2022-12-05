@@ -1,85 +1,54 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MiniDrawer from "./components/MiniDrawer";
-import DashboardPage from "./pages/Dasjboard";
-import CustomersPage from "./pages/Customers";
-import InstallationPage from "./pages/Installation";
-import MachinesPage from "./pages/Machines";
-import ReportingsPage from "./pages/Reportings";
-import AdvertismentPage from "./pages/Advertisment";
-import LoginPage from "./pages/Login";
-import Box from "@mui/material/Box";
-import { UserContext } from "./UserContext";
-import { useState } from "react";
-
+/** @format */
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MiniDrawer from './components/MiniDrawer';
+import LoginPage from './pages/Login';
+import { UserContext } from './UserContext';
+import { useState } from 'react';
+import MobileDrawer from './components/MobileDrawer';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { useMediaQuery, Box } from '@mui/material';
+import { NavItems } from './components/constants';
+import Profile from './pages/Profile';
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
-
 function App() {
   const [user, setUser] = useState('');
-  
-
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <UserContext.Provider value={{ user, setUser }}>
             <Routes>
-              <Route path='/' element={<LoginPage />} />
+              {NavItems.map(item => (
+                <Route
+                  key={item.key}
+                  path={`/${item.route}`}
+                  element={
+                    user ? (
+                      <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                        {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
+                        {item.element}
+                      </Box>
+                    ) : (
+                      <LoginPage />
+                    )
+                  }
+                />
+              ))}
               <Route
-                path='/dashboard'
+                path='/profile'
                 element={
-                  <Box sx={{ p: 1, pl: 9 }}>
-                    <MiniDrawer page='0' />
-                    <DashboardPage />
-                  </Box>
-                }
-              />
-              <Route
-                path='/customers'
-                element={
-                  <Box sx={{ p: 2, pl: 9 }}>
-                    <MiniDrawer page='1' />
-                    <CustomersPage />
-                  </Box>
-                }
-              />
-              <Route
-                path='/machines'
-                element={
-                  <Box sx={{ p: 2, pl: 9 }}>
-                    <MiniDrawer page='2' />
-                    <MachinesPage />
-                  </Box>
-                }
-              />
-              <Route
-                path='/reportings'
-                element={
-                  <Box sx={{ p: 2, pl: 9 }}>
-                    <MiniDrawer page='3' />
-                    <ReportingsPage />
-                  </Box>
-                }
-              />
-              <Route
-                path='/advertisment'
-                element={
-                  <Box sx={{ p: 2, pl: 9 }}>
-                    <MiniDrawer page='4' />
-                    <AdvertismentPage />
-                  </Box>
-                }
-              />
-              <Route
-                path='/installation'
-                element={
-                  <Box sx={{ p: 2, pl: 9 }}>
-                    <MiniDrawer page='5' />
-                    <InstallationPage />
-                  </Box>
+                  user ? (
+                    <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                      {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
+                      <Profile />
+                    </Box>
+                  ) : (
+                    <LoginPage />
+                  )
                 }
               />
             </Routes>

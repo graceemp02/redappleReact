@@ -5,8 +5,9 @@ import Paper from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import {  Typography } from '@mui/material';
-const machines = [
+import { TextField, Typography } from '@mui/material';
+import { useMemo } from 'react';
+const customers = [
   'Frozen',
   'Frozen',
   'Ice cream sandwich',
@@ -22,13 +23,19 @@ const machines = [
   'Gingerbread',
 ];
 
-// const machines = ['anees'];
+// const customers = ['anees'];
 
-function Machines() {
+function Customers() {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [query, setQuery] = useState('');
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+  const filteredCustomers = useMemo(() => {
+    return customers.filter(item => {
+      return item.toLowerCase().includes(query.toLowerCase());
+    });
+  }, [query]);
 
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>
@@ -45,11 +52,25 @@ function Machines() {
           fontWeight={'bold'}
           display={'inline'}
           sx={{ textDecoration: 'Underline', color: 'black' }}>
-          MACHINES
+          CUSTOMERS
         </Typography>
+        <TextField
+          value={query}
+          autoFocus
+          width={'50%'}
+          variant='filled'
+          onChange={e => setQuery(e.target.value)}
+          label='Search Customer'
+          size='small'
+          sx={{
+            background: 'rgba(255,255,255,0) ',
+            p: '0 !important',
+          }}
+        />
       </div>
       <Paper
         sx={{
+          marginBottom: '15px',
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
@@ -63,16 +84,16 @@ function Machines() {
             flex: 1,
             minHeight: 'auto',
             height: { xs: 'auto', sm: '44vh' },
-            maxHeight: { xs: '300px', sm: '44vh' },
+            maxHeight:{xs:'300px', sm: '44vh'},
             overflow: 'auto',
             borderRadius: '10px',
           }}>
-          {machines.map((row, index) => {
+          {filteredCustomers.map((row, index) => {
             return (
               <>
                 <ListItemButton
                   sx={{ paddingBlock: 0 }}
-                  divider={machines.length - 1 === index ? false : true}
+                  divider={filteredCustomers.length - 1 === index ? false : true}
                   key={row}
                   selected={selectedIndex === index}
                   onClick={event => handleListItemClick(event, index)}>
@@ -87,4 +108,4 @@ function Machines() {
     </div>
   );
 }
-export default Machines;
+export default Customers;
