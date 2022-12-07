@@ -7,21 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { TextField, Typography } from '@mui/material';
 import { useMemo } from 'react';
-const customers = [
-  'Frozen',
-  'Frozen',
-  'Ice cream sandwich',
-  'Eclair',
-  'Ice cream sandwich',
-  'Eclair',
-  'Cupcake',
-  'Gingerbread',
-  'Frozen yoghurt',
-  'Ice cream sandwich',
-  'Eclair',
-  'Cupcake',
-  'Gingerbread',
-];
+const customers = ['Anees', 'Malik', 'abc', 'h'];
 
 // const customers = ['anees'];
 
@@ -51,7 +37,7 @@ function Customers() {
           variant='h4'
           fontWeight={'bold'}
           display={'inline'}
-          sx={{ textDecoration: 'Underline', color: 'black' }}>
+          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
           CUSTOMERS
         </Typography>
         <TextField
@@ -84,7 +70,7 @@ function Customers() {
             flex: 1,
             minHeight: 'auto',
             height: { xs: 'auto', sm: '44vh' },
-            maxHeight:{xs:'300px', sm: '44vh'},
+            maxHeight: { xs: '300px', sm: '44vh' },
             overflow: 'auto',
             borderRadius: '10px',
           }}>

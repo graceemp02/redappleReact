@@ -138,7 +138,7 @@ function LoginPage() {
                 label='Remember me'
               />
               <br />
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+              <Button onClick={navigate('/')} type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
                 Login In
               </Button>
               <Copyright sx={{ mt: 5 }} />

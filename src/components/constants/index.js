@@ -56,3 +56,39 @@ export const NavItems = [
     element: <InstallationPage />,
   },
 ];
+
+export const RelayItems = [
+  {
+    id: 1,
+    lable: 'Low Fan',
+  },
+  {
+    id: 2,
+    lable: 'High Fan',
+  },
+  {
+    id: 3,
+    lable: 'UVC',
+  },
+  {
+    id: 4,
+    lable: 'Bipole',
+  },
+  {
+    id: 5,
+    lable: 'Return Damper',
+  },
+  {
+    id: 6,
+    lable: 'Supply Damper',
+  },
+  {
+    id: 7,
+    lable: 'Air Conditioning',
+  },
+  {
+    id: 8,
+    lable: 'Heat',
+  },
+ 
+];

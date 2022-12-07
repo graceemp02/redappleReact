@@ -7,6 +7,9 @@ import classe from '../index.css';
 import Customers from '../components/Customers.jsx';
 import Machines from '../components/machines';
 import CDashboard from '../components/CDashboard';
+import Relays from '../components/Relays';
+import System from '../components/System';
+import Sensors from '../components/Sensors';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -55,13 +58,12 @@ function DashboardPage() {
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            height: '98.4vh',
             minWidth: '350px',
             p: 0,
-            minHeight: '800px',
             overflow: 'hidden',
           }}>
-          Full width column
+          <Relays />
+          <System />
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
@@ -73,7 +75,7 @@ function DashboardPage() {
             minHeight: '800px',
             overflow: 'hidden',
           }}>
-          Sample test
+          <Sensors/>
         </Item>
       </Grid>
     </Grid>

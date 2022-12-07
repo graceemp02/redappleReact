@@ -4,16 +4,16 @@ import { Button, createTheme, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import Logo from '../assests/logo.png';
-import { Opacity } from '@mui/icons-material';
 
 let theme = createTheme();
 
 function CDashboard() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const circleStyle = {
-    width: { xs: '.8em', sm: '' },
-    height: { xs: '.8em', sm: '' },
+    width: { xs: '.8em', sm: '1em' },
+    height: { xs: '.8em', sm: '1em' },
   };
+
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <Typography
@@ -21,7 +21,7 @@ function CDashboard() {
         align='left'
         pl={2}
         variant='h4'
-        sx={{ textDecoration: 'Underline', color: 'black' }}>
+        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
         Dashboard
       </Typography>
       <div
@@ -168,7 +168,7 @@ function CDashboard() {
             alignItems: 'center',
           }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img src={Logo} width='60px' />{' '}
+            <img src={Logo} alt={'Logo'} width='60px' />{' '}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography fontWeight={'bold'} color={'black'} variant={'body1'}>
@@ -178,7 +178,7 @@ function CDashboard() {
               Casa Presidencial
             </Typography>
             <Typography color={'black'} variant={'body1'}>
-              Next Inspection Date:{isMobile? <br/>: null} 11-30-2022
+              Next Inspection Date:{isMobile ? <br /> : null} 11-30-2022
             </Typography>
           </div>
           <div
@@ -188,13 +188,44 @@ function CDashboard() {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Button disabled sx={{ width: '5rem', mb:'5px', bgcolor:'#2196f3 !important', color:'#fff !important', opacity:'0.5' }} variant='contained' size='small'>
+            <Button
+              disabled
+              sx={{
+                width: '5rem',
+                mb: '5px',
+                bgcolor: '#2196f3 !important',
+                color: '#fff !important',
+                opacity: '0.5',
+              }}
+              variant='contained'
+              size='small'>
               Time
             </Button>
-            <Button disabled sx={{ width: '5rem', mb:'5px', bgcolor:'#2196f3 !important', color:'#fff !important', opacity:'0.5' }} width={100} variant='contained' size='small'>
+            <Button
+              disabled
+              sx={{
+                width: '5rem',
+                mb: '5px',
+                bgcolor: '#2196f3 !important',
+                color: '#fff !important',
+                opacity: '.5',
+              }}
+              className='disabledButton'
+              width={100}
+              variant='contained'
+              size='small'>
               Machines
             </Button>
-            <Button disabled sx={{ width: '5rem', bgcolor:'#2196f3 !important', color:'#fff !important', opacity:'0.5' }} variant='contained' size='small'>
+            <Button
+              disabled
+              sx={{
+                width: '5rem',
+                bgcolor: '#2196f3 !important',
+                color: '#fff !important',
+                opacity: '.5',
+              }}
+              variant='contained'
+              size='small'>
               Logout
             </Button>
           </div>

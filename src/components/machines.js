@@ -7,19 +7,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import {  Typography } from '@mui/material';
 const machines = [
-  'Frozen',
-  'Frozen',
-  'Ice cream sandwich',
-  'Eclair',
-  'Ice cream sandwich',
-  'Eclair',
-  'Cupcake',
-  'Gingerbread',
-  'Frozen yoghurt',
-  'Ice cream sandwich',
-  'Eclair',
-  'Cupcake',
-  'Gingerbread',
+  'Anees',
+  'Malik',
+  'abc',
+  'h',
+  
 ];
 
 // const machines = ['anees'];
@@ -44,7 +36,7 @@ function Machines() {
           variant='h4'
           fontWeight={'bold'}
           display={'inline'}
-          sx={{ textDecoration: 'Underline', color: 'black' }}>
+          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
           MACHINES
         </Typography>
       </div>
