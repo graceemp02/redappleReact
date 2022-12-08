@@ -74,6 +74,8 @@ function DashboardPage() {
             p: 0,
             minHeight: '800px',
             overflow: 'hidden',
+            display: 'flex',
+            flexDirection:'column'
           }}>
           <Sensors/>
         </Item>

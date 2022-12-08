@@ -54,9 +54,9 @@ function LoginPage() {
     let formData = new FormData();
     formData.append('username', inputs.username);
     formData.append('password', inputs.password);
-    const url = 'http://146.190.65.198/login.php';
+
     axios
-      .post(url, formData)
+      .post('login.php', formData)
       .then(result => {
         const res = result.data['res'];
         if (res === 'true') {

@@ -45,7 +45,7 @@ function Machines() {
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
-          borderRadius: '1em',
+          borderRadius: '1em 1em 0em 0em',
           display: 'flex',
         }}>
         <List

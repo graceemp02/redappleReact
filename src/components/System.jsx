@@ -28,7 +28,7 @@ function Relays() {
           flex: 3,
           width: '100%',
           bgcolor: 'background.paper',
-          borderRadius: '1em',
+          borderRadius: '1em 1em 0em 0em',
           display: 'flex',
           flexDirection: 'column',
         }}>
@@ -61,7 +61,7 @@ function Relays() {
             </Button>
           </ListItem>
         </List>
-        <div style={{ display: 'flex', flex: 5, margin: '15px', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flex: 5, margin: '13px', flexDirection: 'column' }}>
           <List
             component='nav'
             aria-label='relay controld'
@@ -69,8 +69,9 @@ function Relays() {
               border: '3px solid black',
               flex: 3,
               overflow: 'auto',
-              borderRadius: '10px',
+              borderRadius: '1em',
               paddingInline: 4,
+              marginBottom:'.4em'
             }}>
             <ListItem sx={{ paddingBlock: 0.6 }} divider>
               <ListItemText primary={'Shift Start Time'} />
@@ -104,12 +105,12 @@ function Relays() {
               borderRadius: '10px',
               paddingInline: 4,
             }}>
-            <ListItem sx={{ paddingBlock: 0.6 }} divider>
+            <ListItem sx={{ paddingBlock: 0.3 }} divider>
               <ListItemText primary={'System Violated'} />
 
               <CircleIcon htmlColor='red' sx={circleStyle} />
             </ListItem>
-            <ListItem sx={{ paddingBlock: 0.6 }} divider>
+            <ListItem sx={{ paddingBlock: 0.3 }} divider>
               <ListItemText primary={'Replace Filter'} />
               <CircleIcon sx={circleStyle} />
             </ListItem>

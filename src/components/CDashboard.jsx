@@ -28,7 +28,7 @@ function CDashboard() {
         style={{
           flex: 1,
           display: 'flex',
-          borderRadius: '10px',
+          borderRadius: '1em 1em 0em 0em',
           backgroundColor: 'white',
           overflow: 'hidden',
           flexDirection: 'column',
