@@ -5,8 +5,8 @@ git checkout main
 echo 'Adding to git....................'
 git add .
 
-echo 'commiting with message ($1)'
-git commit -m '$1'
+echo 'commiting with message '$1
+git commit -m $1
 
 echo 'git pushing to GitHub....................'
 git push
