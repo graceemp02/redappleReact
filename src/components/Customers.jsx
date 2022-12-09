@@ -1,25 +1,34 @@
 /** @format */
 
-import React, { useState } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import Paper from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { TextField, Typography } from '@mui/material';
-import { useMemo } from 'react';
-const customers = ['Anees', 'Malik', 'abc', 'h'];
-
-// const customers = ['anees'];
-
+import axios from 'axios';
+import { CustomerContext } from '../CustomerContext';
+let customers = [];
+axios
+  .get('https://redapple.graceautomation.tech/customers.php')
+  .then(result => {
+    customers = result.data;
+  })
+  .catch(error => console.log(error));
 function Customers() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { setCustomerID } = useContext(CustomerContext);
+  const [selectedIndex, setSelectedIndex] = useState(customers[0].id);
   const [query, setQuery] = useState('');
+  useEffect(() => {
+    setCustomerID(customers[0].id);
+  }, []);
   const handleListItemClick = (event, index) => {
+    setCustomerID(index);
     setSelectedIndex(index);
   };
   const filteredCustomers = useMemo(() => {
     return customers.filter(item => {
-      return item.toLowerCase().includes(query.toLowerCase());
+      return item.name.toLowerCase().includes(query.toLowerCase());
     });
   }, [query]);
 
@@ -74,23 +83,22 @@ function Customers() {
             overflow: 'auto',
             borderRadius: '10px',
           }}>
-          {filteredCustomers.map((row, index) => {
+          {filteredCustomers.map(row => {
             return (
               <>
                 <ListItemButton
                   sx={{ paddingBlock: 0 }}
-                  divider={filteredCustomers.length - 1 === index ? false : true}
-                  key={row}
-                  selected={selectedIndex === index}
-                  onClick={event => handleListItemClick(event, index)}>
-                  <ListItemText primary={row} />
+                  divider={filteredCustomers.length - 1 === row.id ? false : true}
+                  key={row.id}
+                  selected={selectedIndex === row.id}
+                  onClick={event => handleListItemClick(event, row.id)}>
+                  <ListItemText primary={row.name} />
                 </ListItemButton>
               </>
             );
           })}
         </List>
       </Paper>
-      <Paper></Paper>
     </div>
   );
 }

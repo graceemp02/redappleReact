@@ -14,42 +14,42 @@ import CustomersPage from '../../pages/Customers';
 import DashboardPage from '../../pages/Dasjboard';
 export const NavItems = [
   {
-    id: 0,
+    id: 1,
     icon: <HomeRoundedIcon />,
     lable: 'Dashboard',
     route: '/',
     element: <DashboardPage />,
   },
   {
-    id: 1,
+    id: 2,
     icon: <PeopleAltRoundedIcon />,
     lable: 'Customers',
     route: '/customers',
     element: <CustomersPage />,
   },
   {
-    id: 2,
+    id: 3,
     icon: <SettingsRoundedIcon />,
     lable: 'Machines',
     route: '/machines',
     element: <MachinesPage />,
   },
   {
-    id: 3,
+    id: 4,
     icon: <TrendingUpRoundedIcon />,
     lable: 'Reportings',
     route: '/reportings',
     element: <ReportingsPage />,
   },
   {
-    id: 4,
+    id: 5,
     icon: <AddPhotoAlternateRoundedIcon />,
     lable: 'Advertisment',
     route: '/advertisment',
     element: <AdvertismentPage />,
   },
   {
-    id: 5,
+    id: 6,
     icon: <ConstructionRoundedIcon />,
     lable: 'Installation',
     route: '/installation',
@@ -90,5 +90,4 @@ export const RelayItems = [
     id: 8,
     lable: 'Heat',
   },
- 
 ];

@@ -76,6 +76,7 @@ function Relays() {
             <ListItem sx={{ paddingBlock: 0.6 }} divider>
               <ListItemText primary={'Shift Start Time'} />
               <input
+              onChange={()=>console.log()}
                 value={9}
                 style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
               />
@@ -83,6 +84,7 @@ function Relays() {
             <ListItem sx={{ paddingBlock: 0.6 }} divider>
               <ListItemText primary={'Shift End Time'} />
               <input
+              onChange={()=>console.log()}
                 value={17}
                 style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
               />
@@ -90,6 +92,7 @@ function Relays() {
             <ListItem sx={{ paddingBlock: 0.6 }} divider>
               <ListItemText primary={'System Override Time'} />
               <input
+              onChange={()=>console.log()}
                 value={2}
                 style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
               />
