@@ -23,7 +23,7 @@ const IndoorSensors = () => {
           width: '100%',
           bgcolor: 'background.paper',
           borderRadius: '1em 1em 0em 0em',
-          p: 2,
+          p: {xs:1,sm:2},
         }}>
         <Typography
           variant='h5'

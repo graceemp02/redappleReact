@@ -16,6 +16,11 @@ const disableButton = {
   bgcolor: '#2196f3 !important',
   color: '#fff !important',
   opacity: '0.5',
+  height:'28px'
+  
+};
+const shortButton = {
+  height: '28px',
 };
 function Relays() {
   const [switchValue, setSwitchValue] = useState(false);
@@ -24,7 +29,7 @@ function Relays() {
     };
     
   return (
-    <div style={{ height: '50%', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ height: '50%', display: 'flex',flex:1 ,flexDirection: 'column' }}>
       <Typography
         align='left'
         fontSize={'auto'}
@@ -42,6 +47,7 @@ function Relays() {
           width: '100%',
           bgcolor: 'background.paper',
           borderRadius: '1em',
+          
           display: 'flex',
         }}>
         <List
@@ -50,21 +56,34 @@ function Relays() {
           sx={{
             flex: 1,
             minHeight: 'auto',
-            height: { xs: '355px', sm: '44vh' },
-
+            height: { xs: '370px', sm: '44vh' },
+            display: 'flex',
+            flexDirection:'column',
             overflow: 'auto',
             borderRadius: '10px',
-            paddingInline: 4,
+            // paddingInline: 1,
           }}>
           {RelayItems.map(relay => {
             return (
-              <ListItem sx={{ paddingBlock: { xs: 0.25, sm: 0.7 } }} divider key={relay.id}>
-                <ListItemText primary={`R${relay.id}: ${relay.lable}`} />
+              <ListItem
+                sx={{ paddingBlock: { xs: 0.15, sm: 0 }, flex: 1 }}
+                divider
+                key={relay.id}>
+                <ListItemText
+                  primary={
+                    <Typography variant='body1'>
+                      R{relay.id}: {relay.lable}
+                    </Typography>
+                  }
+                />
                 <Button
+                  height={'280px !important'}
                   disabled={switchValue && true}
                   variant='contained'
                   size='small'
-                  sx={switchValue && disableButton}>
+                  sx={switchValue ? disableButton: shortButton}
+                  
+                >
                   Start
                 </Button>
                 <CircleIcon sx={circleStyle} />
@@ -74,9 +93,10 @@ function Relays() {
           <ListItem
             sx={{
               display: 'flex',
+              flex:1,
               justifyContent: 'space-between',
-              paddingBlock: { xs: 0.25, sm: 0.78 },
-              paddingInline: 2,
+              // paddingBlock: { xs: 0.25, sm: 0.78 },
+              // paddingInline: 2,
             }}>
             <div
               style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>

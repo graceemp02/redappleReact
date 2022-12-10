@@ -19,7 +19,7 @@ const IndoorSensors = () => {
         p: 2,
       }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography>
+        <Typography variant='body1'>
           Temp
           <br />
           74.4°F
@@ -30,7 +30,7 @@ const IndoorSensors = () => {
           sx={{ textDecoration: 'Underline', color: 'black' }}>
           INDOOR SENSORS
         </Typography>
-        <Typography>
+        <Typography variant='body1'>
           Hum
           <br />
           34%

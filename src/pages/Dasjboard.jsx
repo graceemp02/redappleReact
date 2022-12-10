@@ -25,9 +25,9 @@ function DashboardPage() {
         <Item
           sx={{
             height: { xs: 'auto', sm: '98.4vh' },
-            minWidth: '350px',
+            // minWidth: '300px',
             p: 0,
-            minHeight: { xs: 'auto', sm: '800px' },
+            // minHeight: { xs: 'auto', sm: '800px' },
           }}>
           <div
             style={{
@@ -46,10 +46,10 @@ function DashboardPage() {
         <Item
           sx={{
             display: 'flex',
-            height: '98.4vh',
-            minWidth: '350px',
+            height: { xs: 'auto', sm: '98.4vh' },
+            // minWidth: '300px',
             p: 0,
-            minHeight: '800px',
+            // minHeight: '800px',
             overflow: 'hidden',
           }}>
           <CDashboard />
@@ -58,9 +58,11 @@ function DashboardPage() {
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            minWidth: '350px',
             p: 0,
             overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            height: { xs: 'auto', sm: '98.4vh' },
           }}>
           <Relays />
           <System />
@@ -69,15 +71,15 @@ function DashboardPage() {
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            height: '98.4vh',
-            minWidth: '350px',
+            height: { xs: 'auto', sm: '98.4vh' },
+            // minWidth: '300px',
             p: 0,
-            minHeight: '800px',
+            // minHeight: '800px',
             overflow: 'hidden',
             display: 'flex',
-            flexDirection:'column'
+            flexDirection: 'column',
           }}>
-          <Sensors/>
+          <Sensors />
         </Item>
       </Grid>
     </Grid>

@@ -18,7 +18,7 @@ const OutdoorSensors = () => {
         p: 2,
       }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography>
+        <Typography variant='body1'>
           Temp
           <br />
           74.4°F
@@ -29,7 +29,7 @@ const OutdoorSensors = () => {
           sx={{ textDecoration: 'Underline', color: 'black' }}>
           OUTDOOR SENSORS
         </Typography>
-        <Typography>
+        <Typography variant='body1'>
           Hum
           <br />
           34%

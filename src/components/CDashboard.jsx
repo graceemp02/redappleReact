@@ -1,13 +1,27 @@
 /** @format */
 
 import { Button, createTheme, Typography, useMediaQuery } from '@mui/material';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import Logo from '../assests/logo.png';
+import { MachineContext } from '../MachineContext';
+import axios from 'axios';
+import { useState } from 'react';
 
 let theme = createTheme();
-
 function CDashboard() {
+  const [res, setRes] = useState({});
+  const { machineID } = useContext(MachineContext);
+  useEffect(() => {
+    axios
+      .get('https://redapple.graceautomation.tech/dashboard.php', {
+        params: { api: machineID },
+      })
+      .then(result => {
+        setRes(result.data);
+      })
+      .catch(error => console.log(error));
+  }, [machineID]);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const circleStyle = {
     width: { xs: '.8em', sm: '1em' },
@@ -39,14 +53,14 @@ function CDashboard() {
         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <div>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               AQI
             </Typography>
-            <div>100%</div>{' '}
+            <div>{res.aqi}%</div>
           </div>
           <div className='centerIcon'>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               FAN
             </Typography>
             <div className='iconsDiv'>
@@ -56,7 +70,7 @@ function CDashboard() {
           </div>
           <div className='centerIcon'>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               UCV
             </Typography>
             <div className='iconsDiv'>
@@ -66,7 +80,7 @@ function CDashboard() {
           </div>
           <div className='centerIcon'>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               OSA
             </Typography>
             <div className='iconsDiv'>
@@ -76,7 +90,7 @@ function CDashboard() {
           </div>
           <div className='centerIcon'>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               C/H
             </Typography>
             <div className='iconsDiv'>
@@ -86,23 +100,23 @@ function CDashboard() {
           </div>
           <div>
             {' '}
-            <Typography variant='h6' sx={{ fontWeight: 'bold', color: 'black' }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               Temp
             </Typography>
-            <div>32°F</div>{' '}
+            <div>{ res.temp}°F</div>{' '}
           </div>
         </div>
         <div>
           <Typography
             sx={{ textShadow: '1px 10px 10px rgb(0 0 0 / 50%)', fontSize: '20rem' }}
-            lineHeight={1}
+            lineHeight={0.8}
             fontWeight='900'
             color={'#19C424'}>
-            A
+            {res.letter}
           </Typography>
         </div>
         <div>
-          <Typography color={'black'} variant={'h5'}>
+          <Typography color={'black'} variant={'h5'} lineHeight={1}>
             HEALTHY INDOOR AIR QUALITY
           </Typography>
         </div>
@@ -123,7 +137,7 @@ function CDashboard() {
                 <CircleIcon sx={circleStyle} />
               </div>
             </div>
-            <Typography>Humidity</Typography>
+            <Typography variant='body2'>Humidity</Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <CircleIcon sx={circleStyle} />
@@ -139,7 +153,7 @@ function CDashboard() {
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
-            <Typography>
+            <Typography variant='body2'>
               CO<sub>2</sub>
             </Typography>
           </div>
@@ -149,7 +163,7 @@ function CDashboard() {
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
-            <Typography>PM2.5</Typography>
+            <Typography variant='body2'>PM2.5</Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <CircleIcon sx={circleStyle} color='' />
@@ -157,7 +171,7 @@ function CDashboard() {
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
             <CircleIcon sx={circleStyle} />
-            <Typography>PM10</Typography>
+            <Typography variant='body2'>PM10</Typography>
           </div>
         </div>
         <div

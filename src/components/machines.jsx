@@ -8,28 +8,31 @@ import ListItemText from '@mui/material/ListItemText';
 import { Typography } from '@mui/material';
 import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
+import { MachineContext } from '../MachineContext';
 
 let iMachines = [];
-
 function Machines() {
   const { customerID } = useContext(CustomerContext);
-
+  const { setMachineID } = useContext(MachineContext);
   const [machines, setMachines] = useState(iMachines);
-
+  const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
     axios
-      .get('https://redapple.graceautomation.tech/machines.php', { params: { cid: customerID } })
+      .get('https://redapple.graceautomation.tech/machines.php', {
+        params: { cid: customerID },
+      })
       .then(result => {
         iMachines = result.data;
-        setMachines(iMachines);
 
+        setMachines(iMachines);
+        setSelectedIndex(iMachines[0].apiToken);
+        setMachineID(iMachines[0].apiToken);
       })
       .catch(error => console.log(error));
   }, [customerID]);
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    setMachineID(index);
   };
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>
@@ -73,10 +76,10 @@ function Machines() {
               <>
                 <ListItemButton
                   sx={{ paddingBlock: 0 }}
-                  divider={machines.length - 1 === row.id ? false : true}
+                  divider
                   key={row.id}
-                  selected={selectedIndex === row.id}
-                  onClick={event => handleListItemClick(event, row.id)}>
+                  selected={selectedIndex === row.apiToken}
+                  onClick={event => handleListItemClick(event, row.apiToken)}>
                   <ListItemText primary={row.name} />
                 </ListItemButton>
               </>
