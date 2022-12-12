@@ -96,3 +96,22 @@ code {
   min-height: 140px;
   overflow: hidden;
 }
+
+.colorA {
+  color: #19c424;
+}
+.colorB {
+  color: #ffe435;
+}
+.colorC {
+  color: #ffa100;
+}
+.colorD {
+  color: #ef8625;
+}
+.colorE {
+  color: #ff0000;
+}
+.colorF {
+  color: #ff0000;
+}

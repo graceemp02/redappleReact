@@ -46,7 +46,7 @@ function Customers() {
           variant='h4'
           fontWeight={'bold'}
           display={'inline'}
-          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
+          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5,fontSize:'auto' }}>
           CUSTOMERS
         </Typography>
         <TextField

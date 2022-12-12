@@ -13,7 +13,7 @@ import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
 
 let theme = createTheme();
-theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme, { factor: 5 });
 
 function App() {
   const [user, setUser] = useState('');
@@ -26,7 +26,7 @@ function App() {
         <BrowserRouter>
           <UserContext.Provider value={{ user, setUser }}>
             <CustomerContext.Provider value={{ customerID, setCustomerID }}>
-              <MachineContext.Provider value={{machineID, setMachineID}}>
+              <MachineContext.Provider value={{ machineID, setMachineID }}>
                 <Routes>
                   {NavItems.map(item => (
                     <Route

@@ -23,7 +23,7 @@ const IndoorSensors = () => {
           width: '100%',
           bgcolor: 'background.paper',
           borderRadius: '1em 1em 0em 0em',
-          p: {xs:1,sm:2},
+          p: { xs: 1, sm: 2 },
         }}>
         <Typography
           variant='h5'
@@ -39,7 +39,7 @@ const IndoorSensors = () => {
             marginBlock: '25px',
           }}>
           <DesktopDatePicker
-            label='Date desktop'
+            label='Select Date'
             inputFormat='DD/MM/YYYY'
             value={value}
             onChange={handleChange}

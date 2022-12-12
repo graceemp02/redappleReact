@@ -1,10 +1,25 @@
 /** @format */
-
+import { useContext, useEffect, useState } from 'react';
 import SenserContainer from './SenserContainer';
 import { Paper, Typography } from '@mui/material/';
 import SubTxt from './SubTxt';
+import { MachineContext } from '../MachineContext';
+import axios from 'axios';
 
 const IndoorSensors = () => {
+  const [res, setRes] = useState({});
+  const { machineID } = useContext(MachineContext);
+  useEffect(() => {
+    axios
+      .get('https://redapple.graceautomation.tech/indoor.php', {
+        params: { api: machineID },
+      })
+      .then(result => {
+        setRes(result.data);
+        console.log(result.data);
+      })
+      .catch(error => console.log(error));
+  }, [machineID]);
   return (
     <Paper
       sx={{
@@ -22,7 +37,7 @@ const IndoorSensors = () => {
         <Typography variant='body1'>
           Temp
           <br />
-          74.4°F
+          {res.temp}°F
         </Typography>
         <Typography
           variant='h5'
@@ -33,17 +48,17 @@ const IndoorSensors = () => {
         <Typography variant='body1'>
           Hum
           <br />
-          34%
+          {res.hum}%
         </Typography>
       </div>
       <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}>
-        <SenserContainer max={100} lable={'---'} ht={0} />
-        <SenserContainer max={100} lable={'---'} ht={0} />
-        <SenserContainer max={100} lable={'VOC'} ht={1} />
-        <SenserContainer max={1000} lable={<SubTxt lable={'CO'} sub={2} />} ht={900} />
-        <SenserContainer max={100} lable={'CO'} ht={0} />
-        <SenserContainer max={100} lable={'PM2.5'} ht={8} />
-        <SenserContainer max={100} lable={'PM10'} ht={8} />
+        <SenserContainer val={1} lable={'---'} ht={1} />
+        <SenserContainer val={1} lable={'---'} ht={1} />
+        <SenserContainer val={res.vocVl} lable={'VOC'} ht={res.vocHt} />
+        <SenserContainer val={res.co2Vl} lable={<SubTxt lable={'CO'} sub={2} />} ht={res.co2Ht} />
+        <SenserContainer val={res.coVl} lable={'CO'} ht={res.coHt} />
+        <SenserContainer val={res.pm25Vl} lable={'PM2.5'} ht={res.pm25Ht} />
+        <SenserContainer val={res.pm10Vl} lable={'PM10'} ht={res.pm10Ht} />
       </div>
     </Paper>
   );
