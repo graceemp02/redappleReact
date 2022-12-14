@@ -46,11 +46,10 @@ function DashboardPage() {
         <Item
           sx={{
             display: 'flex',
-            height: { xs: 'auto', sm: '98.4vh' },
-            // minWidth: '300px',
+            height: { xs: 'auto', sm: '97vh' },
             p: 0,
-            // minHeight: '800px',
             overflow: 'hidden',
+            fontSize: '2vh',
           }}>
           <CDashboard />
         </Item>

@@ -25,8 +25,8 @@ function CDashboard() {
   }, [machineID]);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const circleStyle = {
-    width: { xs: '.75em', sm: '.9em' },
-    height: { xs: '.75em', sm: '.9em' },
+    width: '1.3em',
+    height: '1.3em',
   };
 
   return (
@@ -36,7 +36,7 @@ function CDashboard() {
         align='left'
         pl={2}
         variant='h4'
-        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
+        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, fontSize: '3.3vh!important' }}>
         Dashboard
       </Typography>
       <div
@@ -108,15 +108,15 @@ function CDashboard() {
         </div>
         <div>
           <Typography
-            sx={{ textShadow: '1px 10px 10px rgb(0 0 0 / 50%)', fontSize: '20rem' }}
-            lineHeight={0.8}
+            sx={{ textShadow: '1px 10px 10px rgb(0 0 0 / 50%)', fontSize: '40vh' }}
+            lineHeight={'1em'}
             fontWeight='900'
             className={`color${res.letter}`}>
             {res.letter}
           </Typography>
         </div>
         <div>
-          <Typography color={'black'} variant={'h5'} lineHeight={1}>
+          <Typography color={'black'} variant={'h5'} lineHeight={1} sx={{ fontSize: '2.8vh' }}>
             HEALTHY INDOOR AIR QUALITY
           </Typography>
         </div>

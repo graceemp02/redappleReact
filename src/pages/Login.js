@@ -2,7 +2,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.png';
-// import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
+import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
 import { useState, useContext } from 'react';
 import { UserContext } from '../UserContext';
 import axios from 'axios';
@@ -23,7 +23,7 @@ function Copyright(props) {
   return (
     <Typography variant='body2' color='text.secondary' align='center' {...props}>
       {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
+      <Link color='inherit'>
         Iamredapple.com
       </Link>{' '}
       {new Date().getFullYear()}
@@ -58,7 +58,7 @@ function LoginPage() {
     axios
       .post('login.php', formData)
       .then(result => {
-        const res = result.data['res'];
+        const res = result.data['res']; 
         if (res === 'true') {
           setUser(result.data['name']);
           navigate('/');
@@ -79,10 +79,10 @@ function LoginPage() {
           item
           xs={false}
           sm={4}
-          md={7}
+          md={8}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            // backgroundImage: `url(${RedApple_Admin_Login})`,
+            // backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${RedApple_Admin_Login})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundColor: t =>
@@ -90,7 +90,7 @@ function LoginPage() {
             backgroundSize: 'cover',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,

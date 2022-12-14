@@ -42,25 +42,25 @@ function Customers() {
         }}>
         <Typography
           width={'50%'}
-          fontSize={'auto'}
           variant='h4'
           fontWeight={'bold'}
           display={'inline'}
-          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5,fontSize:'auto' }}>
+          sx={{
+            textDecoration: 'Underline',
+            color: 'black',
+            mb: 0.5,
+            fontSize: '3.3vh!important',
+          }}>
           CUSTOMERS
         </Typography>
         <TextField
           value={query}
           autoFocus
-          width={'50%'}
+          width={'40% !important'}
           variant='filled'
           onChange={e => setQuery(e.target.value)}
           label='Search Customer'
           size='small'
-          sx={{
-            background: 'rgba(255,255,255,0) ',
-            p: '0 !important',
-          }}
         />
       </div>
       <Paper
@@ -78,21 +78,22 @@ function Customers() {
           sx={{
             flex: 1,
             minHeight: 'auto',
-            height: { xs: 'auto', sm: '44vh' },
-            maxHeight: { xs: '300px', sm: '44vh' },
+            height: { xs: 'auto', sm: '47vh' },
+            maxHeight: { xs: '300px', sm: '47vh' },
             overflow: 'auto',
-            borderRadius: '10px',
+            borderRadius: '1vh',
           }}>
           {filteredCustomers.map(row => {
             return (
               <>
                 <ListItemButton
-                  sx={{ paddingBlock: 0 }}
+                  // sx={{ padding: '0.3rem !important' }}
+                  sx={{ padding: '0.3rem 0.6rem' }}
                   divider={filteredCustomers.length - 1 === row.id ? false : true}
                   key={row.id}
                   selected={selectedIndex === row.id}
                   onClick={event => handleListItemClick(event, row.id)}>
-                  <ListItemText primary={row.name} />
+                  <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
                 </ListItemButton>
               </>
             );

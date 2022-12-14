@@ -1,106 +1,138 @@
 /** @format */
+import { styled } from '@mui/material/styles';
 
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import {TextField, Typography } from "@mui/material";
+import {
+  Button,
+  // createTheme,
+  Divider,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+  // useMediaQuery,
+} from '@mui/material';
+import React from 'react';
+import { Box } from '@mui/system';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+// let theme = createTheme();
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  "&:last-child td, &:last-child th": {
+  '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 const rows = [
-  createData(1, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(2, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(3, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(4, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(5, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(6, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(7, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(8, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-  createData(9, 'Casa Presidencial', 'anees@gmail.com', 124, 'action'),
-
+  {
+    sr: 1,
+    name: 'anees',
+    email: 'anees@anees.com',
+    phone: '03036889723',
+  },
+  {
+    sr: 2,
+    name: 'anees',
+    email: 'anees@anees.com',
+    phone: '03036889723',
+  },
+  {
+    sr: 3,
+    name: 'anees',
+    email: 'anees@anees.com',
+    phone: '03036889723',
+  },
+  {
+    sr: 4,
+    name: 'anees',
+    email: 'anees@anees.com',
+    phone: '03036889723',
+  },
 ];
-
-export default function CustomizedTables() {
-    return (
-      <Paper>
-        <div className='center'>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}>
-            <Typography
-              variant='h6'
-              pl={1}
-              display={"inline"}
-              sx={{ textDecoration: "Underline", color: "black" }}>
-              CUSTOMERS
-            </Typography>
-            <TextField
-              variant='filled'
-              label='Search Customer'
-              sx={{
-                bgcolor: "white",
-                p: "0 !important",
-              }}
-            />
-          </div>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label='customized table'>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Ser</StyledTableCell>
-                  <StyledTableCell>Full Name</StyledTableCell>
-                  <StyledTableCell>email</StyledTableCell>
-                  <StyledTableCell>Cell No</StyledTableCell>
-                  <StyledTableCell>Actions</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component='th' scope='row'>
-                      {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.calories}</StyledTableCell>
-                    <StyledTableCell>{row.fat}</StyledTableCell>
-                    <StyledTableCell>{row.carbs}</StyledTableCell>
-                    <StyledTableCell>{row.protein}</StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+const headStyle = {
+  color: 'black',
+  fontWeight: 'bold',
+};
+const Customers = () => {
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  return (
+    <div className='centerTable'>
+      <Paper sx={{ p: 3, width: '95%', overflow: 'auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+          <Typography
+            variant='h5'
+            pl={1}
+            display={'inline'}
+            sx={{ textDecoration: 'Underline', fontWeight: 'bold', color: 'black' }}>
+            CUSTOMERS
+          </Typography>
+          <TextField
+            variant='outlined'
+            label='Search Customer'
+            sx={{
+              bgcolor: 'white',
+              p: '0 !important',
+            }}
+          />
+          <Button variant='contained' color='success' sx={{ width: 200 }}>
+            Create New
+          </Button>
         </div>
+        <Table>
+          <TableHead>
+            <TableRow sx={headStyle}>
+              <TableCell>Ser</TableCell>
+              <TableCell>Full Name</TableCell>
+              <TableCell>email</TableCell>
+              <TableCell>Cell No</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <StyledTableRow key={row.sr}>
+                <TableCell>{row.sr}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.phone}</TableCell>
+                <TableCell>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      justifyContent: 'flex-start',
+                    }}>
+                    <Button variant='contained' color='success' sx={{ marginInline: 0.5 }}>
+                      Show{'            '}
+                    </Button>
+                    <Button variant='contained' sx={{ marginInline: 0.5 }}>
+                      Edit
+                    </Button>
+                    <Divider orientation='vertical' flexItem />
+                    <Button variant='contained' color='error' sx={{ marginInline: 0.5 }}>
+                      Delete
+                    </Button>
+                  </Box>
+                </TableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Paper>
-    );
-}
+    </div>
+  );
+};
+
+export default Customers;

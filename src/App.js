@@ -5,6 +5,7 @@ import LoginPage from './pages/Login';
 import { UserContext } from './UserContext';
 import { CustomerContext } from './CustomerContext';
 import { MachineContext } from './MachineContext';
+import { ReloadContext } from './ReloadContext';
 import { useState } from 'react';
 import MobileDrawer from './components/MobileDrawer';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
@@ -12,21 +13,23 @@ import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
 
-let theme = createTheme();
-theme = responsiveFontSizes(theme, { factor: 5 });
+let theme = createTheme({ typography: { fontSize: 'inherit' } });
+// theme = responsiveFontSizes(theme, { factor: 4 });
 
 function App() {
   const [user, setUser] = useState('');
   const [customerID, setCustomerID] = useState('');
   const [machineID, setMachineID] = useState('');
+  const [reload, setReload] = useState(() => 0);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <UserContext.Provider value={{ user, setUser }}>
-            <CustomerContext.Provider value={{ customerID, setCustomerID }}>
-              <MachineContext.Provider value={{ machineID, setMachineID }}>
+      <BrowserRouter>
+        <UserContext.Provider value={{ user, setUser }}>
+          <CustomerContext.Provider value={{ customerID, setCustomerID }}>
+            <MachineContext.Provider value={{ machineID, setMachineID }}>
+              <ReloadContext.Provider value={{ reload, setReload }}>
                 <Routes>
                   {NavItems.map(item => (
                     <Route
@@ -45,6 +48,7 @@ function App() {
                     />
                   ))}
                   <Route
+                    key={10}
                     path='/profile'
                     element={
                       user ? (
@@ -58,10 +62,11 @@ function App() {
                     }
                   />
                 </Routes>
-              </MachineContext.Provider>
-            </CustomerContext.Provider>
-          </UserContext.Provider>
-        </BrowserRouter>
+              </ReloadContext.Provider>
+            </MachineContext.Provider>
+          </CustomerContext.Provider>
+        </UserContext.Provider>
+      </BrowserRouter>
       </ThemeProvider>
     </div>
   );
