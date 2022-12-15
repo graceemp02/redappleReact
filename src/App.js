@@ -8,7 +8,7 @@ import { MachineContext } from './MachineContext';
 import { ReloadContext } from './ReloadContext';
 import { useState } from 'react';
 import MobileDrawer from './components/MobileDrawer';
-import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
@@ -25,48 +25,48 @@ function App() {
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <UserContext.Provider value={{ user, setUser }}>
-          <CustomerContext.Provider value={{ customerID, setCustomerID }}>
-            <MachineContext.Provider value={{ machineID, setMachineID }}>
-              <ReloadContext.Provider value={{ reload, setReload }}>
-                <Routes>
-                  {NavItems.map(item => (
+        <BrowserRouter>
+          <UserContext.Provider value={{ user, setUser }}>
+            <CustomerContext.Provider value={{ customerID, setCustomerID }}>
+              <MachineContext.Provider value={{ machineID, setMachineID }}>
+                <ReloadContext.Provider value={{ reload, setReload }}>
+                  <Routes>
+                    {NavItems.map(item => (
+                      <Route
+                        key={item.key}
+                        path={`/${item.route}`}
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
+                              {item.element}
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                    ))}
                     <Route
-                      key={item.key}
-                      path={`/${item.route}`}
+                      key={10}
+                      path='/profile'
                       element={
                         user ? (
                           <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
-                            {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
-                            {item.element}
+                            {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
+                            <Profile />
                           </Box>
                         ) : (
                           <LoginPage />
                         )
                       }
                     />
-                  ))}
-                  <Route
-                    key={10}
-                    path='/profile'
-                    element={
-                      user ? (
-                        <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
-                          {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
-                          <Profile />
-                        </Box>
-                      ) : (
-                        <LoginPage />
-                      )
-                    }
-                  />
-                </Routes>
-              </ReloadContext.Provider>
-            </MachineContext.Provider>
-          </CustomerContext.Provider>
-        </UserContext.Provider>
-      </BrowserRouter>
+                  </Routes>
+                </ReloadContext.Provider>
+              </MachineContext.Provider>
+            </CustomerContext.Provider>
+          </UserContext.Provider>
+        </BrowserRouter>
       </ThemeProvider>
     </div>
   );

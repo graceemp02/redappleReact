@@ -10,6 +10,7 @@ import CDashboard from '../components/CDashboard';
 import Relays from '../components/Relays';
 import System from '../components/System';
 import Sensors from '../components/Sensors';
+import TestSystem from '../components/TestSystem';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -24,29 +25,23 @@ function DashboardPage() {
       <Grid pl={0} item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            height: { xs: 'auto', sm: '98.4vh' },
-            // minWidth: '300px',
-            p: 0,
-            // minHeight: { xs: 'auto', sm: '800px' },
+            height: { xs: 'auto', sm: '97.51vh' },
+            display: 'flex',
+            flexDirection: 'column',
+            // justifyContent: 'space-between',
+            overflow: 'auto',
+            padding: 0,
+            borderRadius: '1vh',
           }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              overflow: 'hidden',
-              height: '100%',
-            }}>
-            <Customers />
-            <Machines />
-          </div>
+          <Customers />
+          <Machines />
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
             display: 'flex',
-            height: { xs: 'auto', sm: '97vh' },
+            height: { xs: 'auto', sm: '97.51vh' },
             p: 0,
             overflow: 'hidden',
             fontSize: '2vh',
@@ -58,19 +53,20 @@ function DashboardPage() {
         <Item
           sx={{
             p: 0,
-            overflow: 'hidden',
+            overflow: 'suto',
             display: 'flex',
             flexDirection: 'column',
-            height: { xs: 'auto', sm: '98.4vh' },
+            height: { xs: 'auto', sm: '97.51vh' },
           }}>
           <Relays />
-          <System />
+          {/* <System /> */}
+          <TestSystem />
         </Item>
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            height: { xs: 'auto', sm: '98.4vh' },
+            height: { xs: 'auto', sm: '97.51vh' },
             // minWidth: '300px',
             p: 0,
             // minHeight: '800px',

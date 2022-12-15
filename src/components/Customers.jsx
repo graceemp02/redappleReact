@@ -39,16 +39,17 @@ function Customers() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
+          position: 'relative',
         }}>
         <Typography
           width={'50%'}
-          variant='h4'
           fontWeight={'bold'}
           display={'inline'}
           sx={{
             textDecoration: 'Underline',
             color: 'black',
             mb: 0.5,
+            ml: 0.2,
             fontSize: '3.3vh!important',
           }}>
           CUSTOMERS
@@ -56,11 +57,19 @@ function Customers() {
         <TextField
           value={query}
           autoFocus
-          width={'40% !important'}
           variant='filled'
           onChange={e => setQuery(e.target.value)}
           label='Search Customer'
           size='small'
+          sx={{
+            maxHeight: '3.3vh',
+            width: '45%',
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            fontSize: '2vh',
+            marginTop: '-15px',
+          }}
         />
       </div>
       <Paper
@@ -69,17 +78,18 @@ function Customers() {
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
-          borderRadius: '1em',
+          borderRadius: '1vh',
           display: 'flex',
+          padding:0
         }}>
         <List
           component='nav'
-          aria-label='secondary'
+          aria-label='customers'
           sx={{
             flex: 1,
             minHeight: 'auto',
-            height: { xs: 'auto', sm: '47vh' },
-            maxHeight: { xs: '300px', sm: '47vh' },
+            // height: { xs: 'auto', sm: '42vh' },
+            maxHeight: { xs: '300px', sm: '42vh' },
             overflow: 'auto',
             borderRadius: '1vh',
           }}>
@@ -87,8 +97,7 @@ function Customers() {
             return (
               <>
                 <ListItemButton
-                  // sx={{ padding: '0.3rem !important' }}
-                  sx={{ padding: '0.3rem 0.6rem' }}
+                  sx={{ padding: '0.3rem 1rem' }}
                   divider={filteredCustomers.length - 1 === row.id ? false : true}
                   key={row.id}
                   selected={selectedIndex === row.id}

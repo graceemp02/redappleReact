@@ -39,28 +39,21 @@ function Machines() {
   };
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-        }}>
-        <Typography
-          // width={'50%'}
-          fontSize={'3.3vh'}
-          variant='h4'
-          fontWeight={'bold'}
-          display={'inline'}
-          sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, ml: 0.5 }}>
-          MACHINES
-        </Typography>
-      </div>
+      <Typography
+        fontSize={'3.3vh'}
+        variant='h4'
+        fontWeight={'bold'}
+        display={'inline'}
+        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, ml: 0.5 ,textAlign:'left'}}>
+        MACHINES
+      </Typography>
+
       <Paper
         sx={{
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
-          borderRadius: '1em 1em 0em 0em',
+          borderRadius: '1vh',
           display: 'flex',
         }}>
         <List
@@ -69,8 +62,8 @@ function Machines() {
           sx={{
             flex: 1,
             minHeight: 'auto',
-            height: { xs: 'auto', sm: '44vh' },
-            maxHeight: { xs: '300px', sm: '44vh' },
+            // height: { xs: 'auto', sm: '43vh' },
+            maxHeight: { xs: '300px', sm: '43vh' },
             overflow: 'auto',
             borderRadius: '1vh',
           }}>
@@ -78,7 +71,7 @@ function Machines() {
             return (
               <>
                 <ListItemButton
-                  sx={{ padding: '0.3rem' }}
+                  sx={{ padding: '0.3rem 1rem' }}
                   divider
                   key={row.id}
                   selected={selectedIndex === row.apiToken}
@@ -88,7 +81,6 @@ function Machines() {
               </>
             );
           })}
-          <ListItemButton></ListItemButton>
         </List>
       </Paper>
       <Paper></Paper>

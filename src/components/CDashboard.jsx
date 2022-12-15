@@ -25,8 +25,8 @@ function CDashboard() {
   }, [machineID]);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const circleStyle = {
-    width: '1.3em',
-    height: '1.3em',
+    width: '2.7vh',
+    height: '2.7vh',
   };
 
   return (
@@ -116,7 +116,11 @@ function CDashboard() {
           </Typography>
         </div>
         <div>
-          <Typography color={'black'} variant={'h5'} lineHeight={1} sx={{ fontSize: '2.8vh' }}>
+          <Typography
+            color={'black'}
+            variant={'h5'}
+            lineHeight={1}
+            sx={{ fontSize: '2.8vh', mb: '10px' }}>
             HEALTHY INDOOR AIR QUALITY
           </Typography>
         </div>
@@ -124,45 +128,45 @@ function CDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <CircleIcon sx={circleStyle} className={res.humInd1 ? res.humInd1 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humInd2 ? res.humInd2 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humInd3 ? res.humInd3 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humInd4 ? res.humInd4 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humInd5 ? res.humInd5 : ''} />
+                <CircleIcon sx={circleStyle} className={res.humInd1 ? res.humInd1 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humInd2 ? res.humInd2 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humInd3 ? res.humInd3 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humInd4 ? res.humInd4 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humInd5 ? res.humInd5 : 'gray'} />
               </div>
               <Box sx={{ display: { display }, flexDirection: 'column' }}>
-                <CircleIcon sx={circleStyle} className={res.humHdnInd1 ? res.humHdnInd1 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humHdnInd2 ? res.humHdnInd2 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humHdnInd3 ? res.humHdnInd3 : ''} />
-                <CircleIcon sx={circleStyle} className={res.humHdnInd4 ? res.humHdnInd4 : ''} />
+                <CircleIcon sx={circleStyle} className={res.humHdnInd1 ? res.humHdnInd1 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humHdnInd2 ? res.humHdnInd2 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humHdnInd3 ? res.humHdnInd3 : 'gray'} />
+                <CircleIcon sx={circleStyle} className={res.humHdnInd4 ? res.humHdnInd4 : 'gray'} />
               </Box>
             </div>
             <Typography variant='body2'>Humidity</Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <CircleIcon sx={circleStyle} className={res.voc1 ? res.voc1 : ''} />
-            <CircleIcon sx={circleStyle} className={res.voc2 ? res.voc2 : ''} />
-            <CircleIcon sx={circleStyle} className={res.voc3 ? res.voc3 : ''} />
-            <CircleIcon sx={circleStyle} className={res.voc4 ? res.voc4 : ''} />
-            <CircleIcon sx={circleStyle} className={res.voc5 ? res.voc5 : ''} />
+            <CircleIcon sx={circleStyle} className={res.voc1 ? res.voc1 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.voc2 ? res.voc2 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.voc3 ? res.voc3 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.voc4 ? res.voc4 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.voc5 ? res.voc5 : 'gray'} />
             <Typography variant='body2'>VOC</Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <CircleIcon sx={circleStyle} className={res.co2_1 ? res.co2_1 : ''} />
-            <CircleIcon sx={circleStyle} className={res.co2_2 ? res.co2_2 : ''} />
-            <CircleIcon sx={circleStyle} className={res.co2_3 ? res.co2_3 : ''} />
-            <CircleIcon sx={circleStyle} className={res.co2_4 ? res.co2_4 : ''} />
-            <CircleIcon sx={circleStyle} className={res.co2_5 ? res.co2_5 : ''} />
+            <CircleIcon sx={circleStyle} className={res.co2_1 ? res.co2_1 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.co2_2 ? res.co2_2 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.co2_3 ? res.co2_3 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.co2_4 ? res.co2_4 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.co2_5 ? res.co2_5 : 'gray'} />
             <Typography variant='body2'>
               CO<sub>2</sub>
             </Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <CircleIcon sx={circleStyle} className={res.pm25_1 ? res.pm25_1 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm25_2 ? res.pm25_2 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm25_3 ? res.pm25_3 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm25_4 ? res.pm25_4 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm25_5 ? res.pm25_5 : ''} />
+            <CircleIcon sx={circleStyle} className={res.pm25_1 ? res.pm25_1 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm25_2 ? res.pm25_2 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm25_3 ? res.pm25_3 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm25_4 ? res.pm25_4 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm25_5 ? res.pm25_5 : 'gray'} />
             <Typography variant='body2'>PM2.5</Typography>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -171,10 +175,10 @@ function CDashboard() {
               className={res.pm10_1 ? res.pm10_1 : ''}
               htmlColor={res.pm10_1}
             />
-            <CircleIcon sx={circleStyle} className={res.pm10_2 ? res.pm10_2 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm10_3 ? res.pm10_3 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm10_4 ? res.pm10_4 : ''} />
-            <CircleIcon sx={circleStyle} className={res.pm10_5 ? res.pm10_5 : ''} />
+            <CircleIcon sx={circleStyle} className={res.pm10_2 ? res.pm10_2 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm10_3 ? res.pm10_3 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm10_4 ? res.pm10_4 : 'gray'} />
+            <CircleIcon sx={circleStyle} className={res.pm10_5 ? res.pm10_5 : 'gray'} />
             <Typography variant='body2'>PM10</Typography>
           </div>
         </div>
@@ -189,14 +193,19 @@ function CDashboard() {
             <img src={Logo} alt={'Logo'} width='60px' />{' '}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography fontWeight={'bold'} color={'black'} variant={'body1'}>
+            <Typography fontWeight={'bold'} color={'black'} fontSize='1.3em' variant={'body1'}>
               {res.machine}
             </Typography>
-            <Typography fontWeight={'bold'} color={'black'} variant={'body1'}>
+            <Typography
+              fontWeight={'bold'}
+              color={'black'}
+              fontSize='1.3em'
+              mt={0.5}
+              variant={'body1'}>
               {res.customer}
             </Typography>
-            <Typography color={'black'} variant={'body1'}>
-              Next Inspection Date:{isMobile ? <br /> : null} {res.date}
+            <Typography color={'black'} variant={'body1'} fontSize='.84em' mt={0.5}>
+              Next Inspection Date: {res.date}
             </Typography>
           </div>
           <div
@@ -204,16 +213,20 @@ function CDashboard() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
+              height: '100%',
             }}>
             <Button
               disabled
               sx={{
-                width: '5rem',
+                width: '6em',
+                height: '3vh',
                 mb: '5px',
                 bgcolor: '#2196f3 !important',
                 color: '#fff !important',
                 opacity: '0.5',
+                fontSize: '1.5vh',
+                textTransform: 'capitalize',
               }}
               variant='contained'
               size='small'>
@@ -222,11 +235,14 @@ function CDashboard() {
             <Button
               disabled
               sx={{
-                width: '5rem',
+                width: '6em',
+                height: '3vh',
                 mb: '5px',
                 bgcolor: '#2196f3 !important',
                 color: '#fff !important',
                 opacity: '.5',
+                fontSize: '1.5vh',
+                textTransform: 'capitalize',
               }}
               className='disabledButton'
               width={100}
@@ -237,10 +253,13 @@ function CDashboard() {
             <Button
               disabled
               sx={{
-                width: '5rem',
+                width: '6em',
+                height: '3vh',
                 bgcolor: '#2196f3 !important',
                 color: '#fff !important',
                 opacity: '.5',
+                fontSize: '1.5vh',
+                textTransform: 'capitalize',
               }}
               variant='contained'
               size='small'>

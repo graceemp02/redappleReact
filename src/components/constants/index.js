@@ -1,56 +1,57 @@
 /** @format */
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
-import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import MachinesPage from '../../pages/Machines';
 import InstallationPage from '../../pages/Installation';
 import AdvertismentPage from '../../pages/Advertisment';
 import ReportingsPage from '../../pages/Reportings';
 import CustomersPage from '../../pages/Customers';
 import DashboardPage from '../../pages/Dasjboard';
+const iconStyle = { width: '1.5em', height: '1.5em' };
 export const NavItems = [
   {
     id: 1,
-    icon: <HomeRoundedIcon />,
+    icon: <HomeOutlinedIcon sx={iconStyle} />,
     lable: 'Dashboard',
     route: '/',
     element: <DashboardPage />,
   },
   {
     id: 2,
-    icon: <PeopleAltRoundedIcon />,
+    icon: <PeopleAltOutlinedIcon sx={iconStyle} />,
     lable: 'Customers',
     route: '/customers',
     element: <CustomersPage />,
   },
   {
     id: 3,
-    icon: <SettingsRoundedIcon />,
+    icon: <SettingsOutlinedIcon sx={iconStyle} />,
     lable: 'Machines',
     route: '/machines',
     element: <MachinesPage />,
   },
   {
     id: 4,
-    icon: <TrendingUpRoundedIcon />,
+    icon: <TrendingUpOutlinedIcon sx={iconStyle} />,
     lable: 'Reportings',
     route: '/reportings',
     element: <ReportingsPage />,
   },
   {
     id: 5,
-    icon: <AddPhotoAlternateRoundedIcon />,
+    icon: <AddPhotoAlternateOutlinedIcon sx={iconStyle} />,
     lable: 'Advertisment',
     route: '/advertisment',
     element: <AdvertismentPage />,
   },
   {
     id: 6,
-    icon: <ConstructionRoundedIcon />,
+    icon: <ConstructionOutlinedIcon sx={iconStyle} />,
     lable: 'Installation',
     route: '/installation',
     element: <InstallationPage />,

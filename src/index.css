@@ -86,7 +86,7 @@ code {
 .disabledButton {
   background-color: '#2196f3 !important';
   color: '#fff !important';
-  opacity: '0.5';
+  opacity: '0.6';
 }
 .sensorContainer {
   border: 3px solid black;
@@ -116,7 +116,9 @@ code {
 .colorF {
   color: #ff0000;
 }
-
+.gray {
+  color: gray;
+}
 .centerTable {
   display: flex;
   width: 100%;
@@ -124,4 +126,9 @@ code {
   justify-content: center;
   align-items: flex-start;
   padding: 55px 0;
+}
+
+.indicator{
+  width: 2.7vh;
+  height: 2.7vh;
 }
