@@ -2,4 +2,4 @@
 
 import { createContext } from 'react';
 
-export const ReloadContext = createContext(null);
+export const DateContext = createContext(null);

@@ -60,15 +60,11 @@ function Customers() {
           variant='filled'
           onChange={e => setQuery(e.target.value)}
           label='Search Customer'
-          size='small'
+          className='cSearch'
           sx={{
-            maxHeight: '3.3vh',
+            height: '100% !important',
             width: '45%',
-            position: 'absolute',
-            right: 0,
-            top: 0,
             fontSize: '2vh',
-            marginTop: '-15px',
           }}
         />
       </div>
@@ -80,7 +76,7 @@ function Customers() {
           bgcolor: 'background.paper',
           borderRadius: '1vh',
           display: 'flex',
-          padding:0
+          padding: 0,
         }}>
         <List
           component='nav'
@@ -88,7 +84,6 @@ function Customers() {
           sx={{
             flex: 1,
             minHeight: 'auto',
-            // height: { xs: 'auto', sm: '42vh' },
             maxHeight: { xs: '300px', sm: '42vh' },
             overflow: 'auto',
             borderRadius: '1vh',

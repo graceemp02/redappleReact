@@ -1,17 +1,18 @@
 /** @format */
 
-import { Box, Button, createTheme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import Logo from '../assests/logo.png';
 import { MachineContext } from '../MachineContext';
+import { DateContext } from '../DateContext';
 import axios from 'axios';
 
-let theme = createTheme();
 function CDashboard() {
   const [res, setRes] = useState({});
   const [display, setDisplay] = useState('flex');
   const { machineID } = useContext(MachineContext);
+  const { date, setDate } = useContext(DateContext);
   useEffect(() => {
     axios
       .get('https://redapple.graceautomation.tech/dashboard.php', {
@@ -19,11 +20,11 @@ function CDashboard() {
       })
       .then(result => {
         setRes(result.data);
+        setDate(result.data.date);
         setDisplay(result.data.humHdnStatus ? 'flex' : 'none');
       })
       .catch(error => console.log(error));
   }, [machineID]);
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const circleStyle = {
     width: '2.7vh',
     height: '2.7vh',
@@ -205,7 +206,7 @@ function CDashboard() {
               {res.customer}
             </Typography>
             <Typography color={'black'} variant={'body1'} fontSize='.84em' mt={0.5}>
-              Next Inspection Date: {res.date}
+              Next Inspection Date: {date}
             </Typography>
           </div>
           <div

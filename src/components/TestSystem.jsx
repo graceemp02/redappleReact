@@ -4,6 +4,7 @@ import List from '@mui/material/List';
 import CircleIcon from '@mui/icons-material/Circle';
 import ListItemText from '@mui/material/ListItemText';
 import { Button, Divider, ListItem, Typography } from '@mui/material';
+import SubTxt from './SubTxt';
 const circleStyle = {
   width: '2.7vh',
   height: '2.7vh',
@@ -23,14 +24,19 @@ const shortButton = {
 
 function TestSystem() {
   return (
-    <div style={{ height: '50%', flex: 1, display: 'flex', flexDirection: 'column' }}>
+    <div style={{ flex: 5, display: 'flex', flexDirection: 'column' }}>
       <Typography
         align='left'
         fontSize={'auto'}
         variant='h4'
         pl={2}
         fontWeight={'bold'}
-        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, fontSize: '3.3vh!important' }}>
+        sx={{
+          textDecoration: 'Underline',
+          color: 'black',
+          mb: '.1vh',
+          fontSize: '3.3vh!important',
+        }}>
         Test SYSTEM OVERRIDE
       </Typography>
 
@@ -41,14 +47,13 @@ function TestSystem() {
           bgcolor: 'background.paper',
           borderRadius: '1vh',
           display: 'flex',
-          flexDirection: 'column',
         }}>
         <List
           component='nav'
           aria-label='relay controld'
           sx={{
             flex: 1,
-            height: { xs: '470px', sm: '42vh' },
+            height: { xs: '450px', sm: '47.8vh' },
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
@@ -78,10 +83,11 @@ function TestSystem() {
 
           <div
             style={{
+              flex: 3,
               display: 'flex',
               margin: '0px 5px ',
               flexDirection: 'column',
-              border: '3px solid black',
+              border: '2px solid black',
               borderRadius: '1vh',
               marginBottom: '1px',
             }}>
@@ -118,18 +124,16 @@ function TestSystem() {
           </div>
           <div
             style={{
+              flex: 4,
               display: 'flex',
               margin: '0px 5px ',
               flexDirection: 'column',
-              border: '3px solid black',
+              border: '2px solid black',
               borderRadius: '1vh',
               marginBottom: '1px',
             }}>
             <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText
-                sx={{ m: 0, fontSize: '2vh !important' }}
-                primary={'TVOC'}
-              />
+              <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'TVOC'} />
               <input
                 onChange={() => console.log()}
                 value={40}
@@ -145,10 +149,7 @@ function TestSystem() {
               />
             </ListItem>
             <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText
-                sx={{ m: 0, fontSize: '2vh !important' }}
-                primary={'PM10'}
-              />
+              <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'PM10'} />
               <input
                 onChange={() => console.log()}
                 value={15}
@@ -158,7 +159,7 @@ function TestSystem() {
             <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
               <ListItemText
                 sx={{ m: 0, fontSize: '2vh !important' }}
-                primary={'CO2'}
+                primary={<SubTxt lable={'CO'} sub={2} />}
               />
               <input
                 onChange={() => console.log()}
@@ -169,14 +170,15 @@ function TestSystem() {
           </div>
           <div
             style={{
+              flex: 1,
               display: 'flex',
               margin: '0px 5px ',
               flexDirection: 'column',
-              border: '3px solid black',
+              border: '2px solid black',
               borderRadius: '1vh',
+              marginBottom: '5px',
             }}>
             <ListItem sx={{ padding: '0 1rem', flex: 1 }} divider>
-              <div></div>
               <ListItemText
                 sx={{ m: 0, fontSize: '2vh !important', padding: '0.2rem 0' }}
                 primary={'System Violated'}

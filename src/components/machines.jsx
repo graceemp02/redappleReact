@@ -9,13 +9,11 @@ import { Typography } from '@mui/material';
 import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
 import { MachineContext } from '../MachineContext';
-import { ReloadContext } from '../ReloadContext';
 
 let iMachines = [];
 function Machines() {
   const { customerID } = useContext(CustomerContext);
   const { setMachineID } = useContext(MachineContext);
-  const { reload } = useContext(ReloadContext);
 
   const [machines, setMachines] = useState(iMachines);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -32,7 +30,7 @@ function Machines() {
         setMachineID(iMachines[0].apiToken);
       })
       .catch(error => console.log(error));
-  }, [reload, customerID]);
+  }, [ customerID]);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     setMachineID(index);

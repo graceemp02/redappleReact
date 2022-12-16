@@ -1,5 +1,5 @@
 /** @format */
-import {  Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import IndoorSensors from './IndoorSensors';
 import OutdoorSensors from './OutdoorSensors';
 import InspectionDate from './InspectionDate';
@@ -9,16 +9,14 @@ function Sensors() {
     <>
       <Typography
         align='left'
-        fontSize={'auto'}
-        variant='h4'
         pl={2}
         fontWeight={'bold'}
-        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5 }}>
+        sx={{ textDecoration: 'Underline', color: 'black', mb: '.1vh', fontSize: '3.3vh' }}>
         SENSORS
       </Typography>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <IndoorSensors />
-        <OutdoorSensors/>
+        <OutdoorSensors />
         <InspectionDate />
       </div>
     </>

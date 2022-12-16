@@ -13,15 +13,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../UserContext';
 import { NavItems } from './constants';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-
-const drawerWidth = 220;
+const iconStyle = { width: '1.5em', height: '1.5em' };
+const drawerWidth = 200;
 
 const openedMixin = theme => ({
   width: drawerWidth,
@@ -157,7 +157,7 @@ export default function MiniDrawer(props) {
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                 }}>
-                <AccountCircleRoundedIcon />
+                <AccountCircleOutlinedIcon sx={iconStyle} />
               </ListItemIcon>
               <ListItemText primary={user} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -176,7 +176,9 @@ export default function MiniDrawer(props) {
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                 }}>
-                <LogoutRoundedIcon sx={{ opacity: open ? 1 : 0 }} />
+                <LogoutOutlinedIcon
+                  sx={{ opacity: open ? 1 : 0, width: '1.5em', height: '1.5em' }}
+                />
               </ListItemIcon>
               <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>

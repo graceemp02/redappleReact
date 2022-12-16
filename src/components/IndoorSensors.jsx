@@ -22,35 +22,38 @@ const IndoorSensors = () => {
   return (
     <Paper
       sx={{
-        marginBottom: '10px',
+        marginBottom: '.5vh',
         flex: 4,
-        height: '100%',
         width: '100%',
         bgcolor: 'background.paper',
-        borderRadius: '1em',
+        borderRadius: '1vh',
         display: 'flex',
         flexDirection: 'column',
-        p: 2,
+        p: '1vh',
       }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant='body1'>
+        <Typography sx={{ fontSize: '2vh' }}>
           Temp
           <br />
           {res.temp}°F
         </Typography>
         <Typography
-          variant='h5'
           fontWeight={'bold'}
-          sx={{ textDecoration: 'Underline', color: 'black' }}>
+          sx={{ textDecoration: 'Underline', color: 'black', fontSize: '3.1vh' }}>
           INDOOR SENSORS
         </Typography>
-        <Typography variant='body1'>
+        <Typography sx={{ fontSize: '2vh' }}>
           Hum
           <br />
           {res.hum}%
         </Typography>
       </div>
-      <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'space-between',
+        }}>
         <SenserContainer val={1} lable={'---'} ht={1} />
         <SenserContainer val={1} lable={'---'} ht={1} />
         <SenserContainer val={res.vocVl} lable={'VOC'} ht={res.vocHt} />

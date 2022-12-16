@@ -7,14 +7,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { MachineContext } from '../MachineContext';
-import { ReloadContext } from '../ReloadContext';
+import { DateContext } from '../DateContext';
 
 import axios from 'axios';
 
 const IndoorSensors = () => {
   const [value, setValue] = useState(dayjs(new Date()));
   const { machineID } = useContext(MachineContext);
-  const { reload, setReload } = useContext(ReloadContext);
+  const { setDate } = useContext(DateContext);
 
   const handleChange = newValue => {
     setValue(newValue);
@@ -24,16 +24,15 @@ const IndoorSensors = () => {
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Submit fn is called');
     let formData = new FormData();
     formData.append('api', machineID);
     formData.append('date', `${value.year()}-${value.month() + 1}-${value.date()}`);
     axios
       .post('https://redapple.graceautomation.tech/inspection.php', formData)
       .then(res => {
-        console.log(res.data);
-        console.log(reload);
-        res.data && setReload(reload + 1);
+        console.log(
+          res.data ? setDate(`${value.month() + 1}-${value.date()}-${value.year()}`) : 'error'
+        );
       })
       .catch(error => console.log(error));
   };
@@ -45,13 +44,12 @@ const IndoorSensors = () => {
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
-          borderRadius: '1em 1em 0em 0em',
-          p: { xs: 1, sm: 2 },
+          borderRadius: '1vh',
+          p: '1vh',
         }}>
         <Typography
-          variant='h5'
           fontWeight={'bold'}
-          sx={{ textDecoration: 'Underline', color: 'black' }}>
+          sx={{ textDecoration: 'Underline', color: 'black', fontSize: '3.1vh' }}>
           EDIT INSPECTION DATE
         </Typography>
         <Box
@@ -61,7 +59,7 @@ const IndoorSensors = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBlock: '25px',
+            marginBlock: '1vh',
           }}>
           <DesktopDatePicker
             label='Select Date'
@@ -70,7 +68,7 @@ const IndoorSensors = () => {
             onChange={handleChange}
             renderInput={params => <TextField {...params} />}
           />
-          <Button sx={{ height: '40px' }} variant='contained' type='submit'>
+          <Button sx={{ height: '5vh' }} variant='contained' type='submit'>
             Submit
           </Button>
         </Box>

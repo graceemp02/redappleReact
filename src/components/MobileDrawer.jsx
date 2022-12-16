@@ -55,6 +55,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
+const iconStyle = { width: '1.5em', height: '1.5em' };
 
 export default function MobileDrawer() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -88,7 +89,7 @@ export default function MobileDrawer() {
             onClick={handleDrawerOpen}
             edge='start'
             sx={{ mr: 2, ...(open && { display: 'none' }) }}>
-            <MenuIcon />
+            <MenuIcon sx={iconStyle} />
           </IconButton>
           <Typography sx={{ flex: 1 }} variant='h6' noWrap component='div'>
             Iamredapple Admin
@@ -102,7 +103,7 @@ export default function MobileDrawer() {
               aria-haspopup='true'
               onClick={handleMenu}
               color='inherit'>
-              <AccountCircle />
+              <AccountCircle sx={iconStyle} />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
@@ -122,14 +123,14 @@ export default function MobileDrawer() {
                   handleClose();
                   navigate('/profile');
                 }}>
-                <AccountCircle sx={{ mr: 2 }} />
+                <AccountCircle sx={{ mr: 2, width: '1.5em', height: '1.5em' }} />
                 Profile
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   setUser(null);
                 }}>
-                <LogoutRoundedIcon sx={{ mr: 2 }} />
+                <LogoutRoundedIcon sx={{ mr: 2, width: '1.5em', height: '1.5em' }} />
                 Logout
               </MenuItem>
             </Menu>
@@ -163,7 +164,7 @@ export default function MobileDrawer() {
             </Typography>
           </Box>
 
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton sx={iconStyle} onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>

@@ -5,7 +5,8 @@ import LoginPage from './pages/Login';
 import { UserContext } from './UserContext';
 import { CustomerContext } from './CustomerContext';
 import { MachineContext } from './MachineContext';
-import { ReloadContext } from './ReloadContext';
+import { DateContext } from './DateContext';
+
 import { useState } from 'react';
 import MobileDrawer from './components/MobileDrawer';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -20,7 +21,7 @@ function App() {
   const [user, setUser] = useState('');
   const [customerID, setCustomerID] = useState('');
   const [machineID, setMachineID] = useState('');
-  const [reload, setReload] = useState(() => 0);
+  const [date, setDate] = useState('');
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <div className='App'>
@@ -29,7 +30,7 @@ function App() {
           <UserContext.Provider value={{ user, setUser }}>
             <CustomerContext.Provider value={{ customerID, setCustomerID }}>
               <MachineContext.Provider value={{ machineID, setMachineID }}>
-                <ReloadContext.Provider value={{ reload, setReload }}>
+                <DateContext.Provider value={{ date, setDate }}>
                   <Routes>
                     {NavItems.map(item => (
                       <Route
@@ -62,7 +63,7 @@ function App() {
                       }
                     />
                   </Routes>
-                </ReloadContext.Provider>
+                </DateContext.Provider>
               </MachineContext.Provider>
             </CustomerContext.Provider>
           </UserContext.Provider>

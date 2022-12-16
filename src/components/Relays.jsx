@@ -5,7 +5,9 @@ import CircleIcon from '@mui/icons-material/Circle';
 import ListItemText from '@mui/material/ListItemText';
 import { Button, ListItem, Switch, Typography } from '@mui/material';
 import { RelayItems } from './constants';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { MachineContext } from '../MachineContext';
+import axios from 'axios';
 
 const circleStyle = {
   width: '2.7vh',
@@ -18,32 +20,50 @@ const disableButton = {
   opacity: '0.5',
   height: '3vh',
   minWidth: '3vw',
-  fontSize:'1.5vh'
+  fontSize: '1.5vh',
 };
 const shortButton = {
   height: '3vh',
   minWidth: '3vw',
-  fontSize:'1.5vh'
+  fontSize: '1.5vh',
 };
 function Relays() {
   const [switchValue, setSwitchValue] = useState(false);
+  const [res, setRes] = useState({});
+  const { machineID } = useContext(MachineContext);
+  useEffect(() => {
+    axios
+      .get('https://redapple.graceautomation.tech/php/relays.php', {
+        params: { api: machineID },
+      })
+      .then(result => {
+        setRes(result.data);
+        console.log(result.data);
+      })
+      .catch(error => console.log(error));
+  }, [machineID]);
   const handleSwitchChange = e => {
     setSwitchValue(e.target.checked);
   };
 
   return (
-    <div style={{ height: '50%', display: 'flex', flex: 1, flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flex: 4, flexDirection: 'column' }}>
       <Typography
         align='left'
         pl={2}
         fontWeight={'bold'}
-        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, fontSize: '3.3vh!important' }}>
+        sx={{
+          textDecoration: 'Underline',
+          color: 'black',
+          mb: '.1vh',
+          fontSize: '3.3vh!important',
+        }}>
         RELAYS CONTROLS
       </Typography>
 
       <Paper
         sx={{
-          marginBottom: '15px',
+          marginBottom: '.5vh',
           flex: 1,
           width: '100%',
           bgcolor: 'background.paper',
@@ -56,10 +76,11 @@ function Relays() {
           sx={{
             flex: 1,
             minHeight: 'auto',
-            height: { xs: '370px', sm: '42vh' },
+            height: { xs: '400px', sm: '40vh' },
             display: 'flex',
             flexDirection: 'column',
             overflow: 'auto',
+            paddingBottom: 0,
           }}>
           {RelayItems.map(relay => {
             return (

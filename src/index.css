@@ -90,12 +90,12 @@ code {
 }
 .sensorContainer {
   border: 3px solid black;
-  border-radius: 7px;
+  border-radius: 1vh;
   background: #cccccc;
   position: relative;
-  height: 86%;
-  min-height: 140px;
+  flex: 1;
   overflow: hidden;
+  font-size: 2vh;
 }
 
 .colorA {
@@ -128,7 +128,17 @@ code {
   padding: 55px 0;
 }
 
-.indicator{
+.indicator {
   width: 2.7vh;
   height: 2.7vh;
+}
+
+.cSearch input {
+  height: 100%;
+  /* padding: 0 !important;
+  padding-left: 12px !important; */
+}
+.cSearch input,
+.cSearch div {
+  height: 100%;
 }

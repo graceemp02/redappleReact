@@ -66,11 +66,9 @@ function DashboardPage() {
       <Grid item xs={4} md={2} lg={1}>
         <Item
           sx={{
-            height: { xs: 'auto', sm: '97.51vh' },
-            // minWidth: '300px',
+            height: { xs: '650px', sm: '97.51vh' },
             p: 0,
-            // minHeight: '800px',
-            overflow: 'hidden',
+            overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
           }}>
