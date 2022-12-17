@@ -14,7 +14,7 @@ import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
 
-let theme = createTheme({ typography: { fontSize: 'inherit' } });
+let theme = createTheme({ typography: { fontSize: '2vh' } });
 // theme = responsiveFontSizes(theme, { factor: 4 });
 
 function App() {

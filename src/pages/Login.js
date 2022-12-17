@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.png';
 import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { UserContext } from '../UserContext';
 import axios from 'axios';
 import {
@@ -23,10 +23,7 @@ function Copyright(props) {
   return (
     <Typography variant='body2' color='text.secondary' align='center' {...props}>
       {'Copyright © '}
-      <Link color='inherit'>
-        Iamredapple.com
-      </Link>{' '}
-      {new Date().getFullYear()}
+      <Link color='inherit'>Iamredapple.com</Link> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -36,29 +33,26 @@ const theme = createTheme();
 
 function LoginPage() {
   const { setUser } = useContext(UserContext);
-  const [inputs, setInputs] = useState({
-    username: '',
-    password: '',
-  });
+  const emailRef = useRef();
+  const pwdRef = useRef();
+
+  console.count('Page is rerendered');
   const [userError, setUserError] = useState(false);
   const [pwdError, setPwdError] = useState(false);
+
   const navigate = useNavigate();
 
-  function handleChange(e) {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  }
   const handleSubmit = async e => {
     e.preventDefault();
     setUserError(false);
     setPwdError(false);
     let formData = new FormData();
-    formData.append('username', inputs.username);
-    formData.append('password', inputs.password);
-
+    formData.append('username', emailRef.current.value);
+    formData.append('password', pwdRef.current.value);
     axios
       .post('login.php', formData)
       .then(result => {
-        const res = result.data['res']; 
+        const res = result.data['res'];
         if (res === 'true') {
           setUser(result.data['name']);
           navigate('/');
@@ -108,6 +102,7 @@ function LoginPage() {
               <TextField
                 error={userError && true}
                 margin='normal'
+                inputRef={emailRef}
                 required
                 fullWidth
                 id={userError ? 'outlined-error-helper-text' : 'username'}
@@ -115,13 +110,12 @@ function LoginPage() {
                 name='username'
                 autoComplete='username'
                 autoFocus
-                onChange={handleChange}
-                value={inputs.username}
-                helperText={userError}
+                helperText={userError && 'Username Does not Exist'}
               />
               <TextField
                 error={pwdError && true}
                 margin='normal'
+                inputRef={pwdRef}
                 required
                 fullWidth
                 name='password'
@@ -129,9 +123,7 @@ function LoginPage() {
                 type='password'
                 id={pwdError ? 'outlined-error-helper-text' : 'password'}
                 autoComplete='current-password'
-                onChange={handleChange}
-                value={inputs.password}
-                helperText={pwdError}
+                helperText={pwdError && 'Password Incorrent'}
               />
               <FormControlLabel
                 control={<Checkbox value='remember' color='primary' />}

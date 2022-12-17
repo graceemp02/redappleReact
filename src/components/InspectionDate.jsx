@@ -62,6 +62,7 @@ const IndoorSensors = () => {
             marginBlock: '1vh',
           }}>
           <DesktopDatePicker
+            className='datePicker'
             label='Select Date'
             inputFormat='DD/MM/YYYY'
             value={value}

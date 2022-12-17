@@ -2,20 +2,31 @@
 import Paper from '@mui/material/Box';
 import List from '@mui/material/List';
 import CircleIcon from '@mui/icons-material/Circle';
-
-import { ListItem, Switch, Typography } from '@mui/material';
-
+import ListItemText from '@mui/material/ListItemText';
+import { Button, ListItem, Switch, Typography } from '@mui/material';
+import { RelayItems } from './constants';
 import { useContext, useEffect, useState } from 'react';
 import { MachineContext } from '../MachineContext';
 import axios from 'axios';
-import Relay from './Relay';
 
 const circleStyle = {
   width: '2.7vh',
   height: '2.7vh',
   ml: '12px',
 };
-
+const disableButton = {
+  bgcolor: '#2196f3 !important',
+  color: '#fff !important',
+  opacity: '0.5',
+  height: '3vh',
+  minWidth: '3vw',
+  fontSize: '1.5vh',
+};
+const shortButton = {
+  height: '3vh',
+  minWidth: '3vw',
+  fontSize: '1.5vh',
+};
 function Relays() {
   const [switchValue, setSwitchValue] = useState(false);
   const [res, setRes] = useState({});
@@ -27,19 +38,12 @@ function Relays() {
       })
       .then(result => {
         setRes(result.data);
-        setSwitchValue(() => {
-          return result.data.m === '0' ? true : false;
-        });
-        // console.log(result.data);
+        console.log(result.data);
       })
       .catch(error => console.log(error));
   }, [machineID]);
-  console.log(switchValue);
   const handleSwitchChange = e => {
     setSwitchValue(e.target.checked);
-  };
-  const handleRelayBtnClick = id => {
-    console.log(`R${id}: btn clicked`);
   };
 
   return (
@@ -78,74 +82,29 @@ function Relays() {
             overflow: 'auto',
             paddingBottom: 0,
           }}>
-          <Relay
-            id='1'
-            lable='Low Fan'
-            btn={res.r1}
-            isDisable={switchValue}
-            ind={res.r1_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='2'
-            lable='High Fan'
-            btn={res.r2}
-            isDisable={switchValue}
-            ind={res.r2_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='3'
-            lable='UVC'
-            btn={res.r3}
-            isDisable={switchValue}
-            ind={res.r3_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='4'
-            lable='Bipole'
-            btn={res.r4}
-            isDisable={switchValue}
-            ind={res.r4_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='5'
-            lable='Return Damper'
-            btn={res.r5}
-            isDisable={switchValue}
-            ind={res.r5_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='6'
-            lable='Supply Damper'
-            btn={res.r6}
-            isDisable={switchValue}
-            ind={res.r6_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='7'
-            lable='Air Conditioning'
-            btn={res.r7}
-            isDisable={switchValue}
-            ind={res.r7_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
-          <Relay
-            id='8'
-            lable='Heat'
-            btn={res.r8}
-            isDisable={switchValue}
-            ind={res.r8_ind}
-            onBtnClick={handleRelayBtnClick}
-          />
+          {RelayItems.map(relay => {
+            return (
+              <ListItem sx={{ padding: '0rem 1rem', flex: 1 }} divider key={relay.id}>
+                <ListItemText
+                  sx={{ m: 0, fontSize: '2vh !important' }}
+                  primary={`R${relay.id}: ${relay.lable}`}
+                />
+                <Button
+                  disabled={switchValue && true}
+                  variant='contained'
+                  size='small'
+                  sx={switchValue ? disableButton : shortButton}>
+                  Start
+                </Button>
+                <CircleIcon sx={circleStyle} />
+              </ListItem>
+            );
+          })}
           <ListItem
             sx={{
               padding: '0 1rem',
               display: 'flex',
+              // justifyContent: 'space-between',
             }}>
             <div
               style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -157,7 +116,7 @@ function Relays() {
                 AUTO
               </Typography>
             </div>
-            <CircleIcon sx={circleStyle} htmlColor={res.m_ind === '1' ? '#00c853' : ''} />
+            <CircleIcon sx={circleStyle} />
           </ListItem>
         </List>
       </Paper>

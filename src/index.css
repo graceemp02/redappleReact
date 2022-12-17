@@ -142,3 +142,7 @@ code {
 .cSearch div {
   height: 100%;
 }
+.datePicker svg{
+  width: 1.5em;
+  height: 1.5em;
+}
