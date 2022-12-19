@@ -124,7 +124,7 @@ function TestSystem() {
           </div>
           <div
             style={{
-              flex: 4,
+              flex: 2,
               display: 'flex',
               margin: '0px 5px ',
               flexDirection: 'column',
@@ -132,51 +132,65 @@ function TestSystem() {
               borderRadius: '1vh',
               marginBottom: '1px',
             }}>
-            <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'TVOC'} />
-              <input
-                onChange={() => console.log()}
-                value={40}
-                style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+            <ListItem sx={{ padding: '0 1rem', flex: 1 }} divider>
+              <div style={{ width: '50%', display: 'flex' }}>
+                <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'TVOC'} />
+                <input
+                  onChange={() => console.log()}
+                  value={15}
+                  style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+                />
+              </div>
+
+              <Divider
+                orientation='vertical'
+                flexItem
+                sx={{ marginInline: '10px !important', bgcolor: 'black', width: '2px' }}
               />
+
+              <div style={{ width: '50%', display: 'flex' }}>
+                <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'PM2.5'} />
+                <input
+                  onChange={() => console.log()}
+                  value={15}
+                  style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+                />
+              </div>
             </ListItem>
-            <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'PM2.5'} />
-              <input
-                onChange={() => console.log()}
-                value={30}
-                style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+            <ListItem sx={{ padding: '0 1rem', flex: 1 }} divider>
+              <div style={{ width: '50%', display: 'flex' }}>
+                <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'PM10'} />
+                <input
+                  onChange={() => console.log()}
+                  value={15}
+                  style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+                />
+              </div>
+
+              <Divider
+                orientation='vertical'
+                flexItem
+                sx={{ marginInline: '10px !important', bgcolor: 'black', width: '2px' }}
               />
-            </ListItem>
-            <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={'PM10'} />
-              <input
-                onChange={() => console.log()}
-                value={15}
-                style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
-              />
-            </ListItem>
-            <ListItem sx={{ padding: '0.2rem 1rem', flex: 1 }} divider>
-              <ListItemText
-                sx={{ m: 0, fontSize: '2vh !important' }}
-                primary={<SubTxt lable={'CO'} sub={2} />}
-              />
-              <input
-                onChange={() => console.log()}
-                value={15}
-                style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
-              />
+
+              <div style={{ width: '50%', display: 'flex' }}>
+                <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={<SubTxt lable={'CO'} sub={2} />} />
+                <input
+                  onChange={() => console.log()}
+                  value={15}
+                  style={{ width: '30%', textAlign: 'center', borderColor: 'whitesmoke' }}
+                />
+              </div>
             </ListItem>
           </div>
           <div
             style={{
               flex: 1,
               display: 'flex',
-              margin: '0px 5px ',
-              flexDirection: 'column',
+              margin: '0px 5px 5px',
+
               border: '2px solid black',
               borderRadius: '1vh',
-              marginBottom: '5px',
             }}>
             <ListItem sx={{ padding: '0 1rem', flex: 1 }} divider>
               <ListItemText

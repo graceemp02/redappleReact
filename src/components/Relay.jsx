@@ -13,13 +13,13 @@ const disableButton = {
   color: '#fff !important',
   opacity: '0.5',
   height: '3vh',
-  minWidth: '3vw',
+  // minWidth: '3vw',
   maxWidth: '28px',
   fontSize: '1.5vh',
 };
 const shortButton = {
   height: '3vh',
-    minWidth: '3vw',
+    // minWidth: '3vw',
   maxWidth: '28px',
   fontSize: '1.5vh',
 };

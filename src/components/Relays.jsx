@@ -20,8 +20,9 @@ function Relays() {
   const [switchValue, setSwitchValue] = useState(false);
   const [res, setRes] = useState({});
   const { machineID } = useContext(MachineContext);
-  useEffect(() => {
-    axios
+
+  const fetchDta = async () => {
+    await axios
       .get('https://redapple.graceautomation.tech/php/relays.php', {
         params: { api: machineID },
       })
@@ -30,16 +31,36 @@ function Relays() {
         setSwitchValue(() => {
           return result.data.m === '0' ? true : false;
         });
-        // console.log(result.data);
       })
       .catch(error => console.log(error));
+  };
+
+  const pushData = async relay => {
+    await axios
+      .get('https://redapple.graceautomation.tech/php/relays.php', {
+        params: { api: machineID, relay: relay },
+      })
+      .then(result => {
+        console.log(result);
+        // setRes(result.data);
+      })
+      .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchDta();
+    }, 1000);
+    return () => clearInterval(interval);
   }, [machineID]);
-  console.log(switchValue);
+  // console.log(switchValue);
   const handleSwitchChange = e => {
+    handleRelayBtnClick('m');
     setSwitchValue(e.target.checked);
   };
   const handleRelayBtnClick = id => {
     console.log(`R${id}: btn clicked`);
+    pushData(id);
   };
 
   return (
@@ -152,7 +173,7 @@ function Relays() {
               <Typography sx={{ m: 0, fontSize: '2vh !important', p: 0 }} variant='h6'>
                 MANNUAL
               </Typography>
-              <Switch onChange={handleSwitchChange} />
+              <Switch onChange={handleSwitchChange} checked={switchValue} />
               <Typography sx={{ m: 0, fontSize: '2vh !important', p: 0 }} variant='h6'>
                 AUTO
               </Typography>

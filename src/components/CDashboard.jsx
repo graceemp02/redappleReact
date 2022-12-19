@@ -13,8 +13,9 @@ function CDashboard() {
   const [display, setDisplay] = useState('flex');
   const { machineID } = useContext(MachineContext);
   const { date, setDate } = useContext(DateContext);
-  useEffect(() => {
-    axios
+
+  const fetchDta = async () => {
+    await axios
       .get('https://redapple.graceautomation.tech/dashboard.php', {
         params: { api: machineID },
       })
@@ -24,7 +25,15 @@ function CDashboard() {
         setDisplay(result.data.humHdnStatus ? 'flex' : 'none');
       })
       .catch(error => console.log(error));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchDta();
+    }, 1000);
+    return () => clearInterval(interval);
   }, [machineID]);
+
   const circleStyle = {
     width: '2.7vh',
     height: '2.7vh',
@@ -44,7 +53,7 @@ function CDashboard() {
         style={{
           flex: 1,
           display: 'flex',
-          borderRadius: '1em 1em 0em 0em',
+          borderRadius: '1vh',
           backgroundColor: 'white',
           overflow: 'hidden',
           flexDirection: 'column',
