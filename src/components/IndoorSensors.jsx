@@ -54,8 +54,8 @@ const IndoorSensors = () => {
           flex: 1,
           justifyContent: 'space-between',
         }}>
-        <SenserContainer val={1} lable={'---'} ht={1} />
-        <SenserContainer val={1} lable={'---'} ht={1} />
+        <SenserContainer val={0} lable={'---'} ht={1} />
+        <SenserContainer val={0} lable={'---'} ht={1} />
         <SenserContainer val={res.vocVl} lable={'VOC'} ht={res.vocHt} />
         <SenserContainer val={res.co2Vl} lable={<SubTxt lable={'CO'} sub={2} />} ht={res.co2Ht} />
         <SenserContainer val={res.coVl} lable={'CO'} ht={res.coHt} />

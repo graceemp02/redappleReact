@@ -95,11 +95,11 @@ export default function MiniDrawer(props) {
           <img className='logo' src={logo} alt='I am RedApple Logo' />
           {open && (
             <Typography
-              variant='h5'
               sx={{
                 position: 'fixed',
                 left: 75,
                 lineHeight: 1,
+                fontSize: '2vh !important',
               }}>
               Red <br />
               Apple

@@ -19,14 +19,14 @@ const disableButton = {
 };
 const shortButton = {
   height: '3vh',
-    // minWidth: '3vw',
+  // minWidth: '3vw',
   maxWidth: '28px',
   fontSize: '1.5vh',
 };
 const Relay = ({ id, lable, btn, isDisable, ind, onBtnClick }) => {
   return (
     <ListItem sx={{ padding: '0rem 1rem', flex: 1 }} divider>
-      <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={`R${id}: ${lable}`} />
+      <ListItemText sx={{ m: 0, fontSize: '2vh !important' }} primary={lable} />
       <Button
         onClick={() => onBtnClick(id)}
         disabled={isDisable && true}

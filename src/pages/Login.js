@@ -36,7 +36,6 @@ function LoginPage() {
   const emailRef = useRef();
   const pwdRef = useRef();
 
-  console.count('Page is rerendered');
   const [userError, setUserError] = useState(false);
   const [pwdError, setPwdError] = useState(false);
 

@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* outline: 1px solid blue; */
 }
 body {
   margin: 0;
@@ -142,7 +143,7 @@ code {
 .cSearch div {
   height: 100%;
 }
-.datePicker svg{
+.datePicker svg {
   width: 1.5em;
   height: 1.5em;
 }

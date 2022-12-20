@@ -59,7 +59,6 @@ function Relays() {
     setSwitchValue(e.target.checked);
   };
   const handleRelayBtnClick = id => {
-    console.log(`R${id}: btn clicked`);
     pushData(id);
   };
 
@@ -101,7 +100,7 @@ function Relays() {
           }}>
           <Relay
             id='1'
-            lable='Low Fan'
+            lable='R1: Low Fan'
             btn={res.r1}
             isDisable={switchValue}
             ind={res.r1_ind}
@@ -109,7 +108,7 @@ function Relays() {
           />
           <Relay
             id='2'
-            lable='High Fan'
+            lable='R2: High Fan'
             btn={res.r2}
             isDisable={switchValue}
             ind={res.r2_ind}
@@ -117,7 +116,7 @@ function Relays() {
           />
           <Relay
             id='3'
-            lable='UVC'
+            lable='R3: UVC'
             btn={res.r3}
             isDisable={switchValue}
             ind={res.r3_ind}
@@ -125,7 +124,7 @@ function Relays() {
           />
           <Relay
             id='4'
-            lable='Bipole'
+            lable='R4: Bipole'
             btn={res.r4}
             isDisable={switchValue}
             ind={res.r4_ind}
@@ -133,7 +132,7 @@ function Relays() {
           />
           <Relay
             id='5'
-            lable='Return Damper'
+            lable='R5: Return Damper'
             btn={res.r5}
             isDisable={switchValue}
             ind={res.r5_ind}
@@ -141,7 +140,7 @@ function Relays() {
           />
           <Relay
             id='6'
-            lable='Supply Damper'
+            lable='R6: Supply Damper'
             btn={res.r6}
             isDisable={switchValue}
             ind={res.r6_ind}
@@ -149,7 +148,7 @@ function Relays() {
           />
           <Relay
             id='7'
-            lable='Air Conditioning'
+            lable='R7: Air Conditioning'
             btn={res.r7}
             isDisable={switchValue}
             ind={res.r7_ind}
@@ -157,7 +156,7 @@ function Relays() {
           />
           <Relay
             id='8'
-            lable='Heat'
+            lable='R8: Heat'
             btn={res.r8}
             isDisable={switchValue}
             ind={res.r8_ind}
