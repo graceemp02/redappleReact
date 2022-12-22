@@ -28,7 +28,6 @@ const shortButton = {
 };
 
 function TestSystem() {
-  ////////////////////////////////////////
   const [res, setRes] = useState({});
   const { machineID } = useContext(MachineContext);
   const startRef = useRef();
@@ -57,7 +56,7 @@ function TestSystem() {
         params: { api: machineID, relay: id },
       })
       .then(result => {
-        // console.log(result);
+        console.log(result);
       })
       .catch(error => console.log(error));
   };
@@ -75,7 +74,6 @@ function TestSystem() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(endRef.current.value);
     let formData = new FormData();
     formData.append('start', startRef.current.value === '' ? res.start : startRef.current.value);
     formData.append('end', endRef.current.value === '' ? res.end : endRef.current.value);
@@ -86,8 +84,14 @@ function TestSystem() {
     formData.append('co2', co2Ref.current.value === '' ? res.co2 : co2Ref.current.value);
     await axios
       .post(`https://redapple.graceautomation.tech/php/system.php?api=${machineID}`, formData)
-      .then(result => {
-        console.log(result.data);
+      .then(() => {
+        startRef.current.value = '';
+        endRef.current.value = '';
+        sotRef.current.value = '';
+        tvocRef.current.value = '';
+        pm10Ref.current.value = '';
+        pm25Ref.current.value = '';
+        co2Ref.current.value = '';
       })
       .catch(error => console.log(error));
   };

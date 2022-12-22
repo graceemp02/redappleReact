@@ -48,7 +48,7 @@ function LoginPage() {
     let formData = new FormData();
     formData.append('username', emailRef.current.value);
     formData.append('password', pwdRef.current.value);
-    axios
+    await axios
       .post('login.php', formData)
       .then(result => {
         const res = result.data['res'];
@@ -104,7 +104,6 @@ function LoginPage() {
                 inputRef={emailRef}
                 required
                 fullWidth
-                id={userError ? 'outlined-error-helper-text' : 'username'}
                 label='Username'
                 name='username'
                 autoComplete='username'
@@ -120,7 +119,6 @@ function LoginPage() {
                 name='password'
                 label='Password'
                 type='password'
-                id={pwdError ? 'outlined-error-helper-text' : 'password'}
                 autoComplete='current-password'
                 helperText={pwdError && 'Password Incorrent'}
               />

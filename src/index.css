@@ -123,10 +123,10 @@ code {
 .centerTable {
   display: flex;
   width: 100%;
-  min-height: 98vh;
   justify-content: center;
   align-items: flex-start;
-  padding: 55px 0;
+  padding: 2vh 0;
+  overflow: hidden;
 }
 
 .indicator {
@@ -146,4 +146,10 @@ code {
 .datePicker svg {
   width: 1.5em;
   height: 1.5em;
+}
+.formContainer {
+  margin: 1vh;
+  padding: 2vh;
+  border: 2px solid black;
+  border-radius: 1vh;
 }

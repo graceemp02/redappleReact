@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
+import { AddCustomer } from './forms';
 
 let theme = createTheme({ typography: { fontSize: '2vh' } });
 // theme = responsiveFontSizes(theme, { factor: 4 });
@@ -40,6 +41,7 @@ function App() {
                           user ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
+
                               {item.element}
                             </Box>
                           ) : (
@@ -49,13 +51,26 @@ function App() {
                       />
                     ))}
                     <Route
-                      key={10}
                       path='/profile'
                       element={
                         user ? (
                           <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                             {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
                             <Profile />
+                          </Box>
+                        ) : (
+                          <LoginPage />
+                        )
+                      }
+                    />
+
+                    <Route
+                      path='/clints/new'
+                      element={
+                        user ? (
+                          <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                            {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
+                            <AddCustomer />
                           </Box>
                         ) : (
                           <LoginPage />

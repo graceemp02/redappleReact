@@ -25,7 +25,7 @@ export const NavItems = [
     id: 2,
     icon: <PeopleAltOutlinedIcon sx={iconStyle} />,
     lable: 'Customers',
-    route: '/customers',
+    route: '/clints',
     element: <CustomersPage />,
   },
   {

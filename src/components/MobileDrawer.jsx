@@ -1,30 +1,30 @@
 /** @format */
 
-import { useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
+import { useState, useContext } from 'react';
+import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Drawer,
+  CssBaseline,
+  Toolbar,
+  Menu,
+  MenuItem,
+  ListItemText,
+  ListItemIcon,
+  List,
+  Typography,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemButton,
+} from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import { NavItems } from './constants';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
 import { UserContext } from '../UserContext';
 import logo from '../assests/logo.png';
 
@@ -59,7 +59,7 @@ const iconStyle = { width: '1.5em', height: '1.5em' };
 
 export default function MobileDrawer() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const theme = useTheme();
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
@@ -164,8 +164,8 @@ export default function MobileDrawer() {
             </Typography>
           </Box>
 
-          <IconButton sx={iconStyle} onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon sx={iconStyle} />
           </IconButton>
         </DrawerHeader>
         <Divider />

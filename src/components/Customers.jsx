@@ -10,7 +10,7 @@ import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
 let customers = [];
 axios
-  .get('https://redapple.graceautomation.tech/customers.php')
+  .get('https://redapple.graceautomation.tech/php/customers.php')
   .then(result => {
     customers = result.data;
   })
@@ -78,31 +78,37 @@ function Customers() {
           display: 'flex',
           padding: 0,
         }}>
-        <List
-          component='nav'
-          aria-label='customers'
-          sx={{
-            flex: 1,
-            minHeight: 'auto',
-            maxHeight: { xs: '300px', sm: '42vh' },
-            overflow: 'auto',
-            borderRadius: '1vh',
-          }}>
-          {filteredCustomers.map(row => {
-            return (
-              <>
-                <ListItemButton
-                  sx={{ padding: '0.3rem 1rem' }}
-                  divider={filteredCustomers.length - 1 === row.id ? false : true}
-                  key={row.id}
-                  selected={selectedIndex === row.id}
-                  onClick={event => handleListItemClick(event, row.id)}>
-                  <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
-                </ListItemButton>
-              </>
-            );
-          })}
-        </List>
+        {filteredCustomers.length > 0 ? (
+          <List
+            component='nav'
+            aria-label='customers'
+            sx={{
+              flex: 1,
+              minHeight: 'auto',
+              maxHeight: { xs: '300px', sm: '42vh' },
+              overflow: 'auto',
+              borderRadius: '1vh',
+            }}>
+            {filteredCustomers.map(row => {
+              return (
+                <>
+                  <ListItemButton
+                    sx={{ padding: '0.3rem 1rem' }}
+                    divider={filteredCustomers.length - 1 === row.id ? false : true}
+                    key={row.id}
+                    selected={selectedIndex === row.id}
+                    onClick={event => handleListItemClick(event, row.id)}>
+                    <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
+                  </ListItemButton>
+                </>
+              );
+            })}
+          </List>
+        ) : (
+          <Typography sx={{ textAlign: 'center', fontSize: '2vh', margin: '3vh', width: '100%' }}>
+            No Customer with entered name.
+          </Typography>
+        )}
       </Paper>
     </div>
   );
