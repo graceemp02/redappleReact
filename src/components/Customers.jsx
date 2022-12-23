@@ -8,21 +8,36 @@ import ListItemText from '@mui/material/ListItemText';
 import { TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
-let customers = [];
-axios
-  .get('https://redapple.graceautomation.tech/php/customers.php')
-  .then(result => {
-    customers = result.data;
-  })
-  .catch(error => console.log(error));
+import { UpdateCustomersContext } from '../UpdateCustomersContext';
+let iCustomers = [];
+
 function Customers() {
+  const { updateCustomers } = useContext(UpdateCustomersContext);
+  const [customers, setCustomers] = useState(iCustomers);
   const { setCustomerID } = useContext(CustomerContext);
-  const [selectedIndex, setSelectedIndex] = useState(customers[0].id);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [query, setQuery] = useState('');
+
   useEffect(() => {
-    setCustomerID(customers[0].id);
-  }, []);
-  const handleListItemClick = (event, index) => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axios
+      .get('https://redapple.graceautomation.tech/php/customers.php', { cancelToken: source.token })
+      .then(result => {
+        iCustomers = result.data;
+        setCustomers(iCustomers);
+        setCustomerID(iCustomers[0].id);
+        setSelectedIndex(result.data[0].id);
+      })
+      .catch(error => console.log(error));
+    return () => {
+      source.cancel();
+    };
+  }, [updateCustomers]);
+
+  useEffect(() => {}, []);
+  const handleListItemClick = (e, index) => {
+    e.preventDefault();
     setCustomerID(index);
     setSelectedIndex(index);
   };
@@ -30,7 +45,7 @@ function Customers() {
     return customers.filter(item => {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
-  }, [query]);
+  }, [query, customers]);
 
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>

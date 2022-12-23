@@ -10,12 +10,15 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NewCustomerSuccess from '../dialogs/NewCustomerSuccess';
+import { UpdateCustomersContext } from '../UpdateCustomersContext';
+
 let theme = createTheme();
 const AddCustomer = () => {
+  
   const [open, setOpen] = useState(false);
   const nameRef = useRef();
   const emailRef = useRef();
@@ -26,6 +29,7 @@ const AddCustomer = () => {
   const cIdRef = useRef();
   const cPwdRef = useRef();
 
+  const { setUpdateCustomers } = useContext(UpdateCustomersContext);
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleSubmit = async e => {
@@ -52,6 +56,7 @@ const AddCustomer = () => {
           cNameRef.current.value = '';
           cIdRef.current.value = '';
           cPwdRef.current.value = '';
+          setUpdateCustomers(pre => !pre);
           setOpen(true);
         } else {
           console.log('New Customer is not added');

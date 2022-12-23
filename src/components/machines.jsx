@@ -18,9 +18,12 @@ function Machines() {
   const [machines, setMachines] = useState(iMachines);
   const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
     axios
       .get('https://redapple.graceautomation.tech/machines.php', {
         params: { cid: customerID },
+        cancelToken: source.token,
       })
       .then(result => {
         iMachines = result.data;
@@ -30,7 +33,10 @@ function Machines() {
         setMachineID(iMachines[0].apiToken);
       })
       .catch(error => console.log(error));
-  }, [ customerID]);
+    return () => {
+      source.cancel();
+    };
+  }, [customerID]);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     setMachineID(index);
@@ -42,7 +48,7 @@ function Machines() {
         variant='h4'
         fontWeight={'bold'}
         display={'inline'}
-        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, ml: 0.5 ,textAlign:'left'}}>
+        sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, ml: 0.5, textAlign: 'left' }}>
         MACHINES
       </Typography>
 
@@ -81,7 +87,6 @@ function Machines() {
           })}
         </List>
       </Paper>
-      <Paper></Paper>
     </div>
   );
 }

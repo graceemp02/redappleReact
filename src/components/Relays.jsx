@@ -41,7 +41,7 @@ function Relays() {
         params: { api: machineID, relay: relay },
       })
       .then(result => {
-        console.log(result);
+        // console.log(result);
         // setRes(result.data);
       })
       .catch(error => console.log(error));

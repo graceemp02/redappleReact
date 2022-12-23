@@ -6,6 +6,7 @@ import { UserContext } from './UserContext';
 import { CustomerContext } from './CustomerContext';
 import { MachineContext } from './MachineContext';
 import { DateContext } from './DateContext';
+import { UpdateCustomersContext } from './UpdateCustomersContext';
 
 import { useState } from 'react';
 import MobileDrawer from './components/MobileDrawer';
@@ -23,6 +24,7 @@ function App() {
   const [customerID, setCustomerID] = useState('');
   const [machineID, setMachineID] = useState('');
   const [date, setDate] = useState('');
+  const [updateCustomers, setUpdateCustomers] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <div className='App'>
@@ -32,52 +34,54 @@ function App() {
             <CustomerContext.Provider value={{ customerID, setCustomerID }}>
               <MachineContext.Provider value={{ machineID, setMachineID }}>
                 <DateContext.Provider value={{ date, setDate }}>
-                  <Routes>
-                    {NavItems.map(item => (
+                  <UpdateCustomersContext.Provider value={{ updateCustomers, setUpdateCustomers }}>
+                    <Routes>
+                      {NavItems.map(item => (
+                        <Route
+                          key={item.id}
+                          path={`/${item.route}`}
+                          element={
+                            user ? (
+                              <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                                {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
+
+                                {item.element}
+                              </Box>
+                            ) : (
+                              <LoginPage />
+                            )
+                          }
+                        />
+                      ))}
                       <Route
-                        key={item.key}
-                        path={`/${item.route}`}
+                        path='/profile'
                         element={
                           user ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
-                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
-
-                              {item.element}
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
+                              <Profile />
                             </Box>
                           ) : (
                             <LoginPage />
                           )
                         }
                       />
-                    ))}
-                    <Route
-                      path='/profile'
-                      element={
-                        user ? (
-                          <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
-                            {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
-                            <Profile />
-                          </Box>
-                        ) : (
-                          <LoginPage />
-                        )
-                      }
-                    />
 
-                    <Route
-                      path='/clints/new'
-                      element={
-                        user ? (
-                          <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
-                            {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
-                            <AddCustomer />
-                          </Box>
-                        ) : (
-                          <LoginPage />
-                        )
-                      }
-                    />
-                  </Routes>
+                      <Route
+                        path='/clints/new'
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
+                              <AddCustomer />
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                    </Routes>
+                  </UpdateCustomersContext.Provider>
                 </DateContext.Provider>
               </MachineContext.Provider>
             </CustomerContext.Provider>
