@@ -105,12 +105,13 @@ function Customers() {
               borderRadius: '1vh',
             }}>
             {filteredCustomers.map(row => {
+              console.log(typeof parseInt(row.id));
               return (
                 <>
                   <ListItemButton
                     sx={{ padding: '0.3rem 1rem' }}
                     divider={filteredCustomers.length - 1 === row.id ? false : true}
-                    key={row.id}
+                    key={parseInt(row.id)}
                     selected={selectedIndex === row.id}
                     onClick={event => handleListItemClick(event, row.id)}>
                     <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />

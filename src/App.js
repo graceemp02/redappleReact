@@ -14,7 +14,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
-import { AddCustomer } from './forms';
+import { AddCustomer,AddMachine } from './forms';
+import EditCustomer from './forms/EditCustomer';
 
 let theme = createTheme({ typography: { fontSize: '2vh' } });
 // theme = responsiveFontSizes(theme, { factor: 4 });
@@ -74,6 +75,32 @@ function App() {
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
                               <AddCustomer />
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                      <Route
+                        path='/clints/edit'
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
+                              <EditCustomer />
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                      <Route
+                        path='/machines/new'
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
+                              <AddMachine />
                             </Box>
                           ) : (
                             <LoginPage />

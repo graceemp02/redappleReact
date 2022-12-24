@@ -20,7 +20,6 @@ import { Box } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
-import ShowCustomer from '../components/ShowCustomer';
 
 let theme = createTheme();
 
@@ -48,19 +47,22 @@ const Customers = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [query, setQuery] = useState('');
 
-  const fetchData = async () => {
-    await axios
-      .get('https://redapple.graceautomation.tech/php/customers.php')
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axios
+      .get('https://redapple.graceautomation.tech/php/customers.php', {
+        cancelToken: source.token,
+      })
       .then(result => {
         setRows(result.data);
       })
       .catch(error => console.log(error));
-  };
-  useEffect(() => {
-    fetchData();
+    return () => {
+      source.cancel();
+    };
   }, [updateCustomers]);
   const handleDel = async id => {
-    console.log(`Customer with ${id} is requested to deleta`);
     let formData = new FormData();
     formData.append('toDel', id);
     await axios
@@ -86,6 +88,10 @@ const Customers = () => {
       email: user.email,
       phone: user.phone,
     });
+  };
+  const handleEdit = index => {
+    let user = rows[index];
+    navigate('/clints/edit', { state: user });
   };
 
   return (
@@ -242,6 +248,7 @@ const Customers = () => {
                         </Button>
                         <Button
                           variant='contained'
+                          onClick={() => handleEdit(index)}
                           sx={{ marginInline: 0.5, height: '20px', width: '50px', mb: '5px' }}>
                           Edit
                         </Button>

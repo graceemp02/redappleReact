@@ -21,7 +21,7 @@ function Machines() {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
-      .get('https://redapple.graceautomation.tech/machines.php', {
+      .get('https://redapple.graceautomation.tech/php/machines.php', {
         params: { cid: customerID },
         cancelToken: source.token,
       })

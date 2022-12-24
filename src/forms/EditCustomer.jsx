@@ -11,50 +11,59 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useContext, useState } from 'react';
+import { useEffect } from 'react';
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import MyDialog from '../dialogs/MyDialog';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
 
 let theme = createTheme();
-const AddCustomer = () => {
+const EditCustomer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const nameRef = useRef();
   const emailRef = useRef();
   const phoneRef = useRef();
-  const pwdRef = useRef();
 
   const cNameRef = useRef();
   const cIdRef = useRef();
-  const cPwdRef = useRef();
-
   const { setUpdateCustomers } = useContext(UpdateCustomersContext);
-  const navigate = useNavigate();
+
+  const user = location.state;
+
+  useEffect(() => {
+    nameRef.current.value = user.name;
+    emailRef.current.value = user.email;
+    phoneRef.current.value = user.phone;
+    cNameRef.current.value = user.cName;
+    cIdRef.current.value = user.cId;
+  }, []);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
 
+    formData.append('id', user.id);
     formData.append('name', nameRef.current.value);
     formData.append('email', emailRef.current.value);
     formData.append('phone', phoneRef.current.value);
-    formData.append('pwd', pwdRef.current.value);
-    formData.append('companyName', cNameRef.current.value);
-    formData.append('companyId', cIdRef.current.value);
-    formData.append('companyPwd', cPwdRef.current.value);
-    
+    formData.append('cName', cNameRef.current.value);
+    formData.append('cId', cIdRef.current.value);
+
     await axios
-      .post('https://redapple.graceautomation.tech/php/addCustomer.php', formData)
+      .post('https://redapple.graceautomation.tech/php/editCustomer.php', formData)
       .then(result => {
         const res = result.data['res'];
+
         if (res === 'true') {
           nameRef.current.value = '';
           emailRef.current.value = '';
           phoneRef.current.value = '';
-          pwdRef.current.value = '';
+
           cNameRef.current.value = '';
           cIdRef.current.value = '';
-          cPwdRef.current.value = '';
           setUpdateCustomers(pre => !pre);
           setOpen(true);
         } else {
@@ -62,6 +71,9 @@ const AddCustomer = () => {
         }
       })
       .catch(error => console.log(error));
+  };
+  const handleBack = () => {
+    return navigate('/clints');
   };
   return (
     <div className='centerTable'>
@@ -89,7 +101,7 @@ const AddCustomer = () => {
             }}>
             Add New Customer
           </Typography>
-          <Button onClick={() => navigate('/clints')} variant='contained' sx={{ maxWidth: 200 }}>
+          <Button onClick={handleBack} variant='contained' sx={{ maxWidth: 200 }}>
             Back to List
           </Button>
         </div>
@@ -111,6 +123,7 @@ const AddCustomer = () => {
               inputRef={nameRef}
               required
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label='Full Name'
               autoFocus
               size={isMobile ? 'small' : 'medium'}
@@ -120,6 +133,7 @@ const AddCustomer = () => {
               type='email'
               inputRef={emailRef}
               required
+              InputLabelProps={{ shrink: true }}
               fullWidth
               label='Email'
               size={isMobile ? 'small' : 'medium'}
@@ -129,21 +143,9 @@ const AddCustomer = () => {
               margin='normal'
               inputRef={phoneRef}
               required
+              InputLabelProps={{ shrink: true }}
               fullWidth
               label='Phone No'
-              size={isMobile ? 'small' : 'medium'}
-            />
-            <TextField
-              inputProps={{
-                autoComplete: 'new-password',
-              }}
-              autoComplete='off'
-              margin='normal'
-              inputRef={pwdRef}
-              required
-              fullWidth
-              label='Password'
-              type='password'
               size={isMobile ? 'small' : 'medium'}
             />
           </div>
@@ -163,6 +165,7 @@ const AddCustomer = () => {
               margin='normal'
               inputRef={cNameRef}
               required
+              InputLabelProps={{ shrink: true }}
               fullWidth
               label='Installation Company Name'
               size={isMobile ? 'small' : 'medium'}
@@ -172,22 +175,9 @@ const AddCustomer = () => {
               size={isMobile ? 'small' : 'medium'}
               inputRef={cIdRef}
               required
+              InputLabelProps={{ shrink: true }}
               fullWidth
               label='Company ID'
-            />
-
-            <TextField
-              inputProps={{
-                autoComplete: 'new-password',
-              }}
-              autoComplete='off'
-              margin='normal'
-              inputRef={cPwdRef}
-              required
-              fullWidth
-              label='Password'
-              type='password'
-              size={isMobile ? 'small' : 'medium'}
             />
           </div>
           <Button
@@ -195,22 +185,19 @@ const AddCustomer = () => {
             variant='contained'
             sx={{ maxWidth: 200, ml: '1vh', mt: '1vh' }}
             color='success'>
-            Create Customer
+            Update
           </Button>
         </Box>
       </Paper>
       {open && (
         <MyDialog
-          title='Success'
-          des='New Customer is added Successful.'
-          actions={[
-            { onClick: () => navigate('/clints'), color: 'primary', text: 'Back to List' },
-            { onClick: () => setOpen(false), color: 'success', text: 'Create New' },
-          ]}
+          title='Success Update'
+          des='Customer Detail Edited Successfully.'
+          actions={[{ onClick: handleBack, color: 'primary', text: 'Back to List' }]}
         />
       )}
     </div>
   );
 };
 
-export default AddCustomer;
+export default EditCustomer;
