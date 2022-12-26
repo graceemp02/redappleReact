@@ -1,8 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import axios from "axios";
-axios.defaults.baseURL = 'https://redapple.graceautomation.tech/';
-const root = ReactDOM.createRoot(document.getElementById("root"));
+/** @format */
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import axios from 'axios';
+axios.defaults.baseURL = 'https://redapple.graceautomation.tech/php/';
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);

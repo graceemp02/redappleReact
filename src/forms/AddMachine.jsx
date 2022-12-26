@@ -4,20 +4,29 @@ import {
   Box,
   Button,
   createTheme,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
   useMediaQuery,
 } from '@mui/material';
-// import { DesktopDatePicker } from '@mui/x-date-pickers';
+
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyDialog from '../dialogs/MyDialog';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 
 let theme = createTheme();
 const AddCustomer = () => {
@@ -29,6 +38,8 @@ const AddCustomer = () => {
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const loading = options.length === 0;
+  const [date, setDate] = useState(dayjs(new Date()));
+  const [age, setAge] = useState('');
   //customer select
 
   const customerRef = useRef();
@@ -43,6 +54,7 @@ const AddCustomer = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
+    console.log(age);
 
     // formData.append('name', nameRef.current.value);
     // formData.append('email', emailRef.current.value);
@@ -52,19 +64,19 @@ const AddCustomer = () => {
     // formData.append('companyId', cIdRef.current.value);
     // formData.append('companyPwd', cPwdRef.current.value);
 
-    await axios
-      .post('https://redapple.graceautomation.tech/php/addCustomer.php', formData)
-      .then(result => {
-        const res = result.data['res'];
-        if (res === 'true') {
-          //empty refs here
-          setUpdateCustomers(pre => !pre);
-          setOpenDialog(true);
-        } else {
-          console.log('New Customer is not added');
-        }
-      })
-      .catch(error => console.log(error));
+    // await axios
+    //   .post('https://redapple.graceautomation.tech/php/addCustomer.php', formData)
+    //   .then(result => {
+    //     const res = result.data['res'];
+    //     if (res === 'true') {
+    //       //empty refs here
+    //       setUpdateCustomers(pre => !pre);
+    //       setOpenDialog(true);
+    //     } else {
+    //       console.log('New Machine is not added');
+    //     }
+    //   })
+    //   .catch(error => console.log(error));
   };
   //pasting mui useeffect
   useEffect(() => {
@@ -78,7 +90,6 @@ const AddCustomer = () => {
         await axios
           .get('https://redapple.graceautomation.tech/php/customers.php')
           .then(result => {
-            // console.log(result);
             setOptions(result.data);
           })
           .catch(error => console.log(error));
@@ -129,7 +140,7 @@ const AddCustomer = () => {
           </Button>
         </div>
         <Box component='form' onSubmit={handleSubmit}>
-          <Autocomplete
+          {/* <Autocomplete
             value={value}
             onChange={(event, newValue) => {
               console.log(newValue);
@@ -166,10 +177,37 @@ const AddCustomer = () => {
                 }}
               />
             )}
-          />
+          /> */}
+          {/* pasting copied select */}
+          <FormControl fullWidth>
+            <InputLabel id='demo-simple-select-helper-label'>Select Customer</InputLabel>
+            <Select
+              InputProps={{
+                endAdornment: (
+                  <React.Fragment>
+                    {/* {loading ? <CircularProgress color='inherit' size={20} /> : null} */}
+                    <CircularProgress color='inherit' size={20} />
+                  </React.Fragment>
+                ),
+              }}
+              required
+              labelId='demo-simple-select-helper-label'
+              id='demo-simple-select-helper'
+              value={age}
+              label='Age'
+              onChange={e => {
+                return setAge(e.target.value);
+              }}>
+              {options.map(item => (
+                <MenuItem key={item.id} value={item.id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {/* pasting copied select */}
           <TextField
             margin='normal'
-            type='email'
             inputRef={nameRef}
             required
             fullWidth
@@ -186,9 +224,6 @@ const AddCustomer = () => {
             size={isMobile ? 'small' : 'medium'}
           />
           <TextField
-            inputProps={{
-              autoComplete: 'new-password',
-            }}
             autoComplete='off'
             margin='normal'
             inputRef={apiRef}
@@ -198,9 +233,6 @@ const AddCustomer = () => {
             size={isMobile ? 'small' : 'medium'}
           />
           <TextField
-            inputProps={{
-              autoComplete: 'new-password',
-            }}
             autoComplete='off'
             margin='normal'
             inputRef={dateRef}
@@ -209,15 +241,15 @@ const AddCustomer = () => {
             label='Api Token'
             size={isMobile ? 'small' : 'medium'}
           />
-          {/* <DesktopDatePicker
-              className='datePicker'
-              label='Select Date'
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DesktopDatePicker
+              label='Select Inspection Date'
               inputFormat='DD/MM/YYYY'
-              value={value}
-              onChange={handleChange}
+              value={date}
+              onChange={val => setDate(val)}
               renderInput={params => <TextField {...params} />}
-            /> */}
-
+            />
+          </LocalizationProvider>
           <Button
             type='submit'
             variant='contained'

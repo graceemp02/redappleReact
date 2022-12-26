@@ -22,7 +22,7 @@ function Customers() {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
-      .get('https://redapple.graceautomation.tech/php/customers.php', { cancelToken: source.token })
+      .get('customers.php', { cancelToken: source.token })
       .then(result => {
         iCustomers = result.data;
         setCustomers(iCustomers);
@@ -105,7 +105,6 @@ function Customers() {
               borderRadius: '1vh',
             }}>
             {filteredCustomers.map(row => {
-              console.log(typeof parseInt(row.id));
               return (
                 <>
                   <ListItemButton

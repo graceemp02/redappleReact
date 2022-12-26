@@ -23,7 +23,7 @@ function Relays() {
 
   const fetchDta = async () => {
     await axios
-      .get('https://redapple.graceautomation.tech/php/relays.php', {
+      .get('relays.php', {
         params: { api: machineID },
       })
       .then(result => {
@@ -37,7 +37,7 @@ function Relays() {
 
   const pushData = async relay => {
     await axios
-      .get('https://redapple.graceautomation.tech/php/relays.php', {
+      .get('relays.php', {
         params: { api: machineID, relay: relay },
       })
       .then(result => {

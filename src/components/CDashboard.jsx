@@ -1,6 +1,6 @@
 /** @format */
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import Logo from '../assests/logo.png';
@@ -16,7 +16,7 @@ function CDashboard() {
 
   const fetchDta = async () => {
     await axios
-      .get('https://redapple.graceautomation.tech/dashboard.php', {
+      .get('dashboard.php', {
         params: { api: machineID },
       })
       .then(result => {
@@ -122,7 +122,7 @@ function CDashboard() {
             lineHeight={'1em'}
             fontWeight='900'
             className={`color${res.letter}`}>
-            {res.letter}
+            {res.letter ? res.letter : <CircularProgress color='inherit' size={300} />}
           </Typography>
         </div>
         <div>

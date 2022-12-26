@@ -12,7 +12,7 @@ const OutdoorSensors = () => {
   const { machineID } = useContext(MachineContext);
   useEffect(() => {
     axios
-      .get('https://redapple.graceautomation.tech/outdoor.php', {
+      .get('outdoor.php', {
         params: { api: machineID },
       })
       .then(result => {

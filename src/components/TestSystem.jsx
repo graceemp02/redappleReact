@@ -40,7 +40,7 @@ function TestSystem() {
 
   const fetchDta = async () => {
     await axios
-      .get('https://redapple.graceautomation.tech/php/system.php', {
+      .get('system.php', {
         params: { api: machineID },
       })
       .then(result => {
@@ -52,7 +52,7 @@ function TestSystem() {
 
   const pushData = async id => {
     await axios
-      .get('https://redapple.graceautomation.tech/php/system.php', {
+      .get('system.php', {
         params: { api: machineID, relay: id },
       })
       .then(result => {
@@ -83,7 +83,7 @@ function TestSystem() {
     formData.append('pm25', pm25Ref.current.value === '' ? res.pm25 : pm25Ref.current.value);
     formData.append('co2', co2Ref.current.value === '' ? res.co2 : co2Ref.current.value);
     await axios
-      .post(`https://redapple.graceautomation.tech/php/system.php?api=${machineID}`, formData)
+      .post(`system.php?api=${machineID}`, formData)
       .then(() => {
         startRef.current.value = '';
         endRef.current.value = '';

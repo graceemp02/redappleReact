@@ -11,10 +11,11 @@ const IndoorSensors = () => {
   const { machineID } = useContext(MachineContext);
   useEffect(() => {
     axios
-      .get('https://redapple.graceautomation.tech/indoor.php', {
+      .get('indoor.php', {
         params: { api: machineID },
       })
       .then(result => {
+        console.log(result.data);
         setRes(result.data);
       })
       .catch(error => console.log(error));

@@ -28,7 +28,7 @@ const IndoorSensors = () => {
     formData.append('api', machineID);
     formData.append('date', `${value.year()}-${value.month() + 1}-${value.date()}`);
     axios
-      .post('https://redapple.graceautomation.tech/inspection.php', formData)
+      .post('inspection.php', formData)
       .then(res => {
         console.log(
           res.data ? setDate(`${value.month() + 1}-${value.date()}-${value.year()}`) : 'error'
