@@ -50,7 +50,7 @@ const MachinesPage = () => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
-      .get('https://redapple.graceautomation.tech/php/machines.php', {
+      .get('machines.php', {
         cancelToken: source.token,
       })
       .then(result => {

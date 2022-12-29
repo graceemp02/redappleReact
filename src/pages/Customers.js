@@ -51,7 +51,7 @@ const Customers = () => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
-      .get('https://redapple.graceautomation.tech/php/customers.php', {
+      .get('customers.php', {
         cancelToken: source.token,
       })
       .then(result => {
@@ -66,7 +66,7 @@ const Customers = () => {
     let formData = new FormData();
     formData.append('toDel', id);
     await axios
-      .post('https://redapple.graceautomation.tech/php/delCustomer.php', formData)
+      .post('delCustomer.php', formData)
       .then(result => {
         setUpdateCustomers(pre => !pre);
         setShowUser({ status: false });

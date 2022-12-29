@@ -22,8 +22,6 @@ import { useNavigate } from 'react-router-dom';
 import MyDialog from '../dialogs/MyDialog';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
-import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
@@ -32,29 +30,27 @@ let theme = createTheme();
 const AddCustomer = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
-  //customer select
   const [options, setOptions] = useState([]);
-  const [value, setValue] = useState(options[0]);
-  const [inputValue, setInputValue] = useState('');
-  const [open, setOpen] = useState(false);
-  const loading = options.length === 0;
+  let loading = options.length === 0;
+  // const loading = true;
   const [date, setDate] = useState(dayjs(new Date()));
-  const [age, setAge] = useState('');
-  //customer select
+  const [customerId, setCustomerId] = useState('');
 
-  const customerRef = useRef();
   const nameRef = useRef();
   const locationRef = useRef();
   const apiRef = useRef();
   const dateRef = useRef();
-
   const { setUpdateCustomers } = useContext(UpdateCustomersContext);
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
-    console.log(age);
+    console.log(customerId);
+    console.log(nameRef.current.value);
+    console.log(locationRef.current.value);
+    console.log(apiRef.current.value);
+    console.log(dateRef.current.value);
 
     // formData.append('name', nameRef.current.value);
     // formData.append('email', emailRef.current.value);
@@ -88,7 +84,7 @@ const AddCustomer = () => {
     if (active) {
       (async () => {
         await axios
-          .get('https://redapple.graceautomation.tech/php/customers.php')
+          .get('customers.php')
           .then(result => {
             setOptions(result.data);
           })
@@ -100,14 +96,6 @@ const AddCustomer = () => {
       active = false;
     };
   }, [loading]);
-
-  //   useEffect(() => {
-  //     if (!open) {
-  //       setOptions([]);
-  //     }
-  //   }, [open]);
-
-  //pasting mui useeffect
 
   return (
     <div className='centerTable'>
@@ -140,63 +128,22 @@ const AddCustomer = () => {
           </Button>
         </div>
         <Box component='form' onSubmit={handleSubmit}>
-          {/* <Autocomplete
-            value={value}
-            onChange={(event, newValue) => {
-              console.log(newValue);
-              setValue(newValue);
-            }}
-            inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              console.log(newInputValue);
-              setInputValue(newInputValue);
-            }}
-            open={open}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            isOptionEqualToValue={(option, value) => option.title === value.title}
-            getOptionLabel={option => option.name}
-            options={options}
-            loading={loading}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label='Select Customer'
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <React.Fragment>
-                      {loading ? <CircularProgress color='inherit' size={20} /> : null}
-                      {params.InputProps.endAdornment}
-                    </React.Fragment>
-                  ),
-                }}
-              />
-            )}
-          /> */}
-          {/* pasting copied select */}
           <FormControl fullWidth>
-            <InputLabel id='demo-simple-select-helper-label'>Select Customer</InputLabel>
+            <InputLabel id='select-customer'>Select Customer</InputLabel>
             <Select
-              InputProps={{
-                endAdornment: (
-                  <React.Fragment>
-                    {/* {loading ? <CircularProgress color='inherit' size={20} /> : null} */}
-                    <CircularProgress color='inherit' size={20} />
-                  </React.Fragment>
-                ),
-              }}
+              endAdornment={
+                <InputAdornment position='start'>
+                  {loading ? (
+                    <CircularProgress sx={{ mr: '10px' }} color='inherit' size={20} />
+                  ) : null}
+                </InputAdornment>
+              }
               required
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value={age}
-              label='Age'
+              labelId='select-customer'
+              label='Select Customer'
+              value={customerId}
               onChange={e => {
-                return setAge(e.target.value);
+                return setCustomerId(e.target.value);
               }}>
               {options.map(item => (
                 <MenuItem key={item.id} value={item.id}>
@@ -205,7 +152,7 @@ const AddCustomer = () => {
               ))}
             </Select>
           </FormControl>
-          {/* pasting copied select */}
+
           <TextField
             margin='normal'
             inputRef={nameRef}
@@ -232,19 +179,12 @@ const AddCustomer = () => {
             label='Api Token'
             size={isMobile ? 'small' : 'medium'}
           />
-          <TextField
-            autoComplete='off'
-            margin='normal'
-            inputRef={dateRef}
-            required
-            fullWidth
-            label='Api Token'
-            size={isMobile ? 'small' : 'medium'}
-          />
+
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               label='Select Inspection Date'
-              inputFormat='DD/MM/YYYY'
+              inputFormat='YYYY-MM-DD'
+              inputRef={dateRef}
               value={date}
               onChange={val => setDate(val)}
               renderInput={params => <TextField {...params} />}

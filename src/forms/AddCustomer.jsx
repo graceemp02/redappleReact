@@ -42,9 +42,9 @@ const AddCustomer = () => {
     formData.append('companyName', cNameRef.current.value);
     formData.append('companyId', cIdRef.current.value);
     formData.append('companyPwd', cPwdRef.current.value);
-    
+
     await axios
-      .post('https://redapple.graceautomation.tech/php/addCustomer.php', formData)
+      .post('addCustomer.php', formData)
       .then(result => {
         const res = result.data['res'];
         if (res === 'true') {
