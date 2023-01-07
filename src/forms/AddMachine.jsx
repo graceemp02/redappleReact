@@ -96,7 +96,17 @@ const AddCustomer = () => {
       active = false;
     };
   }, [loading]);
-
+  function genToken() {
+    const length = 10;
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    apiRef.current.value = result;
+    return;
+  }
   return (
     <div className='centerTable'>
       <Paper sx={{ p: 4, width: '95%', pt: 0, overflow: 'auto', maxHeight: '93vh' }}>
@@ -178,6 +188,19 @@ const AddCustomer = () => {
             fullWidth
             label='Api Token'
             size={isMobile ? 'small' : 'medium'}
+            helperText={
+              <span
+                onClick={genToken}
+                style={{
+                  marginLeft: '-14px',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  color: 'blue',
+                  textDecoration: 'underline',
+                }}>
+                Generate Random Token
+              </span>
+            }
           />
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -187,14 +210,16 @@ const AddCustomer = () => {
               inputRef={dateRef}
               value={date}
               onChange={val => setDate(val)}
-              renderInput={params => <TextField {...params} />}
+              renderInput={params => (
+                <TextField
+                  sx={{ display: 'block', my: 2 }}
+                  size={isMobile ? 'small' : 'medium'}
+                  {...params}
+                />
+              )}
             />
           </LocalizationProvider>
-          <Button
-            type='submit'
-            variant='contained'
-            sx={{ maxWidth: 200, ml: '1vh', mt: '1vh' }}
-            color='success'>
+          <Button type='submit' variant='contained' sx={{ maxWidth: 200 }} color='success'>
             Create Machine
           </Button>
         </Box>

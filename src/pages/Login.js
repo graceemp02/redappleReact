@@ -53,7 +53,6 @@ function LoginPage() {
       .then(result => {
         const res = result.data['res'];
         if (res === 'true') {
-          console.log('res is true');
           setUser(result.data['name']);
           navigate('/');
         } else if (res === 'Password Incorrent') setPwdError(true);

@@ -14,8 +14,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
-import { AddCustomer,AddMachine } from './forms';
+import { AddCustomer, AddMachine } from './forms';
 import EditCustomer from './forms/EditCustomer';
+import DashboardPage from './pages/Dasjboard';
 
 let theme = createTheme({ typography: { fontSize: '2vh' } });
 // theme = responsiveFontSizes(theme, { factor: 4 });
@@ -61,6 +62,19 @@ function App() {
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
                               <Profile />
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                      <Route
+                        path='/*'
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
+                              <DashboardPage />
                             </Box>
                           ) : (
                             <LoginPage />
