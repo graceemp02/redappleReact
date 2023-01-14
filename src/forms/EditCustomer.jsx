@@ -26,7 +26,6 @@ const EditCustomer = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const phoneRef = useRef();
-
   const cNameRef = useRef();
   const cIdRef = useRef();
   const { setUpdateCustomers } = useContext(UpdateCustomersContext);
@@ -53,15 +52,13 @@ const EditCustomer = () => {
     formData.append('cId', cIdRef.current.value);
 
     await axios
-      .post('https://redapple.graceautomation.tech/php/editCustomer.php', formData)
+      .post('editCustomer.php', formData)
       .then(result => {
         const res = result.data['res'];
-
         if (res === 'true') {
           nameRef.current.value = '';
           emailRef.current.value = '';
           phoneRef.current.value = '';
-
           cNameRef.current.value = '';
           cIdRef.current.value = '';
           setUpdateCustomers(pre => !pre);

@@ -20,6 +20,7 @@ import { Box } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
+import MyDialog from '../dialogs/MyDialog';
 
 let theme = createTheme();
 
@@ -42,6 +43,9 @@ const MachinesPage = () => {
   const { updateCustomers, setUpdateCustomers } = useContext(UpdateCustomersContext);
 
   const [rows, setRows] = useState(gRows);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [delid, setDelid] = useState(null);
+
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [query, setQuery] = useState('');
@@ -62,11 +66,10 @@ const MachinesPage = () => {
     };
   }, [updateCustomers]);
   const handleDel = async id => {
-    console.log(`Customer with ${id} is requested to deleta`);
     let formData = new FormData();
     formData.append('toDel', id);
     await axios
-      .post('https://redapple.graceautomation.tech/php/delCustomer.php', formData)
+      .post('delMachine.php', formData)
       .then(result => {
         console.log(result);
         setUpdateCustomers(pre => !pre);
@@ -84,8 +87,9 @@ const MachinesPage = () => {
     console.log(user);
   };
   const handleEdit = index => {
-    let user = rows[index];
-    navigate('/clints/edit', { state: user });
+    let machine = filteredRows[index];
+
+    navigate('/machines/edit', { state: machine });
   };
 
   return (
@@ -93,6 +97,7 @@ const MachinesPage = () => {
       <Paper
         sx={{
           p: { xs: 1, sm: 3 },
+          paddingTop: { xs: 0, sm: 0 },
           width: '95%',
           pt: 0,
           m: 0,
@@ -103,7 +108,6 @@ const MachinesPage = () => {
           style={{
             background: 'white',
             position: 'sticky',
-
             height: '8vh',
             zIndex: '1',
             top: 0,
@@ -140,7 +144,7 @@ const MachinesPage = () => {
             variant='contained'
             color='success'
             sx={{ maxWidth: 200 }}>
-            Create New
+            Create New Machine
           </Button>
         </div>
         <Table sx={{ fontSize: '1.65vh' }}>
@@ -206,7 +210,11 @@ const MachinesPage = () => {
                       <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
                     )}
                     <Button
-                      onClick={() => handleDel(row.id)}
+                      // onClick={() => handleDel(row.id)}
+                      onClick={() => {
+                        setDelid(row.id);
+                        return setOpenDialog(true);
+                      }}
                       variant='contained'
                       color='error'
                       sx={{ marginInline: { xs: 0, sm: 0.5 }, height: '20px', width: '50px' }}>
@@ -224,6 +232,23 @@ const MachinesPage = () => {
           </Typography>
         )}
       </Paper>
+      {openDialog && (
+        <MyDialog
+          title='Alert'
+          des='Are you sure you want to delete Machine?'
+          actions={[
+            {
+              onClick: () => {
+                handleDel(delid);
+                return setOpenDialog(false);
+              },
+              color: 'error',
+              text: 'Delete',
+            },
+            { onClick: () => setOpenDialog(false), color: 'primary', text: 'Cancel' },
+          ]}
+        />
+      )}
     </div>
   );
 };

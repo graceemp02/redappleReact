@@ -15,7 +15,6 @@ const IndoorSensors = () => {
         params: { api: machineID },
       })
       .then(result => {
-        console.log(result.data);
         setRes(result.data);
       })
       .catch(error => console.log(error));

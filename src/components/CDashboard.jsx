@@ -63,57 +63,52 @@ function CDashboard() {
         }}>
         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <div>
-            {' '}
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               AQI
             </Typography>
             <div>{res.aqi}%</div>
           </div>
           <div className='centerIcon'>
-            {' '}
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               FAN
             </Typography>
             <div className='iconsDiv'>
               <CircleIcon sx={circleStyle} htmlColor={res.fan1 > 0 ? '#00c853' : ''} />
               <CircleIcon sx={circleStyle} htmlColor={res.fan2 > 0 ? '#00c853' : ''} />
-            </div>{' '}
+            </div>
           </div>
           <div className='centerIcon'>
-            {' '}
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               UCV
             </Typography>
             <div className='iconsDiv'>
               <CircleIcon sx={circleStyle} htmlColor={res.uvc1 > 0 ? '#00c853' : ''} />
               <CircleIcon sx={circleStyle} htmlColor={res.uvc2 > 0 ? '#00c853' : ''} />
-            </div>{' '}
+            </div>
           </div>
           <div className='centerIcon'>
-            {' '}
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               OSA
             </Typography>
             <div className='iconsDiv'>
               <CircleIcon sx={circleStyle} htmlColor={res.osa1 > 0 ? '#00c853' : ''} />
               <CircleIcon sx={circleStyle} htmlColor={res.osa2 > 0 ? '#00c853' : ''} />
-            </div>{' '}
+            </div>
           </div>
           <div className='centerIcon'>
-            {' '}
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               C/H
             </Typography>
             <div className='iconsDiv'>
               <CircleIcon sx={circleStyle} htmlColor={res.ch1 > 0 ? 'blue' : ''} />
               <CircleIcon sx={circleStyle} htmlColor={res.ch2 > 0 ? 'red' : ''} />
-            </div>{' '}
+            </div>
           </div>
           <div>
             <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'black' }}>
               Temp
             </Typography>
-            <div>{res.temp}°F</div>{' '}
+            <div>{res.temp}°F</div>
           </div>
         </div>
         <div>

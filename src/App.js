@@ -14,7 +14,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useMediaQuery, Box } from '@mui/material';
 import { NavItems } from './components/constants';
 import Profile from './pages/Profile';
-import { AddCustomer, AddMachine } from './forms';
+import { AddCustomer, AddMachine, EditMachine } from './forms';
 import EditCustomer from './forms/EditCustomer';
 import DashboardPage from './pages/Dasjboard';
 
@@ -115,6 +115,19 @@ function App() {
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
                               <AddMachine />
+                            </Box>
+                          ) : (
+                            <LoginPage />
+                          )
+                        }
+                      />
+                      <Route
+                        path='/machines/edit'
+                        element={
+                          user ? (
+                            <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
+                              {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
+                              <EditMachine />
                             </Box>
                           ) : (
                             <LoginPage />

@@ -29,7 +29,7 @@ import dayjs from 'dayjs';
 let theme = createTheme();
 const AddCustomer = () => {
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [shrink, setShrink] = useState(false);
   const [options, setOptions] = useState([]);
   let loading = options.length === 0;
   // const loading = true;
@@ -46,35 +46,31 @@ const AddCustomer = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
-    console.log(customerId);
-    console.log(nameRef.current.value);
-    console.log(locationRef.current.value);
-    console.log(apiRef.current.value);
-    console.log(dateRef.current.value);
 
-    // formData.append('name', nameRef.current.value);
-    // formData.append('email', emailRef.current.value);
-    // formData.append('phone', phoneRef.current.value);
-    // formData.append('pwd', pwdRef.current.value);
-    // formData.append('companyName', cNameRef.current.value);
-    // formData.append('companyId', cIdRef.current.value);
-    // formData.append('companyPwd', cPwdRef.current.value);
+    formData.append('cid', customerId);
+    formData.append('name', nameRef.current.value);
+    formData.append('location', locationRef.current.value);
+    formData.append('date', dateRef.current.value);
+    formData.append('api', apiRef.current.value);
 
-    // await axios
-    //   .post('https://redapple.graceautomation.tech/php/addCustomer.php', formData)
-    //   .then(result => {
-    //     const res = result.data['res'];
-    //     if (res === 'true') {
-    //       //empty refs here
-    //       setUpdateCustomers(pre => !pre);
-    //       setOpenDialog(true);
-    //     } else {
-    //       console.log('New Machine is not added');
-    //     }
-    //   })
-    //   .catch(error => console.log(error));
+    await axios
+      .post('addMachine.php', formData)
+      .then(result => {
+        const res = result.data['res'];
+        if (res === 'true') {
+          nameRef.current.value = '';
+          locationRef.current.value = '';
+          dateRef.current.value = '';
+          apiRef.current.value = '';
+          setUpdateCustomers(pre => !pre);
+          setOpenDialog(true);
+        } else {
+          console.log('New Machine is not added');
+        }
+      })
+      .catch(error => console.log(error));
   };
-  //pasting mui useeffect
+
   useEffect(() => {
     let active = true;
 
@@ -105,6 +101,7 @@ const AddCustomer = () => {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     apiRef.current.value = result;
+    setShrink(true);
     return;
   }
   return (
@@ -127,7 +124,6 @@ const AddCustomer = () => {
             display={'inline'}
             sx={{
               fontSize: '2.3vh',
-
               fontWeight: 'bold',
               color: 'black',
             }}>
@@ -153,6 +149,7 @@ const AddCustomer = () => {
               label='Select Customer'
               value={customerId}
               onChange={e => {
+                console.log(e.target.value);
                 return setCustomerId(e.target.value);
               }}>
               {options.map(item => (
@@ -184,6 +181,7 @@ const AddCustomer = () => {
             autoComplete='off'
             margin='normal'
             inputRef={apiRef}
+            InputLabelProps={{ shrink: shrink }}
             required
             fullWidth
             label='Api Token'

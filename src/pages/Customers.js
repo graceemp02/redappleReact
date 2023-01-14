@@ -15,6 +15,8 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import MyDialog from '../dialogs/MyDialog';
+
 import { useEffect, useMemo, useState, useContext } from 'react';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -39,9 +41,11 @@ const headStyle = {
   fontWeight: 'bold',
 };
 const Customers = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+
   const [showUser, setShowUser] = useState({ status: false });
   const { updateCustomers, setUpdateCustomers } = useContext(UpdateCustomersContext);
-
+  const [delid, setDelid] = useState(null);
   const [rows, setRows] = useState(gRows);
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -90,7 +94,7 @@ const Customers = () => {
     });
   };
   const handleEdit = index => {
-    let user = rows[index];
+    let user = filteredRows[index];
     navigate('/clints/edit', { state: user });
   };
 
@@ -102,7 +106,6 @@ const Customers = () => {
             <div
               style={{
                 borderBottom: '1px solid black',
-
                 background: 'white',
                 position: 'sticky',
                 height: '8vh',
@@ -134,14 +137,19 @@ const Customers = () => {
                 </Button>
 
                 <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
-
-                <Button
-                  onClick={() => handleDel(showUser.id)}
-                  variant='contained'
-                  color='error'
-                  sx={{ marginInline: '5px', fontSize: '1vh' }}>
-                  Delete
-                </Button>
+                <form onSubmit="return confirm('are you sure')">
+                  <Button
+                    type='submit'
+                    onClick={() => {
+                      // return handleDel(showUser.id);
+                      return setDelid(showUser.id);
+                    }}
+                    variant='contained'
+                    color='error'
+                    sx={{ marginInline: '5px', fontSize: '1vh' }}>
+                    Delete
+                  </Button>
+                </form>
               </div>
             </div>
             <Table sx={{ fontSize: '1.7vh' }}>
@@ -167,7 +175,6 @@ const Customers = () => {
               style={{
                 background: 'white',
                 position: 'sticky',
-
                 height: '8vh',
                 zIndex: '1',
                 top: 0,
@@ -204,10 +211,10 @@ const Customers = () => {
                 variant='contained'
                 color='success'
                 sx={{ maxWidth: 200 }}>
-                Create New
+                Create New Customer
               </Button>
             </div>
-            <Table sx={{ fontSize: '1.7vh' }}>
+            <Table sx={{ fontSize: '1.65vh' }}>
               <TableHead
                 sx={{
                   outline: '1px solid black',
@@ -256,7 +263,11 @@ const Customers = () => {
                           <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
                         )}
                         <Button
-                          onClick={() => handleDel(row.id)}
+                          // onClick={() => handleDel(row.id)}
+                          onClick={() => {
+                            setDelid(row.id);
+                            return setOpenDialog(true);
+                          }}
                           variant='contained'
                           color='error'
                           sx={{ marginInline: 0.5, height: '20px', width: '50px' }}>
@@ -276,6 +287,23 @@ const Customers = () => {
           </>
         )}
       </Paper>
+      {openDialog && (
+        <MyDialog
+          title='Alert'
+          des='Are you sure you want to delete Customer?'
+          actions={[
+            {
+              onClick: () => {
+                handleDel(delid);
+                return setOpenDialog(false);
+              },
+              color: 'error',
+              text: 'Delete',
+            },
+            { onClick: () => setOpenDialog(false), color: 'primary', text: 'Cancel' },
+          ]}
+        />
+      )}
     </div>
   );
 };
