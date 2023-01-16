@@ -44,7 +44,10 @@ const MachinesPage = () => {
 
   const [rows, setRows] = useState(gRows);
   const [openDialog, setOpenDialog] = useState(false);
-  const [delid, setDelid] = useState(null);
+  const [del, setDel] = useState({
+    id: null,
+    name: '',
+  });
 
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -71,8 +74,8 @@ const MachinesPage = () => {
     await axios
       .post('delMachine.php', formData)
       .then(result => {
-        console.log(result);
         setUpdateCustomers(pre => !pre);
+        setDel({ id: null, name: '' });
       })
       .catch(error => console.log(error));
   };
@@ -83,8 +86,9 @@ const MachinesPage = () => {
   }, [query, rows]);
 
   const handleShow = index => {
-    let user = rows[index];
-    console.log(user);
+    let machine = filteredRows[index];
+    console.log(machine);
+    navigate('/machines/detail', { state: machine });
   };
   const handleEdit = index => {
     let machine = filteredRows[index];
@@ -210,9 +214,9 @@ const MachinesPage = () => {
                       <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
                     )}
                     <Button
-                      // onClick={() => handleDel(row.id)}
                       onClick={() => {
-                        setDelid(row.id);
+                        // setDelid(row.id);
+                        setDel({ id: row.id, name: row.name });
                         return setOpenDialog(true);
                       }}
                       variant='contained'
@@ -235,11 +239,11 @@ const MachinesPage = () => {
       {openDialog && (
         <MyDialog
           title='Alert'
-          des='Are you sure you want to delete Machine?'
+          des={`Are you sure you want to delete ${del.name}?`}
           actions={[
             {
               onClick: () => {
-                handleDel(delid);
+                handleDel(del.id);
                 return setOpenDialog(false);
               },
               color: 'error',

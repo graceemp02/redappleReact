@@ -45,7 +45,7 @@ const Customers = () => {
 
   const [showUser, setShowUser] = useState({ status: false });
   const { updateCustomers, setUpdateCustomers } = useContext(UpdateCustomersContext);
-  const [delid, setDelid] = useState(null);
+  const [del, setDel] = useState({ id: null, name: '' });
   const [rows, setRows] = useState(gRows);
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -126,7 +126,7 @@ const Customers = () => {
                   fontWeight: 'bold',
                   color: 'black',
                 }}>
-                Customer
+                Customer Detail
               </Typography>
               <div style={{ display: 'flex' }}>
                 <Button
@@ -135,21 +135,18 @@ const Customers = () => {
                   sx={{ fontSize: '1vh' }}>
                   Back to List
                 </Button>
-
                 <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
-                <form onSubmit="return confirm('are you sure')">
-                  <Button
-                    type='submit'
-                    onClick={() => {
-                      // return handleDel(showUser.id);
-                      return setDelid(showUser.id);
-                    }}
-                    variant='contained'
-                    color='error'
-                    sx={{ marginInline: '5px', fontSize: '1vh' }}>
-                    Delete
-                  </Button>
-                </form>
+                <Button
+                  type='submit'
+                  onClick={() => {
+                    setDel({ id: showUser.id, name: showUser.name });
+                    return setOpenDialog(true);
+                  }}
+                  variant='contained'
+                  color='error'
+                  sx={{ marginInline: '5px', fontSize: '1vh' }}>
+                  Delete
+                </Button>
               </div>
             </div>
             <Table sx={{ fontSize: '1.7vh' }}>
@@ -263,9 +260,9 @@ const Customers = () => {
                           <Divider orientation='vertical' flexItem sx={{ marginInline: '5px' }} />
                         )}
                         <Button
-                          // onClick={() => handleDel(row.id)}
                           onClick={() => {
-                            setDelid(row.id);
+                            // setDelid(row.id);
+                            setDel({ id: row.id, name: row.name });
                             return setOpenDialog(true);
                           }}
                           variant='contained'
@@ -290,11 +287,11 @@ const Customers = () => {
       {openDialog && (
         <MyDialog
           title='Alert'
-          des='Are you sure you want to delete Customer?'
+          des={`Are you sure you want to delete ${del.name}?`}
           actions={[
             {
               onClick: () => {
-                handleDel(delid);
+                handleDel(del.id);
                 return setOpenDialog(false);
               },
               color: 'error',
