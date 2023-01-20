@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.png';
 import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { UserContext } from '../UserContext';
 import axios from 'axios';
 import {
@@ -32,6 +32,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 function LoginPage() {
+  const user = localStorage.getItem('id');
+  useEffect(() => {
+    if (user) navigate('/');
+  }, []);
   const { setUser } = useContext(UserContext);
   const emailRef = useRef();
   const pwdRef = useRef();
@@ -53,12 +57,12 @@ function LoginPage() {
       .then(result => {
         const res = result.data['res'];
         if (res === 'true') {
-          setUser(result.data['name']);
+          setUser(result.data.name);
+          localStorage.setItem('id', result.data.id);
+          localStorage.setItem('name', result.data.name);
           navigate('/');
         } else if (res === 'Password Incorrent') setPwdError(true);
         else {
-          console.log('this is else');
-          console.log(result.data);
           setUserError(true);
         }
       })

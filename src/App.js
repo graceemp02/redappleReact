@@ -19,11 +19,12 @@ import EditCustomer from './forms/EditCustomer';
 import DashboardPage from './pages/Dasjboard';
 import ShowMachine from './miniPages/ShowMachine';
 
-let theme = createTheme({ typography: { fontSize: '2vh' } });
+let theme = createTheme({ typography: { fontSize: '2vh', button: { textTransform: 'none' } } });
 // theme = responsiveFontSizes(theme, { factor: 4 });
 
 function App() {
   const [user, setUser] = useState('');
+  const isLogedin = localStorage.getItem('id');
   const [customerID, setCustomerID] = useState('');
   const [machineID, setMachineID] = useState('');
   const [date, setDate] = useState('');
@@ -32,7 +33,8 @@ function App() {
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
+        {/* <BrowserRouter> */}
+        <BrowserRouter basename='newadmin'>
           <UserContext.Provider value={{ user, setUser }}>
             <CustomerContext.Provider value={{ customerID, setCustomerID }}>
               <MachineContext.Provider value={{ machineID, setMachineID }}>
@@ -44,7 +46,7 @@ function App() {
                           key={item.id}
                           path={`/${item.route}`}
                           element={
-                            user ? (
+                            isLogedin ? (
                               <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                                 {isMobile ? <MobileDrawer /> : <MiniDrawer page={`${item.id}`} />}
                                 {item.element}
@@ -58,7 +60,7 @@ function App() {
                       <Route
                         path='/profile'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
                               <Profile />
@@ -71,7 +73,7 @@ function App() {
                       <Route
                         path='/*'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={6} />}
                               <DashboardPage />
@@ -85,7 +87,7 @@ function App() {
                       <Route
                         path='/clints/new'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
                               <AddCustomer />
@@ -98,7 +100,7 @@ function App() {
                       <Route
                         path='/clints/edit'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'2'} />}
                               <EditCustomer />
@@ -111,7 +113,7 @@ function App() {
                       <Route
                         path='/machines/new'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
                               <AddMachine />
@@ -124,7 +126,7 @@ function App() {
                       <Route
                         path='/machines/edit'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
                               <EditMachine />
@@ -137,7 +139,7 @@ function App() {
                       <Route
                         path='/machines/detail'
                         element={
-                          user ? (
+                          isLogedin ? (
                             <Box sx={{ p: 1, pl: { xs: 1, sm: 9 }, mt: { xs: 7, sm: 0 } }}>
                               {isMobile ? <MobileDrawer /> : <MiniDrawer page={'3'} />}
                               <ShowMachine />

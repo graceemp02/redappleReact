@@ -110,10 +110,14 @@ function Customers() {
                   <ListItemButton
                     sx={{ padding: '0.3rem 1rem' }}
                     divider={filteredCustomers.length - 1 === row.id ? false : true}
-                    key={parseInt(row.id)}
+                    key={row.id}
                     selected={selectedIndex === row.id}
                     onClick={event => handleListItemClick(event, row.id)}>
-                    <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
+                    <ListItemText
+                      key={row.id}
+                      primary={row.name}
+                      sx={{ m: 0, fontSize: '2vh !important' }}
+                    />
                   </ListItemButton>
                 </>
               );

@@ -159,12 +159,15 @@ export default function MiniDrawer(props) {
                 }}>
                 <AccountCircleOutlinedIcon sx={iconStyle} />
               </ListItemIcon>
-              <ListItemText primary={user} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={localStorage.getItem('name')} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
-              onClick={() => setUser(null)}
+              onClick={() => {
+                localStorage.clear();
+                setUser(null);
+              }}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',

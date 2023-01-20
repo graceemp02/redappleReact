@@ -149,7 +149,6 @@ const AddCustomer = () => {
               label='Select Customer'
               value={customerId}
               onChange={e => {
-                console.log(e.target.value);
                 return setCustomerId(e.target.value);
               }}>
               {options.map(item => (

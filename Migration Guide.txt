@@ -1,0 +1,1 @@
+1. Change Data type in advertisment table, for ad_pic from media to VARCHAR

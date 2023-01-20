@@ -1,11 +1,136 @@
 /** @format */
-import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Fab, Paper, Stack, TextField, Typography } from '@mui/material';
 import Customers from '../components/Customers.jsx';
 import Machines from '../components/machines';
-import ImageUpload from '../components/ImageUpload.jsx';
-import { useState } from 'react';
+import { useContext, useRef, useState, useEffect } from 'react';
+import MyDialog from '../dialogs/MyDialog';
+import { AddPhotoAlternate } from '@mui/icons-material';
+import { MachineContext } from '../MachineContext';
+import { CustomerContext } from '../CustomerContext.jsx';
+import axios from 'axios';
+
 function AdvertismentPage() {
-  const [adImg, setAdImg] = useState(null);
+  const adTimeRef = useRef();
+  const [dialog, setDialog] = useState({ status: false, msg: '', title: '' });
+  const { machineID } = useContext(MachineContext);
+  const { customerID } = useContext(CustomerContext);
+  const [adImg, setAdImg] = useState();
+  const [imgUpdate, setImgUpdate] = useState(false);
+  // const [url, setUrl] = useState();
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axios
+      .get(`advertisment.php?cid=${customerID}&api=${machineID}`, { cancelToken: source.token })
+      .then(res => {
+        res.data.path ? setAdImg(axios.defaults.baseURL + res.data.path) : setAdImg(null);
+        adTimeRef.current.value = res.data.time;
+      })
+      .catch(err => console.log(err));
+    return () => {
+      source.cancel();
+    };
+  }, [machineID, imgUpdate]);
+  const imgRef = useRef(null);
+
+  const imgForSingleMachine = async () => {
+    if (imgRef.current.files[0]) {
+      let fd = new FormData();
+      fd.append('fileToUpload', imgRef.current.files[0]);
+      fd.append('cid', customerID);
+      fd.append('api', machineID);
+      await axios
+        .post('advertisment.php', fd)
+        .then(result => {
+          const res = result.data.res;
+          res === 'true'
+            ? setDialog({
+                msg: 'Image is Uploaded for only Selected Machine.',
+                title: 'SUCCESS',
+                status: true,
+              })
+            : setDialog({
+                msg: res,
+                title: 'FAILURE',
+                status: true,
+              });
+        })
+        .catch(err => console.log(err));
+      setImgUpdate(pre => !pre);
+      imgRef.current.value = null;
+    }
+  };
+  const imgForAllMachine = async () => {
+    if (imgRef.current.files[0]) {
+      let fd = new FormData();
+      fd.append('fileToUpload', imgRef.current.files[0]);
+      fd.append('cid', customerID);
+      await axios
+        .post('advertisment.php', fd)
+        .then(result => {
+          console.log(result.data);
+          const res = result.data.res;
+          res === 'true'
+            ? setDialog({
+                msg: 'Image is Uploaded for All Machines.',
+                title: 'SUCCESS',
+                status: true,
+              })
+            : setDialog({
+                msg: res,
+                title: 'FAILURE',
+                status: true,
+              });
+        })
+        .catch(err => console.log(err));
+      setImgUpdate(pre => !pre);
+      imgRef.current.value = null;
+    }
+  };
+  const timeForSingleMachine = async () => {
+    let fd = new FormData();
+    fd.append('time', adTimeRef.current.value);
+    fd.append('api', machineID);
+    await axios
+      .post('advertisment.php', fd)
+      .then(result => {
+        const res = result.data.res;
+        res === 'true'
+          ? setDialog({
+              msg: 'Time is Updated for only Selected Machine.',
+              title: 'SUCCESS',
+              status: true,
+            })
+          : setDialog({
+              msg: res,
+              title: 'FAILURE',
+              status: true,
+            });
+      })
+      .catch(err => console.log(err));
+  };
+  const timeForAllMachine = async () => {
+    let fd = new FormData();
+    fd.append('time', adTimeRef.current.value);
+    fd.append('cid', customerID);
+    await axios
+      .post('advertisment.php', fd)
+      .then(result => {
+        const res = result.data.res;
+        res === 'true'
+          ? setDialog({
+              msg: 'Time is Updated for all Machines.',
+              title: 'SUCCESS',
+              status: true,
+            })
+          : setDialog({
+              msg: res,
+              title: 'FAILURE',
+              status: true,
+            });
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <Stack gap={1} direction={{ xs: 'column', sm: 'row' }}>
       <div>
@@ -23,44 +148,164 @@ function AdvertismentPage() {
 
             fontSize: '3.3vh!important',
           }}>
-          ADVERTISEMENT
+          ADVERTISMENT
         </Typography>
         <Paper sx={{ flexGrow: 1, p: 1 }}>
           <Stack sx={{ justifyContent: 'space-between' }} direction={{ xs: 'column', sm: 'row' }}>
-            <div>
-              <Typography fontSize='2vh'>
-                Note:
+            <Box sx={{ flex: 1, order: { xs: 2, sm: 1 } }}>
+              <div
+                style={{
+                  border: '2px solid black',
+                  borderRadius: '1vh',
+                  padding: '1vh',
+                  marginBottom: '.3vh',
+                }}>
+                <Typography fontWeight='bold' fontSize='2.5vh'>
+                  Upload Image:
+                </Typography>
+                <u>Note:</u>
                 <ul style={{ marginLeft: '50px' }}>
-                  <li>Size of image should not exceed 2MB.</li>
-                  <li>{'File Must be in Squre Dimensions(i.e. aspect ratio 1/1)'}</li>
-                  <li>Recomended dimensions of image are 1024 by 1024.</li>
+                  <li>
+                    <Typography fontSize='2vh'>Size of image should not exceed 2MB.</Typography>
+                  </li>
+                  <li>
+                    <Typography fontSize='2vh'>
+                      Image must be with .jpg or .png extension.
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography fontSize='2vh'>
+                      File Must be in Squre Dimensions(i.e. aspect ratio 1/1)
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography fontSize='2vh'>
+                      Recomended dimensions of image are 1024 by 1024.
+                    </Typography>
+                  </li>
                 </ul>
-                <br />
-              </Typography>
-              <Typography fontWeight='bold' fontSize='2vh'>
-                Upload Image:
-              </Typography>
+                <form onSubmit={e => e.preventDefault()}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: '2vh 0',
+                    }}>
+                    <Paper
+                      elevation={10}
+                      sx={{
+                        width: 'fit-content',
+                        p: '1vh',
 
-              <ImageUpload imgData={setAdImg} />
-              <Button variant='contained'>Upload for Selected Machine</Button>
-              <Button color='success' variant='contained'>
-                Upload for all Machine
-              </Button>
-              <Typography fontWeight='bold' fontSize='2vh'>
-                Advertising Time:
-              </Typography>
-              <TextField type='number' />
-              <br />
-              <Button variant='contained'>Upload for Selected Machine</Button>
-              <Button color='success' variant='contained'>
-                Upload for all Machine
-              </Button>
-            </div>
-            <Box sx={{ width: '40%', aspectRatio: '1/1', border: '1px solid black', m: 1, p: 1 }}>
-              image priview
+                        paddingInline: '1.5vh',
+                      }}>
+                      <input
+                        required
+                        accept='image/*'
+                        ref={imgRef}
+                        id='img'
+                        type='file'
+                        style={{ width: '80%' }}
+                        // onChange={handleUploadClick}
+                      />
+                      <label htmlFor='img'>
+                        <Fab component='span'>
+                          <AddPhotoAlternate />
+                        </Fab>
+                      </label>
+                    </Paper>
+                  </div>
+                  <Typography sx={{ display: 'inline', fontSize: '2vh', fontWeight: 'bold' }}>
+                    Upload For:
+                  </Typography>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    size='large'
+                    onClick={imgForSingleMachine}
+                    sx={{ marginInline: '2vh' }}>
+                    Selected Machine
+                  </Button>
+                  <Button
+                    type='submit'
+                    color='success'
+                    variant='contained'
+                    size='large'
+                    onClick={imgForAllMachine}
+                    sx={{ m: '1vh', ml: '1.5vh' }}>
+                    All Machines
+                  </Button>
+                </form>
+              </div>
+              <div style={{ border: '2px solid black', borderRadius: '1vh', padding: '1vh' }}>
+                <Typography fontWeight='bold' fontSize='2.5vh'>
+                  Advertising Time:
+                </Typography>
+                <form onSubmit={e => e.preventDefault()}>
+                  <div style={{ margin: '2vh 0', display: 'flex', justifyContent: 'center' }}>
+                    <TextField
+                      required
+                      label='Enter Time in Seconds'
+                      InputLabelProps={{ shrink: true }}
+                      inputRef={adTimeRef}
+                      type='number'
+                    />
+                  </div>
+
+                  <Typography sx={{ display: 'inline', fontSize: '2vh', fontWeight: 'bold' }}>
+                    Update For:
+                  </Typography>
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    size='large'
+                    sx={{ marginInline: '2vh' }}
+                    onClick={timeForSingleMachine}>
+                    Selected Machine
+                  </Button>
+                  <Button
+                    type='submit'
+                    color='success'
+                    variant='contained'
+                    size='large'
+                    onClick={timeForAllMachine}
+                    sx={{ m: '1vh', ml: '1.5vh' }}>
+                    All Machines
+                  </Button>
+                </form>
+              </div>
+            </Box>
+            <Box
+              sx={{
+                order: { xs: 1, sm: 2 },
+                flex: 1,
+                aspectRatio: '1 / 1',
+                border: '2px solid black',
+                borderRadius: '1vh',
+                marginInline: { xs: 0, sm: 1 },
+                marginBlock: { xs: 1, sm: 0 },
+                overflow: 'hidden',
+              }}>
+              {adImg ? (
+                <img alt='Advertisment' width='100%' src={adImg} />
+              ) : (
+                <Typography fontSize='2.5vh' textAlign='center'>
+                  Image is not Uploaded for Selected Machine.
+                </Typography>
+              )}
             </Box>
           </Stack>
         </Paper>
+        {dialog.status && (
+          <MyDialog
+            title={dialog.title}
+            des={dialog.msg}
+            actions={[
+              { onClick: () => setDialog({ status: false }), color: 'primary', text: 'OK' },
+            ]}
+          />
+        )}
       </div>
     </Stack>
   );

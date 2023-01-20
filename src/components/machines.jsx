@@ -77,10 +77,14 @@ function Machines() {
                 <ListItemButton
                   sx={{ padding: '0.3rem 1rem' }}
                   divider
-                  key={row.id}
+                  key={row.apiToken}
                   selected={selectedIndex === row.apiToken}
                   onClick={event => handleListItemClick(event, row.apiToken)}>
-                  <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
+                  <ListItemText
+                    primary={row.name}
+                    key={row.apiToken}
+                    sx={{ m: 0, fontSize: '2vh !important' }}
+                  />
                 </ListItemButton>
               </>
             );
