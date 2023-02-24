@@ -35,7 +35,6 @@ function Customers() {
     };
   }, [updateCustomers]);
 
-  useEffect(() => {}, []);
   const handleListItemClick = (e, index) => {
     e.preventDefault();
     setCustomerID(index);
@@ -65,7 +64,7 @@ function Customers() {
             color: 'black',
             mb: 0.5,
             ml: 0.2,
-            fontSize: '3.3vh!important',
+            fontSize: '3.1vh!important',
           }}>
           CUSTOMERS
         </Typography>

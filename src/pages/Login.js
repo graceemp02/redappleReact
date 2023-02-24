@@ -47,8 +47,8 @@ function LoginPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setUserError(false);
-    setPwdError(false);
+    userError && setUserError(false);
+    pwdError && setPwdError(false);
     let formData = new FormData();
     formData.append('username', emailRef.current.value);
     formData.append('password', pwdRef.current.value);
@@ -105,7 +105,7 @@ function LoginPage() {
             <Typography component='h1' variant='h3'>
               Login
             </Typography>
-            <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
               <TextField
                 error={userError && true}
                 margin='normal'
@@ -130,10 +130,10 @@ function LoginPage() {
                 autoComplete='current-password'
                 helperText={pwdError && 'Password Incorrent'}
               />
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'
-              />
+              /> */}
               <br />
               <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
                 Login In

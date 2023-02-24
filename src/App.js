@@ -33,8 +33,8 @@ function App() {
   return (
     <div className='App'>
       <ThemeProvider theme={theme}>
-        {/* <BrowserRouter> */}
-        <BrowserRouter basename='newadmin'>
+        <BrowserRouter>
+          {/* <BrowserRouter basename='newadmin'> */}
           <UserContext.Provider value={{ user, setUser }}>
             <CustomerContext.Provider value={{ customerID, setCustomerID }}>
               <MachineContext.Provider value={{ machineID, setMachineID }}>

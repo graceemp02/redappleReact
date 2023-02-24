@@ -154,3 +154,11 @@ code {
   border-radius: 1vh;
 }
 
+.alert {
+  height: 35px;
+  width: 140px;
+  padding-inline: 7px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

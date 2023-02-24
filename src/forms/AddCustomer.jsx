@@ -173,7 +173,7 @@ const AddCustomer = () => {
               inputRef={cIdRef}
               required
               fullWidth
-              label='Company ID'
+              label='Company Username'
             />
 
             <TextField
