@@ -56,8 +56,8 @@ code {
 }
 
 ::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.3em;
+  height: 0.3em;
 }
 ::-webkit-scrollbar-track {
   /* background-color: rgba(255, 0, 0, 1); */
@@ -161,4 +161,14 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+/* .MuiAlert-icon {
+  font-size: inherit !important;
+  margin-right: 5px !important;
+} */
+@media (max-width: 600px) {
+  .alert {
+    font-size: 1.4vh !important;
+    width: 125px;
+  }
 }

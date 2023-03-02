@@ -72,7 +72,7 @@ const RowFile = ({ lable, name }) => {
   };
   return (
     <StyledTableRow>
-      <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
+      <StyledTableCell sx={{ paddingRight: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
           {!upload ? (

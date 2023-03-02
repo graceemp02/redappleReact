@@ -5,31 +5,24 @@ import React, { useContext, useEffect, useState } from 'react';
 import CircleIcon from '@mui/icons-material/Circle';
 import Logo from '../assests/logo.png';
 import { MachineContext } from '../MachineContext';
-import { DateContext } from '../DateContext';
 import axios from 'axios';
 
 function CDashboard() {
   const [res, setRes] = useState({});
   const [display, setDisplay] = useState('flex');
   const { machineID } = useContext(MachineContext);
-  const { date, setDate } = useContext(DateContext);
-
-  const fetchDta = async () => {
-    await axios
-      .get('dashboard.php', {
-        params: { api: machineID },
-      })
-      .then(result => {
-        setRes(result.data);
-        setDate(result.data.date);
-        setDisplay(result.data.humHdnStatus ? 'flex' : 'none');
-      })
-      .catch(error => console.log(error));
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchDta();
+      axios
+        .get('dashboard.php', {
+          params: { api: machineID },
+        })
+        .then(result => {
+          setRes(result.data);
+          setDisplay(result.data.humHdnStatus ? 'flex' : 'none');
+        })
+        .catch(error => console.log(error));
     }, 1000);
     return () => clearInterval(interval);
   }, [machineID]);
@@ -38,7 +31,6 @@ function CDashboard() {
     width: '2.7vh',
     height: '2.7vh',
   };
-
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <Typography
@@ -210,7 +202,7 @@ function CDashboard() {
               {res.customer}
             </Typography>
             <Typography color={'black'} variant={'body1'} fontSize='.84em' mt={0.5}>
-              Next Inspection Date: {date}
+              Next Inspection Date: {res.date}
             </Typography>
           </div>
           <div

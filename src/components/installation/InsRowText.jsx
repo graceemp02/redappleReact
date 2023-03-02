@@ -2,7 +2,7 @@
 
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { Stack, TableRow, Alert, Typography } from '@mui/material';
+import { Stack, TableRow, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CustomerContext } from '../../CustomerContext';
@@ -30,14 +30,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     paddingInline: 1,
   },
 }));
-const RowText = ({ lable, name }) => {
+const InsRowText = ({ lable, name }) => {
   const { customerID } = useContext(CustomerContext);
   const [upload, setUpload] = useState(false);
 
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
     const inv = setInterval(() => {
       axios
-        .get(`company/txtInput.php?id=${customerID}&name=${name}`)
+        .get(`inspector/checkInput.php?id=${customerID}&name=${name}`, {
+          cancelToken: source.token,
+        })
         .then(res => {
           const data = res.data.res;
           if (data) {
@@ -47,6 +51,7 @@ const RowText = ({ lable, name }) => {
         .catch(err => console.log(err));
     }, 1000);
     return () => {
+      source.cancel();
       clearInterval(inv);
     };
   }, [customerID]);
@@ -56,7 +61,13 @@ const RowText = ({ lable, name }) => {
       <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-          {!upload ? 'Data not Updated' : <Typography>{upload}</Typography>}
+          {!upload ? (
+            'Pending'
+          ) : (
+            <Typography>
+              {upload === '1' ? 'Verified' : upload === '0' ? 'Pending' : upload}
+            </Typography>
+          )}
         </Stack>
       </StyledTableCell>
       <StyledTableCell align='right'>
@@ -65,20 +76,10 @@ const RowText = ({ lable, name }) => {
             display: 'flex',
             justifyContent: 'flex-end',
             paddingInline: '10px',
-          }}>
-          {upload ? (
-            <Alert className='alert' severity='success'>
-              Uploaded
-            </Alert>
-          ) : (
-            <Alert className='alert' severity='warning'>
-              Not Uploaded
-            </Alert>
-          )}
-        </div>
+          }}></div>
       </StyledTableCell>
     </StyledTableRow>
   );
 };
 
-export default RowText;
+export default InsRowText;

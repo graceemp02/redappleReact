@@ -33,7 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     paddingInline: 1,
   },
 }));
-const RowFile = ({ lable, name }) => {
+const RowFileS = ({ lable, name }) => {
   const [dialog, setDialog] = useState({ status: false, msg: '', title: '' });
   const { customerID } = useContext(CustomerContext);
   const [status, setStatus] = useState(0);
@@ -43,10 +43,7 @@ const RowFile = ({ lable, name }) => {
     await axios
       .get(`company/fileInput.php?id=${customerID}&status=${name}Status`)
       .then(res => setStatus(+res.data.res))
-      .catch(err => {
-        console.log('Request Cancled with cid: ' + customerID);
-        console.log(err);
-      });
+      .catch(err => console.log(err));
   };
   useEffect(() => {
     const inv = setInterval(() => {
@@ -56,21 +53,7 @@ const RowFile = ({ lable, name }) => {
       clearInterval(inv);
     };
   }, [customerID]);
-  const handleAction = async e => {
-    await axios
-      .get(`inspector/action.php?id=${customerID}&action=${e.target.value}&name=${name}`)
-      .then(res => {
-        if (res.data.res === 'true') {
-          getStatus();
-          setDialog({
-            status: true,
-            title: 'Success',
-            msg: `Status Updated Successfully`,
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
+
   const handleDownload = async () => {
     await axios
       .get(`inspector/action.php?id=${customerID}&action=1&name=${name}`)
@@ -97,34 +80,8 @@ const RowFile = ({ lable, name }) => {
               'File Not Uploaded'
             ) : (
               <>
-                <Button onClick={handleDownload} size='small' variant='contained'>
+                <Button color='success' onClick={handleDownload} size='small' variant='contained'>
                   Download
-                </Button>
-                <Button
-                  value='2'
-                  onClick={handleAction}
-                  size='small'
-                  variant='contained'
-                  color='success'>
-                  Approve
-                </Button>
-                <Button
-                  value='3'
-                  onClick={handleAction}
-                  size='small'
-                  variant='contained'
-                  color='error'>
-                  Reject
-                </Button>
-
-                <Button
-                  size='small'
-                  onClick={() => {
-                    console.log('Detail button is clicked with detail is: ' + detail);
-                    setDetail(true);
-                  }}
-                  variant='contained'>
-                  Details
                 </Button>
               </>
             )}
@@ -181,4 +138,4 @@ const RowFile = ({ lable, name }) => {
   );
 };
 
-export default RowFile;
+export default RowFileS;

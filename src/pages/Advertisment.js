@@ -280,12 +280,12 @@ function AdvertismentPage() {
               sx={{
                 order: { xs: 1, sm: 2 },
                 flex: 1,
-                aspectRatio: '1 / 1',
                 border: '2px solid black',
                 borderRadius: '1vh',
                 marginInline: { xs: 0, sm: 1 },
                 marginBlock: { xs: 1, sm: 0 },
                 overflow: 'hidden',
+                height: 'fit-content',
               }}>
               {adImg ? (
                 <img alt='Advertisment' width='100%' src={adImg} />

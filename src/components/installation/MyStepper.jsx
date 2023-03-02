@@ -41,10 +41,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export default function HorizontalNonLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const oldStep = +localStorage.getItem('admin_ins_step');
+  const [activeStep, setActiveStep] = React.useState(() => oldStep);
   const [completed, setCompleted] = React.useState({});
-  const id = localStorage.getItem('id');
-
   const totalSteps = () => {
     return steps.length;
   };
@@ -69,14 +68,17 @@ export default function HorizontalNonLinearStepper() {
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
+    localStorage.setItem('admin_ins_step', newActiveStep);
   };
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
+    console.log(activeStep);
   };
 
   const handleStep = step => () => {
     setActiveStep(step);
+    localStorage.setItem('admin_ins_step', step);
   };
 
   // const handleComplete = () => {
@@ -93,7 +95,7 @@ export default function HorizontalNonLinearStepper() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ margin: 1 }}>
+      <Box sx={{ margin: { xs: 0, sm: 1 } }}>
         <Stepper
           sx={{
             paddingBlock: '2vh',
@@ -134,7 +136,6 @@ export default function HorizontalNonLinearStepper() {
                       <StyledTableCell align='right'>Status</StyledTableCell>
                     </TableRow>
                   </TableHead>
-
                   {activeStep === 0 ? (
                     <FirstPage />
                   ) : activeStep === 1 ? (

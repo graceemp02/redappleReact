@@ -8,7 +8,6 @@ import Customers from '../components/Customers.jsx';
 import Machines from '../components/machines';
 import CDashboard from '../components/CDashboard';
 import Relays from '../components/Relays';
-import System from '../components/System';
 import Sensors from '../components/Sensors';
 import TestSystem from '../components/TestSystem';
 

@@ -1,6 +1,6 @@
 
 echo "Switching Branch Main........................................"
-git checkout main
+# git checkout main
 
 echo "Adding to git........................................"
 git add .
@@ -14,11 +14,11 @@ git commit -m "$Msg"
 echo "git pushing to GitHub........................................"
 git push
 
-echo "Building App........................................"
-npm run build
+# echo "Building App........................................"
+# npm run build
 
 echo "Deploying Files to Server........................................"
 # scp -r build/* root@146.190.65.198:/var/www/html/
-scp -r build/* root@198.199.82.208:/var/www/iamredapple.com/newadmin
+scp -r build/* root@137.184.179.113:/var/www/iamredapple.com/newadmin
 
 echo "Done!! ........................................"

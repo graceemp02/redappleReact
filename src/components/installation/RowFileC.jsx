@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { Button, Stack, TableRow, Alert } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import axios from 'axios';
 import MyDialog from '../../dialogs/MyDialog';
 import { CustomerContext } from '../../CustomerContext';
@@ -33,20 +32,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     paddingInline: 1,
   },
 }));
-const RowFile = ({ lable, name }) => {
+const RowFileC = ({ lable, name }) => {
   const [dialog, setDialog] = useState({ status: false, msg: '', title: '' });
   const { customerID } = useContext(CustomerContext);
-  const [status, setStatus] = useState(0);
   const [detail, setDetail] = useState(false);
+  const [upload, setUpload] = useState(false);
 
   const getStatus = async () => {
     await axios
-      .get(`company/fileInput.php?id=${customerID}&status=${name}Status`)
-      .then(res => setStatus(+res.data.res))
-      .catch(err => {
-        console.log('Request Cancled with cid: ' + customerID);
-        console.log(err);
-      });
+      .get(`company/fileInput.php?id=${customerID}&name=${name}`)
+      .then(res => {
+        const data = res.data.res;
+        if (data) {
+          setUpload(true);
+        } else setUpload(false);
+      })
+      .catch(err => console.log(err));
   };
   useEffect(() => {
     const inv = setInterval(() => {
@@ -56,21 +57,7 @@ const RowFile = ({ lable, name }) => {
       clearInterval(inv);
     };
   }, [customerID]);
-  const handleAction = async e => {
-    await axios
-      .get(`inspector/action.php?id=${customerID}&action=${e.target.value}&name=${name}`)
-      .then(res => {
-        if (res.data.res === 'true') {
-          getStatus();
-          setDialog({
-            status: true,
-            title: 'Success',
-            msg: `Status Updated Successfully`,
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
+
   const handleDownload = async () => {
     await axios
       .get(`inspector/action.php?id=${customerID}&action=1&name=${name}`)
@@ -93,30 +80,13 @@ const RowFile = ({ lable, name }) => {
         <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
         <StyledTableCell>
           <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-            {status === 0 ? (
+            {!upload ? (
               'File Not Uploaded'
             ) : (
               <>
-                <Button onClick={handleDownload} size='small' variant='contained'>
+                <Button color='success' onClick={handleDownload} size='small' variant='contained'>
                   Download
                 </Button>
-                <Button
-                  value='2'
-                  onClick={handleAction}
-                  size='small'
-                  variant='contained'
-                  color='success'>
-                  Approve
-                </Button>
-                <Button
-                  value='3'
-                  onClick={handleAction}
-                  size='small'
-                  variant='contained'
-                  color='error'>
-                  Reject
-                </Button>
-
                 <Button
                   size='small'
                   onClick={() => {
@@ -137,23 +107,9 @@ const RowFile = ({ lable, name }) => {
               justifyContent: 'flex-end',
               paddingInline: '10px',
             }}>
-            {status === 1 ? (
-              <Alert className='alert' variant='filled' color='warning' severity='info'>
-                In Process
-              </Alert>
-            ) : status === 2 ? (
-              <Alert className='alert' variant='filled' severity='success'>
-                Approved
-              </Alert>
-            ) : status === 3 ? (
-              <Alert
-                className='alert'
-                variant='filled'
-                color='error'
-                iconMapping={{
-                  success: <WarningAmberIcon fontSize='inherit' />,
-                }}>
-                Rejected
+            {upload ? (
+              <Alert className='alert' severity='success'>
+                Uploaded
               </Alert>
             ) : (
               <Alert className='alert' severity='warning'>
@@ -181,4 +137,4 @@ const RowFile = ({ lable, name }) => {
   );
 };
 
-export default RowFile;
+export default RowFileC;

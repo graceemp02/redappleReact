@@ -10,13 +10,12 @@ import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
 import { MachineContext } from '../MachineContext';
 
-let iMachines = [];
 function Machines() {
   const { customerID } = useContext(CustomerContext);
-  const { setMachineID } = useContext(MachineContext);
-
-  const [machines, setMachines] = useState(iMachines);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { machineID, setMachineID } = useContext(MachineContext);
+  const selectedApiClient = localStorage.getItem('admin_api_client');
+  const [machines, setMachines] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(() => (machineID ? machineID : 0));
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
@@ -26,11 +25,12 @@ function Machines() {
         cancelToken: source.token,
       })
       .then(result => {
-        iMachines = result.data;
-
-        setMachines(iMachines);
-        setSelectedIndex(iMachines[0].apiToken);
-        setMachineID(iMachines[0].apiToken);
+        setMachines(result.data);
+        if (!machineID || selectedApiClient !== customerID)
+          setSelectedIndex(result.data[0].apiToken);
+        setMachineID(result.data[0].apiToken);
+        localStorage.setItem('admin_api', result.data[0].apiToken);
+        localStorage.setItem('admin_api_client', customerID);
       })
       .catch(error => console.log(error));
     return () => {
@@ -40,6 +40,8 @@ function Machines() {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
     setMachineID(index);
+    localStorage.setItem('admin_api', index);
+    localStorage.setItem('admin_api_client', customerID);
   };
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>

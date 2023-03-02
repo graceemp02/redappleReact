@@ -9,13 +9,12 @@ import { TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { CustomerContext } from '../CustomerContext';
 import { UpdateCustomersContext } from '../UpdateCustomersContext';
-let iCustomers = [];
 
 function Customers() {
   const { updateCustomers } = useContext(UpdateCustomersContext);
-  const [customers, setCustomers] = useState(iCustomers);
-  const { setCustomerID } = useContext(CustomerContext);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { customerID, setCustomerID } = useContext(CustomerContext);
+  const [customers, setCustomers] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(() => customerID);
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -24,10 +23,12 @@ function Customers() {
     axios
       .get('customers.php', { cancelToken: source.token })
       .then(result => {
-        iCustomers = result.data;
-        setCustomers(iCustomers);
-        setCustomerID(iCustomers[0].id);
-        setSelectedIndex(result.data[0].id);
+        setCustomers(result.data);
+        if (!customerID) {
+          setCustomerID(result.data[0].id);
+          setSelectedIndex(result.data[0].id);
+          localStorage.setItem('admin_client', result.data[0].id);
+        }
       })
       .catch(error => console.log(error));
     return () => {
@@ -39,6 +40,7 @@ function Customers() {
     e.preventDefault();
     setCustomerID(index);
     setSelectedIndex(index);
+    localStorage.setItem('admin_client', index);
   };
   const filteredCustomers = useMemo(() => {
     return customers.filter(item => {
@@ -107,16 +109,12 @@ function Customers() {
               return (
                 <>
                   <ListItemButton
+                    key={row.id.toString()}
                     sx={{ padding: '0.3rem 1rem' }}
                     divider={filteredCustomers.length - 1 === row.id ? false : true}
-                    key={row.id}
                     selected={selectedIndex === row.id}
                     onClick={event => handleListItemClick(event, row.id)}>
-                    <ListItemText
-                      key={row.id}
-                      primary={row.name}
-                      sx={{ m: 0, fontSize: '2vh !important' }}
-                    />
+                    <ListItemText primary={row.name} sx={{ m: 0, fontSize: '2vh !important' }} />
                   </ListItemButton>
                 </>
               );

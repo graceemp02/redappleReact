@@ -53,6 +53,7 @@ export default function NewCustomerSuccess({ title, des, actions }) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = () => {
+    
     setOpen(false);
   };
 

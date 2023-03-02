@@ -7,20 +7,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { MachineContext } from '../MachineContext';
-import { DateContext } from '../DateContext';
+import MyDialog from '../dialogs/MyDialog';
 
 import axios from 'axios';
 
 const IndoorSensors = () => {
   const [value, setValue] = useState(dayjs(new Date()));
   const { machineID } = useContext(MachineContext);
-  const { setDate } = useContext(DateContext);
+  const [dialog, setDialog] = useState(false);
 
   const handleChange = newValue => {
     setValue(newValue);
-    console.log(newValue.date());
-    console.log(newValue.month() + 1);
-    console.log(newValue.year());
   };
   const handleSubmit = async e => {
     e.preventDefault();
@@ -30,37 +27,35 @@ const IndoorSensors = () => {
     axios
       .post('inspection.php', formData)
       .then(res => {
-        console.log(
-          res.data ? setDate(`${value.month() + 1}-${value.date()}-${value.year()}`) : 'error'
-        );
+        res.data && setDialog(true);
       })
       .catch(error => console.log(error));
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Paper
+    <Paper
+      sx={{
+        flex: 1,
+        width: '100%',
+        bgcolor: 'background.paper',
+        borderRadius: '1vh',
+        p: '1vh',
+      }}>
+      <Typography
+        fontWeight={'bold'}
+        sx={{ textDecoration: 'Underline', color: 'black', fontSize: '3.1vh' }}>
+        EDIT INSPECTION DATE
+      </Typography>
+      <Box
+        onSubmit={handleSubmit}
+        component='form'
         sx={{
-          flex: 1,
-          width: '100%',
-          bgcolor: 'background.paper',
-          borderRadius: '1vh',
-          p: '1vh',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBlock: '1vh',
         }}>
-        <Typography
-          fontWeight={'bold'}
-          sx={{ textDecoration: 'Underline', color: 'black', fontSize: '3.1vh' }}>
-          EDIT INSPECTION DATE
-        </Typography>
-        <Box
-          onSubmit={handleSubmit}
-          component='form'
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBlock: '1vh',
-          }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             className='datePicker'
             label='Select Date'
@@ -69,12 +64,19 @@ const IndoorSensors = () => {
             onChange={handleChange}
             renderInput={params => <TextField {...params} />}
           />
-          <Button sx={{ height: '5vh' }} variant='contained' type='submit'>
-            Submit
-          </Button>
-        </Box>
-      </Paper>
-    </LocalizationProvider>
+        </LocalizationProvider>
+        <Button sx={{ height: '5vh' }} variant='contained' type='submit'>
+          Submit
+        </Button>
+      </Box>
+      {dialog && (
+        <MyDialog
+          title='Success'
+          des={`Inspection date is updated successfully.`}
+          actions={[{ onClick: () => setDialog(false), text: 'Close' }]}
+        />
+      )}
+    </Paper>
   );
 };
 

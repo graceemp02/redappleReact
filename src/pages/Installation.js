@@ -1,11 +1,9 @@
 /** @format */
 
-import { useEffect } from 'react';
 import { Grid, Paper, Typography } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 import Customers from '../components/Customers';
 import MyStepper from '../components/installation/MyStepper';
-import axios from 'axios';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -15,20 +13,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 const Installation = () => {
-  useEffect(() => {
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
-    // axios
-    //   .get(`../inspection.php?api=${machineID}`, { cancelToken: source.token })
-    //   .then(res => {
-    //     setDate(res.data.res);
-    //   })
-    //   .catch(err => console.log(err));
-    return () => {
-      source.cancel();
-    };
-  }, []);
-
   return (
     <Grid container spacing={0.5} sx={{ p: 1 }}>
       <Grid item xs={12} md={5} lg={2.5}>

@@ -3,21 +3,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.png';
 import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
-import { useState, useContext, useRef, useEffect } from 'react';
-import { UserContext } from '../UserContext';
+import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Button,
-  TextField,
-  Grid,
-  Typography,
-  Box,
-  Paper,
-  CssBaseline,
-  FormControlLabel,
-  Checkbox,
-  Link,
-} from '@mui/material';
+import { Button, TextField, Grid, Typography, Box, Paper, CssBaseline, Link } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -32,18 +20,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 function LoginPage() {
-  const user = localStorage.getItem('id');
+  const navigate = useNavigate();
+  const user = localStorage.getItem('admin_id');
   useEffect(() => {
     if (user) navigate('/');
   }, []);
-  const { setUser } = useContext(UserContext);
   const emailRef = useRef();
   const pwdRef = useRef();
 
   const [userError, setUserError] = useState(false);
   const [pwdError, setPwdError] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -57,9 +43,8 @@ function LoginPage() {
       .then(result => {
         const res = result.data['res'];
         if (res === 'true') {
-          setUser(result.data.name);
-          localStorage.setItem('id', result.data.id);
-          localStorage.setItem('name', result.data.name);
+          localStorage.setItem('admin_id', result.data.id);
+          localStorage.setItem('admin_name', result.data.name);
           navigate('/');
         } else if (res === 'Password Incorrent') setPwdError(true);
         else {
@@ -130,10 +115,6 @@ function LoginPage() {
                 autoComplete='current-password'
                 helperText={pwdError && 'Password Incorrent'}
               />
-              {/* <FormControlLabel
-                control={<Checkbox value='remember' color='primary' />}
-                label='Remember me'
-              /> */}
               <br />
               <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
                 Login In

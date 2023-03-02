@@ -15,8 +15,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../UserContext';
 import { NavItems } from './constants';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
@@ -70,7 +68,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer(props) {
-  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
@@ -159,14 +156,17 @@ export default function MiniDrawer(props) {
                 }}>
                 <AccountCircleOutlinedIcon sx={iconStyle} />
               </ListItemIcon>
-              <ListItemText primary={localStorage.getItem('name')} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={localStorage.getItem('admin_name')}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               onClick={() => {
                 localStorage.clear();
-                setUser(null);
+                navigate('/login');
               }}
               sx={{
                 minHeight: 48,

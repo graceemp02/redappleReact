@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   Box,
@@ -25,7 +25,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { NavItems } from './constants';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../UserContext';
 import logo from '../assests/logo.png';
 
 const drawerWidth = 200;
@@ -62,7 +61,6 @@ export default function MobileDrawer() {
 
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -128,7 +126,8 @@ export default function MobileDrawer() {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  setUser(null);
+                  localStorage.clear();
+                  navigate('/login');
                 }}>
                 <LogoutRoundedIcon sx={{ mr: 2, width: '1.5em', height: '1.5em' }} />
                 Logout

@@ -1,44 +1,21 @@
 /** @format */
 
-import { Typography, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import MyTableRow from './RowFile';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-    fontWeight: 'bold',
-    fontSize: '1.7vh',
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: '1.7vh',
-  },
-}));
+import { TableBody } from '@mui/material';
+import React from 'react';
+import RowFile from './RowFile';
+import RowText from './RowText';
 
 const FifthPage = () => {
   return (
-    <>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>#</StyledTableCell>
-              <StyledTableCell>Field</StyledTableCell>
-              <StyledTableCell align='left'>Data</StyledTableCell>
-              <StyledTableCell align='center'>Status</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <MyTableRow name='roughFau' lable='Rough FAU set up- Pictures' />
-            <MyTableRow name='roughDuct' lable='Rough Ductwork Design' />
-            <MyTableRow name='roughWiring' lable='Rough Wiring Pictures' />
-            <MyTableRow name='roughTV' lable='Rough TV Mount Locations Showing Wiring as well' />
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+    <TableBody>
+      <RowFile
+        name='certificationApplication'
+        lable='Red Apple to Issue Certification Application'
+      />
+      <RowText name='certificationApproveBy' lable='Certification Approved By' />
+      <RowText name='warrantyAgreeDate' lable='1 Year Warranty Agreement Termination Date' />
+      <RowFile name='agreementCertification' lable='Agreement To Maintain And Keep Certification' />
+    </TableBody>
   );
 };
 

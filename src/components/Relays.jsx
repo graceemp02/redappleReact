@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import CircleIcon from '@mui/icons-material/Circle';
 
 import { ListItem, Switch, Typography } from '@mui/material';
-
+import isEqual from 'lodash/isEqual';
 import { useContext, useEffect, useState } from 'react';
 import { MachineContext } from '../MachineContext';
 import axios from 'axios';
