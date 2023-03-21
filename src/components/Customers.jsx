@@ -47,7 +47,6 @@ function Customers() {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
   }, [query, customers]);
-
   return (
     <div style={{ height: { xs: 'auto', sm: '50%' }, display: 'flex', flexDirection: 'column' }}>
       <div

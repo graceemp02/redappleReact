@@ -1,20 +1,25 @@
 /** @format */
-import { useState } from 'react';
+import { lazy, useContext, useEffect, useState } from 'react';
 import { Stack, Button, Typography, Switch, TextField } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import OutReportsTable from './OutReportsTable';
+import axios from 'axios';
+import { MachineContext } from '../../MachineContext';
 import InReportsTable from './InReportsTable';
+// const InReportsTable = lazy(() => import('./InReportsTable'));
 var date = new Date();
 
 const Reports = () => {
+  const { machineID } = useContext(MachineContext);
+  const [data, setData] = useState([{}]);
   const [switchVal, setSwitchVal] = useState(() => {
     const oldSwitch = localStorage.getItem('admin_reportings_reports_switch');
     if (oldSwitch) {
       return oldSwitch === 'true';
     } else return false;
   });
-  const [start, setStart] = useState(new Date(date.getFullYear(), date.getMonth(), 1));
+  const [start, setStart] = useState(() => new Date(date.getFullYear(), date.getMonth(), 1));
   const [end, setEnd] = useState(new Date());
   const [isLoading, setLoading] = useState(false);
 
@@ -29,11 +34,21 @@ const Reports = () => {
   const handleDate = () => {
     setLoading(true);
     setTimeout(() => {
-      console.log(start.getFullYear());
-      console.log(end);
       setLoading(false);
     }, 1000);
   };
+  useEffect(() => {
+    let fd = new FormData();
+    fd.append('fromDate', start);
+    fd.append('toDate', end);
+    axios
+      .get(`reportings/reports.php?api=${machineID}&fromDate=${start}&toDate=${end}`)
+      .then(res => {
+        console.log(res.data);
+        setData(res.data);
+      })
+      .catch(err => console.log(err));
+  }, [machineID, end]);
   return (
     <div>
       <Stack
@@ -57,7 +72,7 @@ const Reports = () => {
           <Stack direction={{ xs: 'column', sm: 'row' }} gap={1}>
             <DesktopDatePicker
               disableMaskedInput
-              inputFormat='MMMM DD, YYYY'
+              inputFormat='MM DD, YYYY'
               required
               label='Start Date'
               value={start}
@@ -66,14 +81,14 @@ const Reports = () => {
                 <TextField
                   required
                   size='small'
-                  sx={{ '&': { width: { xs: '70vw', sm: '11rem' } } }}
+                  sx={{ '&': { width: { xs: '70vw', sm: '12rem' } } }}
                   {...params}
                 />
               )}
             />
             <DesktopDatePicker
               disableMaskedInput
-              inputFormat='MMMM DD, YYYY'
+              inputFormat='MM DD, YYYY'
               required
               label='End Date'
               value={end}
@@ -82,7 +97,7 @@ const Reports = () => {
                 <TextField
                   required
                   size='small'
-                  sx={{ '&': { width: { xs: '70vw', sm: '11rem' } } }}
+                  sx={{ '&': { width: { xs: '70vw', sm: '12rem' } } }}
                   {...params}
                 />
               )}
@@ -107,7 +122,11 @@ const Reports = () => {
           </Button>
         </Stack>
       </Stack>
-      {switchVal ? <OutReportsTable loading={isLoading} /> : <InReportsTable loading={isLoading} />}
+      {switchVal ? (
+        <OutReportsTable loading={isLoading} />
+      ) : (
+        <InReportsTable data={data} loading={isLoading} />
+      )}
     </div>
   );
 };
