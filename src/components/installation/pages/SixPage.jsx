@@ -1,7 +1,7 @@
 /** @format */
 
 import { TableBody } from '@mui/material';
-import InsRowText from './InsRowText';
+import InsRowText from '../InsRowText';
 
 const SixPage = () => {
   return (

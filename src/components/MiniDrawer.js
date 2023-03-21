@@ -69,7 +69,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer(props) {
   const navigate = useNavigate();
-
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -105,34 +104,36 @@ export default function MiniDrawer(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {NavItems.map(item => (
-            <ListItem
-              className={props.page === item.id.toString() ? 'active' : null}
-              key={item.id}
-              disablePadding
-              sx={{ display: 'block' }}>
-              <ListItemButton
-                onClick={() => {
-                  handleDrawerClose();
-                  navigate(item.route);
-                }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}>
-                <ListItemIcon
+          {NavItems.map(item => {
+            return (
+              <ListItem
+                className={props.page === item.id ? 'active' : null}
+                key={item.id}
+                disablePadding
+                sx={{ display: 'block' }}>
+                <ListItemButton
+                  onClick={() => {
+                    handleDrawerClose();
+                    navigate(item.route);
+                  }}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={item.lable} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.lable} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
 
         <Divider />
@@ -140,7 +141,7 @@ export default function MiniDrawer(props) {
           <ListItem
             disablePadding
             sx={{ display: 'block' }}
-            className={props.page === 6 ? 'active' : null}>
+            className={props.page === 7 ? 'active' : null}>
             <ListItemButton
               onClick={() => navigate('/profile')}
               sx={{

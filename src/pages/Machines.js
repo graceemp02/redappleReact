@@ -87,7 +87,6 @@ const MachinesPage = () => {
 
   const handleShow = index => {
     let machine = filteredRows[index];
-    console.log(machine);
     navigate('/machines/detail', { state: machine });
   };
   const handleEdit = index => {

@@ -4,7 +4,6 @@ import List from '@mui/material/List';
 import CircleIcon from '@mui/icons-material/Circle';
 
 import { ListItem, Switch, Typography } from '@mui/material';
-import isEqual from 'lodash/isEqual';
 import { useContext, useEffect, useState } from 'react';
 import { MachineContext } from '../MachineContext';
 import axios from 'axios';
@@ -21,20 +20,6 @@ function Relays() {
   const [res, setRes] = useState({});
   const { machineID } = useContext(MachineContext);
 
-  const fetchDta = async () => {
-    await axios
-      .get('relays.php', {
-        params: { api: machineID },
-      })
-      .then(result => {
-        setRes(result.data);
-        setSwitchValue(() => {
-          return result.data.m === '0' ? true : false;
-        });
-      })
-      .catch(error => console.log(error));
-  };
-
   const pushData = async relay => {
     await axios
       .get('relays.php', {
@@ -48,12 +33,27 @@ function Relays() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchDta();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [machineID]);
-  // console.log(switchValue);
+    let intervalId;
+    const fetchDta = async () => {
+      await axios
+        .get('relays.php', {
+          params: { api: machineID },
+        })
+        .then(result => {
+          const newData = result.data;
+          if (JSON.stringify(newData) !== JSON.stringify(res)) {
+            setRes(newData);
+            setSwitchValue(() => {
+              return newData.m === '0' ? true : false;
+            });
+          }
+        })
+        .catch(error => console.log(error));
+    };
+    fetchDta();
+    intervalId = setInterval(fetchDta, 1000);
+    return () => clearInterval(intervalId);
+  }, [machineID, res]);
   const handleSwitchChange = e => {
     handleRelayBtnClick('m');
     setSwitchValue(e.target.checked);

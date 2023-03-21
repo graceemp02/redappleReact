@@ -2,7 +2,7 @@
 
 import { TableBody } from '@mui/material';
 import React from 'react';
-import RowText from './RowText';
+import RowText from '../RowText';
 
 const ForthPage = () => {
   return (

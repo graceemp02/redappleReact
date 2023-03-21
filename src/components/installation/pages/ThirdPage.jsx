@@ -2,9 +2,9 @@
 
 import { TableBody } from '@mui/material';
 import React from 'react';
-import RowFileC from './RowFileC';
-import RowFileS from './RowFileS';
-import RowText from './RowText';
+import RowFileC from '../RowFileC';
+import RowFileS from '../RowFileS';
+import RowText from '../RowText';
 
 const ThirdPage = () => {
   return (

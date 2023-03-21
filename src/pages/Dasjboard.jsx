@@ -27,7 +27,6 @@ function DashboardPage() {
             height: { xs: 'auto', sm: '97.51vh' },
             display: 'flex',
             flexDirection: 'column',
-            // justifyContent: 'space-between',
             overflow: 'auto',
             padding: 0,
             borderRadius: '1vh',
@@ -58,7 +57,6 @@ function DashboardPage() {
             height: { xs: 'auto', sm: '97.51vh' },
           }}>
           <Relays />
-          {/* <System /> */}
           <TestSystem />
         </Item>
       </Grid>

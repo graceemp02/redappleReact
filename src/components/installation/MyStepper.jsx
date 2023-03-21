@@ -14,7 +14,15 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { FifthPage, FirstPage, FourthPage, SecondPage, SixPage, ThirdPage } from '../installation';
+import {
+  FifthPage,
+  FirstPage,
+  FourthPage,
+  SecondPage,
+  SixPage,
+  ThirdPage,
+  SevenPage,
+} from './pages';
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
@@ -27,6 +35,7 @@ const steps = [
   'Payment Schedule',
   'Certificate Issuance',
   'Inspector Data',
+  'Commissioning',
 ];
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -146,8 +155,10 @@ export default function HorizontalNonLinearStepper() {
                     <FourthPage />
                   ) : activeStep === 4 ? (
                     <FifthPage />
-                  ) : (
+                  ) : activeStep === 5 ? (
                     <SixPage />
+                  ) : (
+                    <SevenPage />
                   )}
                 </Table>
               </TableContainer>

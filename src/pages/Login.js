@@ -6,6 +6,7 @@ import RedApple_Admin_Login from '../assests/RedApple_Admin_Login.jpg';
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Button, TextField, Grid, Typography, Box, Paper, CssBaseline, Link } from '@mui/material';
+import ResetPasswordDialog from '../components/reset/ResetPasswordDialog';
 
 function Copyright(props) {
   return (
@@ -22,8 +23,11 @@ const theme = createTheme();
 function LoginPage() {
   const navigate = useNavigate();
   const user = localStorage.getItem('admin_id');
+  const [dialog, setdialog] = useState(false);
   useEffect(() => {
-    if (user) navigate('/');
+    if (user) {
+      navigate('/');
+    } else localStorage.clear();
   }, []);
   const emailRef = useRef();
   const pwdRef = useRef();
@@ -45,6 +49,7 @@ function LoginPage() {
         if (res === 'true') {
           localStorage.setItem('admin_id', result.data.id);
           localStorage.setItem('admin_name', result.data.name);
+          console.log('Navigating');
           navigate('/');
         } else if (res === 'Password Incorrent') setPwdError(true);
         else {
@@ -53,7 +58,9 @@ function LoginPage() {
       })
       .catch(error => console.log(error));
   };
-
+  const handleForgot = () => {
+    setdialog(true);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -67,7 +74,6 @@ function LoginPage() {
           sm={4}
           md={8}
           sx={{
-            // backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundImage: `url(${RedApple_Admin_Login})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -116,13 +122,23 @@ function LoginPage() {
                 helperText={pwdError && 'Password Incorrent'}
               />
               <br />
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                Login In
-              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+                    Login
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Link onClick={handleForgot} sx={{ cursor: 'pointer' }} variant='body2'>
+                    Forgot password?
+                  </Link>
+                </Grid>
+              </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
+        {dialog && <ResetPasswordDialog />}
       </Grid>
     </ThemeProvider>
   );

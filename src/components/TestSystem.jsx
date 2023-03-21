@@ -38,17 +38,6 @@ function TestSystem() {
   const pm25Ref = useRef();
   const co2Ref = useRef();
 
-  const fetchDta = async () => {
-    await axios
-      .get('system.php', {
-        params: { api: machineID },
-      })
-      .then(result => {
-        setRes(result.data);
-      })
-      .catch(error => console.log(error));
-  };
-
   const pushData = async id => {
     await axios
       .get('system.php', {
@@ -61,11 +50,24 @@ function TestSystem() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchDta();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [machineID]);
+    let intervalId;
+    const fetchDta = async () => {
+      await axios
+        .get('system.php', {
+          params: { api: machineID },
+        })
+        .then(result => {
+          const newData = result.data;
+          if (JSON.stringify(newData) !== JSON.stringify(res)) {
+            setRes(newData);
+          }
+        })
+        .catch(error => console.log(error));
+    };
+    fetchDta();
+    intervalId = setInterval(fetchDta, 1000);
+    return () => clearInterval(intervalId);
+  }, [machineID, res]);
 
   const handleRelayBtnClick = id => {
     pushData(id);

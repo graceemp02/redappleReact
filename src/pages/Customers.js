@@ -84,13 +84,15 @@ const Customers = () => {
   }, [query, rows]);
 
   const handleShow = index => {
-    let user = rows[index];
+    let user = filteredRows[index];
     setShowUser({
       status: true,
       id: user.id,
       name: user.name,
       email: user.email,
       phone: user.phone,
+      cName: user.cName,
+      cEmail: user.cEmail,
     });
   };
   const handleEdit = index => {
@@ -159,10 +161,18 @@ const Customers = () => {
                 <TableCell>{showUser.email}</TableCell>
               </TableRow>
               <TableRow>
+                <TableCell sx={headStyle}>Phone</TableCell>
+                <TableCell>{showUser.phone}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={headStyle}>Company Name</TableCell>
+                <TableCell>{showUser.cName}</TableCell>
+              </TableRow>
+              <TableRow>
                 <TableCell sx={{ color: 'black', fontWeight: 'bold', borderBottom: 0 }}>
-                  Phone
+                  Company Email
                 </TableCell>
-                <TableCell sx={{ borderBottom: 0 }}>{showUser.phone}</TableCell>
+                <TableCell sx={{ borderBottom: 0 }}>{showUser.cEmail}</TableCell>
               </TableRow>
             </Table>
           </>
@@ -261,7 +271,6 @@ const Customers = () => {
                         )}
                         <Button
                           onClick={() => {
-                            // setDelid(row.id);
                             setDel({ id: row.id, name: row.name });
                             return setOpenDialog(true);
                           }}

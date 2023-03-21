@@ -2,8 +2,8 @@
 
 import { TableBody } from '@mui/material';
 import React from 'react';
-import RowFile from './RowFile';
-import RowText from './RowText';
+import RowFile from '../RowFile';
+import RowText from '../RowText';
 
 const FirstPage = () => {
   return (

@@ -2,7 +2,7 @@
 
 import { TableBody } from '@mui/material';
 import React from 'react';
-import RowFileCS from './RowFileCS';
+import RowFileCS from '../RowFileCS';
 
 const SecondPage = () => {
   return (

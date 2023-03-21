@@ -13,19 +13,25 @@ function CDashboard() {
   const { machineID } = useContext(MachineContext);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      axios
+    let intervalId;
+    const fetchData = async () => {
+      await axios
         .get('dashboard.php', {
           params: { api: machineID },
         })
         .then(result => {
-          setRes(result.data);
-          setDisplay(result.data.humHdnStatus ? 'flex' : 'none');
+          const newData = result.data;
+          if (JSON.stringify(newData) !== JSON.stringify(res)) {
+            setRes(newData);
+            setDisplay(newData.humHdnStatus ? 'flex' : 'none');
+          }
         })
         .catch(error => console.log(error));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [machineID]);
+    };
+    fetchData();
+    intervalId = setInterval(fetchData, 1000);
+    return () => clearInterval(intervalId);
+  }, [machineID, res]);
 
   const circleStyle = {
     width: '2.7vh',

@@ -96,7 +96,7 @@ const EditCustomer = () => {
               fontWeight: 'bold',
               color: 'black',
             }}>
-            Add New Customer
+            Edit Customer Detail
           </Typography>
           <Button onClick={handleBack} variant='contained' sx={{ maxWidth: 200 }}>
             Back to List

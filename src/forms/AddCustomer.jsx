@@ -25,6 +25,7 @@ const AddCustomer = () => {
   const pwdRef = useRef();
 
   const cNameRef = useRef();
+  const cEmailRef = useRef();
   const cIdRef = useRef();
   const cPwdRef = useRef();
 
@@ -40,6 +41,7 @@ const AddCustomer = () => {
     formData.append('phone', phoneRef.current.value);
     formData.append('pwd', pwdRef.current.value);
     formData.append('companyName', cNameRef.current.value);
+    formData.append('companyEmail', cEmailRef.current.value);
     formData.append('companyId', cIdRef.current.value);
     formData.append('companyPwd', cPwdRef.current.value);
 
@@ -53,12 +55,13 @@ const AddCustomer = () => {
           phoneRef.current.value = '';
           pwdRef.current.value = '';
           cNameRef.current.value = '';
+          cEmailRef.current.value = '';
           cIdRef.current.value = '';
           cPwdRef.current.value = '';
           setUpdateCustomers(pre => !pre);
           setOpen(true);
         } else {
-          console.log('New Customer is not added');
+          alert('New Customer is not added. Make sure Customer email is not already added.');
         }
       })
       .catch(error => console.log(error));
@@ -164,7 +167,16 @@ const AddCustomer = () => {
               inputRef={cNameRef}
               required
               fullWidth
-              label='Installation Company Name'
+              label='Company Name'
+              size={isMobile ? 'small' : 'medium'}
+            />
+            <TextField
+              autoComplete='off'
+              margin='normal'
+              inputRef={cEmailRef}
+              required
+              fullWidth
+              label='Company Email'
               size={isMobile ? 'small' : 'medium'}
             />
             <TextField
