@@ -1,37 +1,24 @@
 /** @format */
 
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Box,
+  TableSortLabel,
+} from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+
 import { styled } from '@mui/material/styles';
 
-const columns = [
-  { id: 'date', label: 'Date', minWidth: 50 },
-  { id: 'time', label: 'Time', minWidth: 50 },
-  { id: 'AQI', label: 'AQI', minWidth: 50 },
-  { id: 'In_Temperature', label: 'Temperature', minWidth: 50 },
-  { id: 'In_Humidity', label: 'Humidity', minWidth: 50 },
-  { id: 'In_CO2', label: 'CO2', minWidth: 50 },
-  { id: 'In_VOC', label: 'VOC', minWidth: 50 },
-  { id: 'In_PM_2.5', label: 'PM 2.5', minWidth: 50 },
-  { id: 'In_PM_10', label: 'PM 1.0', minWidth: 50 },
-  { id: 'In_CO', label: 'CO', minWidth: 50 },
-];
+import PropTypes from 'prop-types';
+import { visuallyHidden } from '@mui/utils';
 
-function createData(date, time, aqi, temp, hum, co2, voc, pm25, pm10, co) {
-  return { date, time, aqi, temp, hum, co2, voc, pm25, pm10, co };
-}
-
-// const rows = [createData('date', 'time', 'aqi', 'temp', 'hum', 'co2', 'voc', 'pm25', 'pm10', 'co')];
-// const rows = () => {
-
-// }
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -51,49 +38,133 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
 
-export default function InReportsTable({ loading, data }) {
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+export default function InReportsTable({ loading, data, columns }) {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('date');
   const [page, setPage] = React.useState(0);
   const rowsPerPage = 25;
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  function EnhancedTableHead(props) {
+    const { order, orderBy, onRequestSort } = props;
+    const createSortHandler = property => event => {
+      onRequestSort(event, property);
+    };
+
+    return (
+      <TableHead>
+        <TableRow>
+          {columns.map(headCell => (
+            <TableCell
+              key={headCell.id}
+              align={headCell.numeric ? 'right' : 'left'}
+              padding={'normal'}
+              sortDirection={orderBy === headCell.id ? order : false}>
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={createSortHandler(headCell.id)}>
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component='span' sx={visuallyHidden}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    );
+  }
+  EnhancedTableHead.propTypes = {
+    numSelected: PropTypes.number.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    onSelectAllClick: PropTypes.func.isRequired,
+    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired,
+  };
+  // React.useEffect(() => {
+  //   document.getElementById('#reportsTable').DataTable({
+  //     scrollY: '55vh',
+  //     searching: false,
+  //     dom: 'Bfrtip',
+  //     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+  //     pageLength: 25,
+  //   });
+
+  //   return () => {
+  //     console.log('Cleanup');
+  //   };
+  // }, []);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: '70vh' }}>
-        <Table size='small' stickyHeader aria-label='sticky table'>
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <StyledTableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}>
-                  {column.label}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
+        <Table size='small' stickyHeader id='reportsTable'>
+          <EnhancedTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            rowCount={data.length}
+          />
           <TableBody>
-            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <StyledTableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                  {columns.map(column => {
-                    const value = row[column.id];
-                    return (
-                      <StyledTableCell key={column.id} align={column.align}>
-                        {loading
-                          ? 'Loading...'
-                          : column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </StyledTableCell>
-                    );
-                  })}
-                </StyledTableRow>
-              );
-            })}
+            {stableSort(data, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (
+                  <StyledTableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                    {columns.map(column => {
+                      const value = row[column.id];
+                      return (
+                        <StyledTableCell key={column.id} id={labelId} align={'right'}>
+                          {loading
+                            ? 'Loading...'
+                            : column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : value}
+                        </StyledTableCell>
+                      );
+                    })}
+                  </StyledTableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
