@@ -17,7 +17,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: '1.7vh',
   },
 }));
-
+const getDate = oldDate => {
+  console.log(oldDate);
+  const date = new Date(oldDate);
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${month}-${day}-${year}`;
+};
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
@@ -33,8 +40,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const InsRowText = ({ lable, name }) => {
   const { customerID } = useContext(CustomerContext);
   const [upload, setUpload] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const inv = setInterval(() => {
@@ -47,6 +56,7 @@ const InsRowText = ({ lable, name }) => {
           if (data) {
             setUpload(data);
           } else setUpload(false);
+          setLoading(false);
         })
         .catch(err => console.log(err));
     }, 1000);
@@ -61,11 +71,13 @@ const InsRowText = ({ lable, name }) => {
       <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-          {!upload ? (
+          {loading ? (
+            'Loading...'
+          ) : !upload ? (
             'Pending'
           ) : (
             <Typography>
-              {upload === '1' ? 'Verified' : upload === '0' ? 'Pending' : upload}
+              {upload === '1' ? 'Verified' : upload === '0' ? 'Pending' : getDate(upload)}
             </Typography>
           )}
         </Stack>

@@ -2,7 +2,7 @@
 
 import { Box, Button, Paper, TextField, Typography } from '@mui/material/';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -19,6 +19,19 @@ const IndoorSensors = () => {
   const handleChange = newValue => {
     setValue(newValue);
   };
+  useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    axios
+      .get(`inspection.php?api=${machineID}`, { cancelToken: source.token })
+      .then(res => {
+        setValue(res.data.res);
+      })
+      .catch(err => console.log(err));
+    return () => {
+      source.cancel();
+    };
+  }, [machineID]);
   const handleSubmit = async e => {
     e.preventDefault();
     let formData = new FormData();
@@ -51,7 +64,8 @@ const IndoorSensors = () => {
         component='form'
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
+          gap: 1,
           alignItems: 'center',
           marginBlock: '1vh',
         }}>
@@ -59,7 +73,7 @@ const IndoorSensors = () => {
           <DesktopDatePicker
             className='datePicker'
             label='Select Date'
-            inputFormat='DD/MM/YYYY'
+            inputFormat='MM-DD-YYYY'
             value={value}
             onChange={handleChange}
             renderInput={params => <TextField {...params} />}

@@ -15,11 +15,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useNavigate } from 'react-router-dom';
-import { NavItems } from './constants';
+import { NavItems, SuperNavItems } from './constants';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { CustomerContext } from '../CustomerContext';
 
-const iconStyle = { width: '1.5em', height: '1.5em' };
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 const openedMixin = theme => ({
   width: drawerWidth,
@@ -70,14 +70,18 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer(props) {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const { setCustomerID } = React.useContext(CustomerContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  const id = localStorage.getItem('admin_id');
+  const nav = id === '5' ? SuperNavItems : NavItems;
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const iconStyle = { width: '1.5em', height: '1.5em', color: '#2196f3 !important' };
+  const handleLogout = () => {};
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -102,9 +106,9 @@ export default function MiniDrawer(props) {
             </Typography>
           )}
         </DrawerHeader>
-        <Divider />
+        {/* <Divider /> */}
         <List>
-          {NavItems.map(item => {
+          {nav.map(item => {
             return (
               <ListItem
                 className={props.page === item.id ? 'active' : null}
@@ -141,7 +145,7 @@ export default function MiniDrawer(props) {
           <ListItem
             disablePadding
             sx={{ display: 'block' }}
-            className={props.page === 7 ? 'active' : null}>
+            className={props.page === 9 ? 'active' : null}>
             <ListItemButton
               onClick={() => navigate('/profile')}
               sx={{
@@ -164,28 +168,30 @@ export default function MiniDrawer(props) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              onClick={() => {
-                localStorage.clear();
-                navigate('/login');
-              }}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}>
-              <ListItemIcon
+            <form onSubmit={handleLogout}>
+              <ListItemButton
+                type='submit'
+                onClick={() => {
+                  localStorage.clear();
+                  setCustomerID(null);
+                  navigate('/login');
+                }}
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
                 }}>
-                <LogoutOutlinedIcon
-                  sx={{ opacity: open ? 1 : 0, width: '1.5em', height: '1.5em' }}
-                />
-              </ListItemIcon>
-              <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}>
+                  <LogoutOutlinedIcon sx={{ opacity: open ? 1 : 0, ...iconStyle }} />
+                </ListItemIcon>
+                <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </form>
           </ListItem>
         </List>
       </Drawer>

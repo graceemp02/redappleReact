@@ -31,10 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const GaesText = ({ lable, name, f }) => {
+  const [loading, setLoading] = useState(false);
   const { customerID } = useContext(CustomerContext);
   const [data, setData] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
@@ -46,6 +48,7 @@ const GaesText = ({ lable, name, f }) => {
         if (data) {
           setData(data);
         } else setData(false);
+        setLoading(false);
       })
       .catch(err => console.log(err));
     return () => source.cancel();
@@ -66,7 +69,9 @@ const GaesText = ({ lable, name, f }) => {
       <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-          {!data ? (
+          {loading ? (
+            'Loading...'
+          ) : !data ? (
             'Data not updated'
           ) : f === true ? (
             <Button variant='contained' onClick={handleDownload}>

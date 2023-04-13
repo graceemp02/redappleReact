@@ -1,36 +1,28 @@
 /** @format */
-import { lazy, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Stack, Button, Typography, Switch, TextField } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import OutReportsTable from './OutReportsTable';
 import axios from 'axios';
 import { MachineContext } from '../../MachineContext';
-import InReportsTable from './InReportsTable';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-// const InReportsTable = lazy(() => import('./InReportsTable'));
+import autoTable from 'jspdf-autotable';
+
 var date = new Date();
-const InColumns = [
-  { id: 'date', label: 'Date', minWidth: 50, numeric: true },
-  { id: 'time', label: 'Time', minWidth: 50, numeric: true },
-  { id: 'AQI', label: 'AQI', minWidth: 50, numeric: true },
-  { id: 'In_Temperature', label: 'Temperature', minWidth: 50, numeric: true },
-  { id: 'In_Humidity', label: 'Humidity', minWidth: 50, numeric: true },
-  { id: 'In_CO2', label: 'CO2', minWidth: 50, numeric: true },
-  { id: 'In_VOC', label: 'VOC', minWidth: 50, numeric: true },
-  { id: 'In_PM_2.5', label: 'PM 2.5', minWidth: 50, numeric: true },
-  { id: 'In_PM_10', label: 'PM 1.0', minWidth: 50, numeric: true },
-  { id: 'In_CO', label: 'CO', minWidth: 50, numeric: true },
-];
-const Reports = () => {
+
+const Reports = ({ InColumns, OutColumns }) => {
   const { machineID } = useContext(MachineContext);
   const [data, setData] = useState([{}]);
   const [switchVal, setSwitchVal] = useState(() => {
-    const oldSwitch = localStorage.getItem('admin_reportings_reports_switch');
+    const oldSwitch = localStorage.getItem('admin_reportings_switch');
     if (oldSwitch) {
       return oldSwitch === 'true';
     } else return false;
+  });
+  const [columns, setColumns] = useState(() => {
+    const oldSwitch = localStorage.getItem('admin_reportings_switch');
+    return oldSwitch === 'true' ? OutColumns : InColumns;
   });
   const [start, setStart] = useState(() =>
     new Date(date.getFullYear(), date.getMonth(), 1).toLocaleDateString()
@@ -49,7 +41,8 @@ const Reports = () => {
   };
   const handleSwitch = e => {
     setSwitchVal(e.target.checked);
-    localStorage.setItem('admin_reportings_reports_switch', e.target.checked);
+    setColumns(e.target.checked ? OutColumns : InColumns);
+    localStorage.setItem('admin_reportings_switch', e.target.checked);
   };
   const handleDate = async e => {
     e.preventDefault();
@@ -62,13 +55,15 @@ const Reports = () => {
 
   const handlePDFDownload = () => {
     const doc = new jsPDF();
-    doc.text('Indoor Reports', 20, 10);
-    doc.autoTable({
-      theme: 'grid',
-      columns: InColumns.map(col => ({ ...col, dataKey: col.id })),
+    autoTable(doc, {
       body: data,
+      columns: columns.map(col => ({ ...col, dataKey: col.id, header: col.label })),
     });
-    doc.save('table.pdf');
+    doc.save(
+      switchVal
+        ? `Outdoor Reports from ${start} to ${end}`
+        : `Indoor Reports from ${start} to ${end}`
+    );
   };
   return (
     <div>
@@ -137,30 +132,17 @@ const Reports = () => {
           </Stack>
         </LocalizationProvider>
         <Stack direction='row' gap={1}>
-          <Button size='small' disabled={isLoading} variant='contained' color='success'>
-            CSV
-          </Button>
-          <Button size='small' disabled={isLoading} variant='contained' color='success'>
-            Excel
-          </Button>
           <Button
             onClick={handlePDFDownload}
             size='small'
             disabled={isLoading}
             variant='contained'
             color='success'>
-            PDF
-          </Button>
-          <Button size='small' disabled={isLoading} variant='contained' color='success'>
-            Print
+            Download as PDF
           </Button>
         </Stack>
       </Stack>
-      {switchVal ? (
-        <OutReportsTable data={data} loading={isLoading} />
-      ) : (
-        <InReportsTable columns={InColumns} data={data} loading={isLoading} />
-      )}
+      <OutReportsTable columns={columns} data={data} loading={isLoading} />
     </div>
   );
 };

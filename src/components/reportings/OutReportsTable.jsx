@@ -19,21 +19,6 @@ import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { visuallyHidden } from '@mui/utils';
 
-const columns = [
-  { id: 'date', label: 'Date', minWidth: 50, numeric: true },
-  { id: 'time', label: 'Time', minWidth: 50, numeric: true },
-  { id: 'Out_Temperature', label: 'Temperature', minWidth: 50, numeric: true },
-  { id: 'Out_Humidity', label: 'Humidity', minWidth: 50, numeric: true },
-  { id: 'Out_O3', label: 'O3', minWidth: 50, numeric: true },
-  { id: 'Out_SO2', label: 'SO2', minWidth: 50, numeric: true },
-  { id: 'Out_CO', label: 'CO', minWidth: 50, numeric: true },
-  { id: 'Out_CO2', label: 'CO2', minWidth: 50, numeric: true },
-  { id: 'Out_NO2', label: 'NO2', minWidth: 50, numeric: true },
-  { id: 'Out_PM_2_5', label: 'PM 2.5', minWidth: 50, numeric: true },
-  { id: 'Out_PM_10', label: 'PM 1.0', minWidth: 50, numeric: true },
-  { id: 'Out_Radon_Spare', label: 'Radon', minWidth: 50, numeric: true },
-];
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -80,48 +65,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map(el => el[0]);
 }
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {columns.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}>
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}>
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component='span' sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-export default function OutReportsTable({ loading, data }) {
+export default function OutReportsTable({ loading, data, columns }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('date');
   const [page, setPage] = React.useState(0);
@@ -134,7 +78,47 @@ export default function OutReportsTable({ loading, data }) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  function EnhancedTableHead(props) {
+    const { order, orderBy, onRequestSort } = props;
+    const createSortHandler = property => event => {
+      onRequestSort(event, property);
+    };
 
+    return (
+      <TableHead>
+        <TableRow>
+          {columns.map(headCell => (
+            <TableCell
+              key={headCell.id}
+              align={headCell.numeric ? 'right' : 'left'}
+              padding={'normal'}
+              sortDirection={orderBy === headCell.id ? order : false}>
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={createSortHandler(headCell.id)}>
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component='span' sx={visuallyHidden}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    );
+  }
+
+  EnhancedTableHead.propTypes = {
+    // numSelected: PropTypes.number.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    // onSelectAllClick: PropTypes.func.isRequired,
+    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired,
+  };
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: '70vh' }}>
@@ -149,13 +133,12 @@ export default function OutReportsTable({ loading, data }) {
             {stableSort(data, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
                 return (
                   <StyledTableRow hover role='checkbox' tabIndex={-1} key={row.code}>
                     {columns.map(column => {
                       const value = row[column.id];
                       return (
-                        <StyledTableCell key={column.id} id={labelId} align={'right'}>
+                        <StyledTableCell key={column.id} align={'right'}>
                           {loading
                             ? 'Loading...'
                             : column.format && typeof value === 'number'

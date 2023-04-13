@@ -106,26 +106,13 @@ export default function InReportsTable({ loading, data, columns }) {
     );
   }
   EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
+    // numSelected: PropTypes.number,
     onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
+    // onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
-  // React.useEffect(() => {
-  //   document.getElementById('#reportsTable').DataTable({
-  //     scrollY: '55vh',
-  //     searching: false,
-  //     dom: 'Bfrtip',
-  //     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-  //     pageLength: 25,
-  //   });
-
-  //   return () => {
-  //     console.log('Cleanup');
-  //   };
-  // }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -149,7 +136,7 @@ export default function InReportsTable({ loading, data, columns }) {
               .map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`;
                 return (
-                  <StyledTableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                  <StyledTableRow hover role='checkbox' tabIndex={-1} key={index}>
                     {columns.map(column => {
                       const value = row[column.id];
                       return (

@@ -31,10 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const RowText = ({ lable, name }) => {
+  const [loading, setLoading] = useState(false);
   const { customerID } = useContext(CustomerContext);
   const [upload, setUpload] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const inv = setInterval(() => {
       axios
         .get(`company/txtInput.php?id=${customerID}&name=${name}`)
@@ -43,6 +45,7 @@ const RowText = ({ lable, name }) => {
           if (data) {
             setUpload(data);
           } else setUpload(false);
+          setLoading(false);
         })
         .catch(err => console.log(err));
     }, 1000);
@@ -56,7 +59,13 @@ const RowText = ({ lable, name }) => {
       <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-          {!upload ? 'Data not Updated' : <Typography>{upload}</Typography>}
+          {loading ? (
+            'Loading...'
+          ) : !upload ? (
+            'Data not Updated'
+          ) : (
+            <Typography>{upload}</Typography>
+          )}
         </Stack>
       </StyledTableCell>
       <StyledTableCell align='right'>

@@ -49,7 +49,6 @@ function LoginPage() {
         if (res === 'true') {
           localStorage.setItem('admin_id', result.data.id);
           localStorage.setItem('admin_name', result.data.name);
-          console.log('Navigating');
           navigate('/');
         } else if (res === 'Password Incorrent') setPwdError(true);
         else {

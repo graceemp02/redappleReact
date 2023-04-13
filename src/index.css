@@ -11,7 +11,7 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f2f5 !important;
+  background-color: #d3d3d3 !important;
   /* height: 100%; 
   overflow: hidden; */
 }
@@ -48,7 +48,7 @@ code {
 }
 
 .active {
-  background-color: #2599ca;
+  background-color: #2598ca48;
 }
 
 .tableHead {
@@ -98,24 +98,33 @@ code {
   overflow: hidden;
   font-size: 2vh;
 }
-
+.senserContainerVal {
+  color: black;
+  font-size: 0.7em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 9999;
+}
 .colorA {
-  color: #19c424;
+  color: #33bd1d;
 }
 .colorB {
-  color: #ffe435;
+  color: #fbeb06;
 }
 .colorC {
-  color: #ffa100;
+  color: #f08c00;
 }
 .colorD {
-  color: #ef8625;
+  color: #eb0630;
 }
 .colorE {
   color: #ff0000;
 }
 .colorF {
-  color: #ff0000;
+  color: #6b6364;
 }
 .gray {
   color: gray;
@@ -181,4 +190,14 @@ code {
 }
 .border:nth-child(2) {
   padding-block: 15px;
+}
+.tabPanel {
+  flex: 1;
+  padding: 2rem;
+}
+@media (max-width: 600px) {
+  .tabPanel {
+    flex: 1;
+    padding: 0;
+  }
 }

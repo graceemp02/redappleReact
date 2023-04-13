@@ -32,9 +32,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 const RowFile = ({ lable, name }) => {
   const { customerID } = useContext(CustomerContext);
+  const [loading, setLoading] = useState(false);
   const [upload, setUpload] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const inv = setInterval(() => {
@@ -45,6 +47,7 @@ const RowFile = ({ lable, name }) => {
           if (data) {
             setUpload(true);
           } else setUpload(false);
+          setLoading(false);
         })
         .catch(err => console.log(err));
     }, 1000);
@@ -75,7 +78,9 @@ const RowFile = ({ lable, name }) => {
       <StyledTableCell sx={{ paddingRight: '10px !important' }}>{lable}</StyledTableCell>
       <StyledTableCell>
         <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-          {!upload ? (
+          {loading ? (
+            'Loading...'
+          ) : !upload ? (
             'File not uploaded'
           ) : (
             <>

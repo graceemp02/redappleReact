@@ -27,7 +27,6 @@ const ShowMachine = () => {
       .catch(error => console.log(error));
   };
   const machine = location.state;
-  console.log(machine);
 
   return (
     <Paper sx={{ p: 2, width: '95%', pt: 0, overflow: 'auto', maxHeight: '93vh' }}>
@@ -92,6 +91,10 @@ const ShowMachine = () => {
         <TableRow>
           <TableCell sx={headStyle}>API Token</TableCell>
           <TableCell>{machine.apiToken}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell sx={headStyle}>Machine ID</TableCell>
+          <TableCell>{machine.id}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell sx={{ ...headStyle, borderBottom: 0 }}>Next Inspection Date</TableCell>

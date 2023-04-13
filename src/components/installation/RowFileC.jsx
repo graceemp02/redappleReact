@@ -37,6 +37,7 @@ const RowFileC = ({ lable, name }) => {
   const { customerID } = useContext(CustomerContext);
   const [detail, setDetail] = useState(false);
   const [upload, setUpload] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getStatus = async () => {
     await axios
@@ -46,10 +47,12 @@ const RowFileC = ({ lable, name }) => {
         if (data) {
           setUpload(true);
         } else setUpload(false);
+        setLoading(false);
       })
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setLoading(true);
     const inv = setInterval(() => {
       getStatus();
     }, 1000);
@@ -80,7 +83,9 @@ const RowFileC = ({ lable, name }) => {
         <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
         <StyledTableCell>
           <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-            {!upload ? (
+            {loading ? (
+              'Loading...'
+            ) : !upload ? (
               'File Not Uploaded'
             ) : (
               <>

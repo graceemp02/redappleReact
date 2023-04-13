@@ -34,6 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const RowFile = ({ lable, name }) => {
+  const [loading, setLoading] = useState(false);
   const [dialog, setDialog] = useState({ status: false, msg: '', title: '' });
   const { customerID } = useContext(CustomerContext);
   const [status, setStatus] = useState(0);
@@ -42,13 +43,17 @@ const RowFile = ({ lable, name }) => {
   const getStatus = async () => {
     await axios
       .get(`company/fileInput.php?id=${customerID}&status=${name}Status`)
-      .then(res => setStatus(+res.data.res))
+      .then(res => {
+        setStatus(+res.data.res);
+        setLoading(false);
+      })
       .catch(err => {
         console.log('Request Cancled with cid: ' + customerID);
         console.log(err);
       });
   };
   useEffect(() => {
+    setLoading(true);
     const inv = setInterval(() => {
       getStatus();
     }, 1000);
@@ -93,7 +98,9 @@ const RowFile = ({ lable, name }) => {
         <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
         <StyledTableCell>
           <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-            {status === 0 ? (
+            {loading ? (
+              'Loading...'
+            ) : status === 0 ? (
               'File Not Uploaded'
             ) : (
               <>

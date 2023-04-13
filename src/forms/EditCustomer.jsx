@@ -28,6 +28,7 @@ const EditCustomer = () => {
   const phoneRef = useRef();
   const cNameRef = useRef();
   const cIdRef = useRef();
+  const cEmailRef = useRef();
   const { setUpdateCustomers } = useContext(UpdateCustomersContext);
 
   const user = location.state;
@@ -38,6 +39,7 @@ const EditCustomer = () => {
     phoneRef.current.value = user.phone;
     cNameRef.current.value = user.cName;
     cIdRef.current.value = user.cId;
+    cEmailRef.current.value = user.cEmail;
   }, []);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const handleSubmit = async e => {
@@ -50,6 +52,7 @@ const EditCustomer = () => {
     formData.append('phone', phoneRef.current.value);
     formData.append('cName', cNameRef.current.value);
     formData.append('cId', cIdRef.current.value);
+    formData.append('cEmail', cEmailRef.current.value);
 
     await axios
       .post('editCustomer.php', formData)
@@ -61,6 +64,7 @@ const EditCustomer = () => {
           phoneRef.current.value = '';
           cNameRef.current.value = '';
           cIdRef.current.value = '';
+          cEmailRef.current.value = '';
           setUpdateCustomers(pre => !pre);
           setOpen(true);
         } else {
@@ -174,7 +178,16 @@ const EditCustomer = () => {
               required
               InputLabelProps={{ shrink: true }}
               fullWidth
-              label='Company ID'
+              label='Company Username'
+            />
+            <TextField
+              margin='normal'
+              size={isMobile ? 'small' : 'medium'}
+              inputRef={cEmailRef}
+              required
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              label='Company Email'
             />
           </div>
           <Button

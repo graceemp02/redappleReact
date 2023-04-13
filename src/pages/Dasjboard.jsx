@@ -23,6 +23,7 @@ function DashboardPage() {
     <Grid className={classe.mainContet} container spacing={1} columns={4}>
       <Grid pl={0} item xs={4} md={2} lg={1}>
         <Item
+          elevation={0}
           sx={{
             height: { xs: 'auto', sm: '97.51vh' },
             display: 'flex',
@@ -37,6 +38,7 @@ function DashboardPage() {
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
         <Item
+          elevation={0}
           sx={{
             display: 'flex',
             height: { xs: 'auto', sm: '97.51vh' },
@@ -49,6 +51,7 @@ function DashboardPage() {
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
         <Item
+          elevation={0}
           sx={{
             p: 0,
             overflow: 'suto',
@@ -62,6 +65,7 @@ function DashboardPage() {
       </Grid>
       <Grid item xs={4} md={2} lg={1}>
         <Item
+          elevation={0}
           sx={{
             height: { xs: '650px', sm: '97.51vh' },
             p: 0,

@@ -38,14 +38,19 @@ const RowFileS = ({ lable, name }) => {
   const { customerID } = useContext(CustomerContext);
   const [status, setStatus] = useState(0);
   const [detail, setDetail] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getStatus = async () => {
     await axios
       .get(`company/fileInput.php?id=${customerID}&status=${name}Status`)
-      .then(res => setStatus(+res.data.res))
+      .then(res => {
+        setStatus(+res.data.res);
+        setLoading(false);
+      })
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setLoading(true);
     const inv = setInterval(() => {
       getStatus();
     }, 1000);
@@ -76,7 +81,9 @@ const RowFileS = ({ lable, name }) => {
         <StyledTableCell sx={{ padding: '10px !important' }}>{lable}</StyledTableCell>
         <StyledTableCell>
           <Stack gap={0.5} direction={{ xs: 'column', sm: 'row' }}>
-            {status === 0 ? (
+            {loading ? (
+              'Loading...'
+            ) : status === 0 ? (
               'File Not Uploaded'
             ) : (
               <>

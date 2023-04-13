@@ -6,6 +6,7 @@ const SenserContainer = ({ val, lable, ht }) => {
   return (
     <div style={{ width: 'calc(100%/8)', display: 'flex', flexDirection: 'column' }}>
       <div className='sensorContainer'>
+        <span className='senserContainerVal'>{ht ? ht.toFixed(1) : 0}%</span>
         <strong
           style={{
             height: `${ht}%`,
@@ -15,9 +16,7 @@ const SenserContainer = ({ val, lable, ht }) => {
             position: 'absolute',
             bottom: 0,
             fontSize: '1.4vh',
-          }}>
-          {ht ? ht.toFixed(1) : 0}%
-        </strong>
+          }}></strong>
       </div>
       <p style={{ fontSize: '2vh' }}>
         {lable}

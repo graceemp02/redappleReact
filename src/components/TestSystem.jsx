@@ -230,7 +230,12 @@ function TestSystem() {
                 <Divider
                   orientation='vertical'
                   flexItem
-                  sx={{ marginInline: '10px !important', bgcolor: 'black', width: '2px' }}
+                  sx={{
+                    marginInline: '10px !important',
+                    bgcolor: 'rgba(0,0,0,0)',
+                    width: '2px',
+                    borderColor: 'rgba(0,0,0,0)',
+                  }}
                 />
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%' }}>
@@ -255,7 +260,12 @@ function TestSystem() {
                 <Divider
                   orientation='vertical'
                   flexItem
-                  sx={{ marginInline: '10px !important', bgcolor: 'black', width: '2px' }}
+                  sx={{
+                    marginInline: '10px !important',
+                    bgcolor: 'rgba(0,0,0,0)',
+                    width: '2px',
+                    borderColor: 'rgba(0,0,0,0)',
+                  }}
                 />
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%' }}>
@@ -287,7 +297,12 @@ function TestSystem() {
               <Divider
                 orientation='vertical'
                 flexItem
-                sx={{ marginInline: '10px !important', bgcolor: 'black', width: '2px' }}
+                sx={{
+                  marginInline: '10px !important',
+                  bgcolor: 'rgba(0,0,0,0)',
+                  width: '2px',
+                  borderColor: 'rgba(0,0,0,0)',
+                }}
               />
               <ListItemText
                 sx={{ m: 0, fontSize: '2vh !important' }}

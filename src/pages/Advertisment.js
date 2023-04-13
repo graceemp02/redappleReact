@@ -10,20 +10,55 @@ import { CustomerContext } from '../CustomerContext.jsx';
 import axios from 'axios';
 
 function AdvertismentPage() {
+  const [validateMsg, setValidateMsg] = useState('');
   const adTimeRef = useRef();
   const [dialog, setDialog] = useState({ status: false, msg: '', title: '' });
   const { machineID } = useContext(MachineContext);
   const { customerID } = useContext(CustomerContext);
   const [adImg, setAdImg] = useState();
   const [imgUpdate, setImgUpdate] = useState(false);
-  // const [url, setUrl] = useState();
+  function validateImg() {
+    var fileInput = document.getElementById('img');
+    var fileSize = fileInput.files[0].size;
+    var fileType = fileInput.files[0].type;
+    var image = new Image();
+    image.src = URL.createObjectURL(fileInput.files[0]);
+    image.onload = function () {
+      var width = this.width;
+      var height = this.height;
+      if (fileType !== 'image/jpeg' && fileType !== 'image/png') {
+        alert('Please upload a JPEG or PNG image.');
+        fileInput.value = '';
+        return false;
+      }
+      if (fileSize > 5 * 1024 * 1024) {
+        alert('Please upload an image smaller than 5MB.');
+        fileInput.value = '';
+        return false;
+      }
+      if (width !== height) {
+        setValidateMsg(
+          'Warning! Please upload a square image next time for better result in Client View.'
+        );
+        return true;
+      }
+      if (width < 1024 || height < 1024) {
+        setValidateMsg(
+          'Warning! Please upload an image with dimensions greater than 1024x1024 next time for better result in Client View.'
+        );
+        return true;
+      }
+    };
+  }
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     axios
       .get(`advertisment.php?cid=${customerID}&api=${machineID}`, { cancelToken: source.token })
       .then(res => {
-        res.data.path ? setAdImg(axios.defaults.baseURL + res.data.path) : setAdImg(null);
+        res.data.path
+          ? setAdImg(axios.defaults.baseURL + 'client/' + res.data.path)
+          : setAdImg(null);
         adTimeRef.current.value = res.data.time;
       })
       .catch(err => console.log(err));
@@ -45,8 +80,8 @@ function AdvertismentPage() {
           const res = result.data.res;
           res === 'true'
             ? setDialog({
-                msg: 'Image is Uploaded for only Selected Machine.',
-                title: 'SUCCESS',
+                msg: `Image is uploaded successfully for only selected machine.<br> ${validateMsg}`,
+                title: validateMsg === '' ? 'SUCCESS' : 'WARNING',
                 status: true,
               })
             : setDialog({
@@ -68,12 +103,11 @@ function AdvertismentPage() {
       await axios
         .post('advertisment.php', fd)
         .then(result => {
-          console.log(result.data);
           const res = result.data.res;
           res === 'true'
             ? setDialog({
-                msg: 'Image is Uploaded for All Machines.',
-                title: 'SUCCESS',
+                msg: `Image is uploaded successfully for all machines.<br> ${validateMsg}`,
+                title: validateMsg === '' ? 'SUCCESS' : 'WARNING',
                 status: true,
               })
             : setDialog({
@@ -207,7 +241,7 @@ function AdvertismentPage() {
                         id='img'
                         type='file'
                         style={{ width: '80%' }}
-                        // onChange={handleUploadClick}
+                        onChange={validateImg}
                       />
                       <label htmlFor='img'>
                         <Fab component='span'>

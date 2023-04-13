@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   Box,
@@ -22,10 +22,11 @@ import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { NavItems } from './constants';
+import { NavItems, SuperNavItems } from './constants';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assests/logo.png';
+import { CustomerContext } from '../CustomerContext';
 
 const drawerWidth = 200;
 
@@ -57,6 +58,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const iconStyle = { width: '1.5em', height: '1.5em' };
 
 export default function MobileDrawer() {
+  const { setCustomerID } = useContext(CustomerContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [open, setOpen] = useState(false);
@@ -64,7 +67,8 @@ export default function MobileDrawer() {
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
-
+  const id = localStorage.getItem('admin_id');
+  const nav = id === '5' ? SuperNavItems : NavItems;
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -127,6 +131,7 @@ export default function MobileDrawer() {
               <MenuItem
                 onClick={() => {
                   localStorage.clear();
+                  setCustomerID(null);
                   navigate('/login');
                 }}>
                 <LogoutRoundedIcon sx={{ mr: 2, width: '1.5em', height: '1.5em' }} />
@@ -169,7 +174,7 @@ export default function MobileDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {NavItems.map(item => (
+          {nav.map(item => (
             <ListItem key={item.id} disablePadding>
               <ListItemButton
                 onClick={() => {

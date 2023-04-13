@@ -14,25 +14,34 @@ function Machines() {
   const { customerID } = useContext(CustomerContext);
   const { machineID, setMachineID } = useContext(MachineContext);
   const selectedApiClient = localStorage.getItem('admin_api_client');
+  const selectedApi = localStorage.getItem('admin_api');
   const [machines, setMachines] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(() => (machineID ? machineID : 0));
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
-    axios
-      .get('machines.php', {
-        params: { cid: customerID },
-        cancelToken: source.token,
-      })
-      .then(result => {
-        setMachines(result.data);
-        if (!machineID || selectedApiClient !== customerID)
-          setSelectedIndex(result.data[0].apiToken);
-        setMachineID(result.data[0].apiToken);
-        localStorage.setItem('admin_api', result.data[0].apiToken);
-        localStorage.setItem('admin_api_client', customerID);
-      })
-      .catch(error => console.log(error));
+    if (customerID) {
+      axios
+        .get('machines.php', {
+          params: { cid: customerID },
+          cancelToken: source.token,
+        })
+        .then(result => {
+          setMachines(result.data);
+          if (!machineID || selectedApiClient !== customerID) {
+            setSelectedIndex(result.data[0].apiToken);
+            setMachineID(result.data[0].apiToken);
+            localStorage.setItem('admin_api', result.data[0].apiToken);
+            localStorage.setItem('admin_api_client', customerID);
+          } else if (selectedApiClient === customerID) {
+            setSelectedIndex(selectedApi);
+            setMachineID(selectedApi);
+            localStorage.setItem('admin_api', selectedApi);
+            localStorage.setItem('admin_api_client', customerID);
+          }
+        })
+        .catch(error => console.log(error));
+    }
     return () => {
       source.cancel();
     };

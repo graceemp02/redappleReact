@@ -45,7 +45,7 @@ function CDashboard() {
         pl={2}
         variant='h4'
         sx={{ textDecoration: 'Underline', color: 'black', mb: 0.5, fontSize: '3.3vh!important' }}>
-        Dashboard
+        DASHBOARD
       </Typography>
       <div
         style={{
@@ -124,7 +124,18 @@ function CDashboard() {
             variant={'h5'}
             lineHeight={1}
             sx={{ fontSize: '2.8vh', mb: '10px' }}>
-            HEALTHY INDOOR AIR QUALITY
+            {res.letter === 'A'
+              ? 'HEALTHY '
+              : res.letter === 'B'
+              ? 'SAFE '
+              : res.letter === 'C'
+              ? 'FAIR '
+              : res.letter === 'D'
+              ? 'POOR '
+              : res.letter === 'F'
+              ? 'DANGER '
+              : '... '}
+            INDOOR AIR QUALITY
           </Typography>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>

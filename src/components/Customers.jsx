@@ -28,6 +28,10 @@ function Customers() {
           setCustomerID(result.data[0].id);
           setSelectedIndex(result.data[0].id);
           localStorage.setItem('admin_client', result.data[0].id);
+        } else {
+          setCustomerID(customerID);
+          setSelectedIndex(customerID);
+          localStorage.setItem('admin_client', customerID);
         }
       })
       .catch(error => console.log(error));

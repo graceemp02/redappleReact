@@ -28,7 +28,32 @@ TabPanel.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
-
+const InColumns = [
+  { id: 'date', label: 'Date', minWidth: 50, numeric: true },
+  { id: 'time', label: 'Time', minWidth: 50, numeric: true },
+  { id: 'AQI', label: 'AQI', minWidth: 50, numeric: true, unit: '%' },
+  { id: 'In_Temperature', label: 'Temperature', minWidth: 50, numeric: true, unit: '°F' },
+  { id: 'In_Humidity', label: 'Humidity', minWidth: 50, numeric: true, unit: '' },
+  { id: 'In_CO2', label: 'CO2', minWidth: 50, numeric: true, unit: '' },
+  { id: 'In_VOC', label: 'VOC', minWidth: 50, numeric: true, unit: '' },
+  { id: 'In_CO', label: 'CO', minWidth: 50, numeric: true, unit: '' },
+  { id: 'In_PM_2.5', label: 'PM 2.5', minWidth: 50, numeric: true, unit: '' },
+  { id: 'In_PM_10', label: 'PM 1.0', minWidth: 50, numeric: true, unit: '' },
+];
+const OutColumns = [
+  { id: 'date', label: 'Date', minWidth: 50, numeric: true },
+  { id: 'time', label: 'Time', minWidth: 50, numeric: true },
+  { id: 'Out_Temperature', label: 'Temperature', minWidth: 50, numeric: true, unit: '°F' },
+  { id: 'Out_Humidity', label: 'Humidity', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_O3', label: 'O3', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_SO2', label: 'SO2', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_CO', label: 'CO', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_CO2', label: 'CO2', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_NO2', label: 'NO2', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_PM_2_5', label: 'PM 2.5', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_PM_10', label: 'PM 1.0', minWidth: 50, numeric: true, unit: '' },
+  { id: 'Out_Radon_Spare', label: 'Radon', minWidth: 50, numeric: true },
+];
 export default function Main() {
   const [value, setValue] = React.useState(() => {
     const memoTab = +localStorage.getItem('admin_reportings_tab');
@@ -41,7 +66,6 @@ export default function Main() {
   });
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     localStorage.setItem('admin_reportings_tab', newValue);
     setValue(newValue);
   };
@@ -57,13 +81,13 @@ export default function Main() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Values />
+          <Values InColumns={InColumns} OutColumns={OutColumns} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Reports />
+          <Reports InColumns={InColumns} OutColumns={OutColumns} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Trends />
+          <Trends InColumns={InColumns} OutColumns={OutColumns} />
         </TabPanel>
       </Box>
     </ThemeProvider>

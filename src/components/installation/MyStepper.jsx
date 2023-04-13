@@ -136,6 +136,24 @@ export default function HorizontalNonLinearStepper() {
             </React.Fragment>
           ) : (
             <React.Fragment>
+              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Button
+                  // color='inherit'
+                  variant='contained'
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}>
+                  Back
+                </Button>
+                <Box sx={{ flex: '1 1 auto' }} />
+                <Button
+                  variant='contained'
+                  onClick={handleNext}
+                  sx={{ mr: 1 }}
+                  disabled={activeStep + 1 === steps.length}>
+                  Next
+                </Button>
+              </Box>
               <TableContainer>
                 <Table>
                   <TableHead>
@@ -162,35 +180,6 @@ export default function HorizontalNonLinearStepper() {
                   )}
                 </Table>
               </TableContainer>
-
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                  // color='inherit'
-                  variant='contained'
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}>
-                  Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button
-                  variant='contained'
-                  onClick={handleNext}
-                  sx={{ mr: 1 }}
-                  disabled={activeStep + 1 === steps.length}>
-                  Next
-                </Button>
-                {/* {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                    <Typography variant='caption' sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
-                    </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                    </Button>
-                ))} */}
-              </Box>
             </React.Fragment>
           )}
         </div>

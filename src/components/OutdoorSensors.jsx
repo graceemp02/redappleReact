@@ -10,18 +10,29 @@ import { useContext, useEffect, useState } from 'react';
 const OutdoorSensors = () => {
   const [res, setRes] = useState({});
   const { machineID } = useContext(MachineContext);
+
   useEffect(() => {
-    axios
-      .get('outdoor.php', {
-        params: { api: machineID },
-      })
-      .then(result => {
-        setRes(result.data);
-      })
-      .catch(error => console.log(error));
-  }, [machineID]);
+    let intervalId;
+    const fetchData = async () => {
+      await axios
+        .get('outdoor.php', {
+          params: { api: machineID },
+        })
+        .then(result => {
+          const newData = result.data;
+          if (JSON.stringify(newData) !== JSON.stringify(res)) {
+            setRes(newData);
+          }
+        })
+        .catch(error => console.log(error));
+    };
+    fetchData();
+    intervalId = setInterval(fetchData, 1000);
+    return () => clearInterval(intervalId);
+  }, [machineID, res]);
   return (
     <Paper
+      elevation={0}
       sx={{
         marginBottom: '.5vh',
         flex: 4,

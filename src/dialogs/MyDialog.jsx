@@ -53,10 +53,8 @@ export default function NewCustomerSuccess({ title, des, actions }) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = () => {
-    
     setOpen(false);
   };
-
   return (
     <div>
       <BootstrapDialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>
@@ -64,7 +62,8 @@ export default function NewCustomerSuccess({ title, des, actions }) {
           {title}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>{des}</Typography>
+          {/* <Typography gutterBottom>{des}</Typography> */}
+          <Typography dangerouslySetInnerHTML={{ __html: des }} gutterBottom />
         </DialogContent>
         <DialogActions>
           {actions.map(action => {
